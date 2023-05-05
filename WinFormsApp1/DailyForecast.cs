@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -27,6 +28,7 @@ namespace WinFormsApp1
         SolidBrush drawBrush = new SolidBrush(Color.Black);
         StringFormat drawFormat = new StringFormat();
         List<int> genHeights = null;
+        List<int> homeHeights = null;
         int maxVal = 2000;
         const int PADDING = 5;
         string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -39,7 +41,6 @@ namespace WinFormsApp1
             InitializeComponent();
 
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
-            radioButtonOne.Checked = true;
         }
 
         //updateListBoxes
@@ -66,17 +67,16 @@ namespace WinFormsApp1
 
         private void listBoxModelHouses_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!radioButtonAll.Checked)
+
+            if (Cache.genListOut[listBoxModelHouses.SelectedIndex] is HouseModel)
             {
-                if (Cache.genListOut[listBoxModelHouses.SelectedIndex] is HouseModel)
-                {
-                    currHouseIndex = listBoxModelHouses.SelectedIndex;
-                    currHouse = (HouseModel)Cache.genListOut[listBoxModelHouses.SelectedIndex];
-                    List<int> dailyData = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
-                    canvas.Refresh();
-                    labelPanel.Refresh();
-                }
+                currHouseIndex = listBoxModelHouses.SelectedIndex;
+                currHouse = (HouseModel)Cache.genListOut[listBoxModelHouses.SelectedIndex];
+                List<int> dailyData = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
+                canvas.Refresh();
+                labelPanel.Refresh();
             }
+
         }
 
         private void listBoxGenerators_SelectedIndexChanged(object sender, EventArgs e)
@@ -92,26 +92,32 @@ namespace WinFormsApp1
 
         public void recalculateGenTotals()
         {
-            currGen = Cache.genListin[listBoxGenerators.SelectedIndex];
-            if (currGen is SolarPanelArray)
+            try
             {
-                SolarPanelArray array = (SolarPanelArray)currGen;
-                currArrayAmount = array.Amount;
-                currGen = array.getPanelObject();
+                currGen = Cache.genListin[listBoxGenerators.SelectedIndex];
+                if (currGen is SolarPanelArray)
+                {
+                    SolarPanelArray array = (SolarPanelArray)currGen;
+                    currArrayAmount = array.Amount;
+                    currGen = array.getPanelObject();
+                }
+                else if (currGen is WindTurbineArray)
+                {
+                    WindTurbineArray array = (WindTurbineArray)currGen;
+                    currArrayAmount = array.Amount;
+                    currGen = array.getWindTurbine();
+                }
+                else if (currGen is WindTurbineExisting)
+                {
+                    WindTurbineExisting turbine = (WindTurbineExisting)currGen;
+                    currArrayAmount = 1;
+                    currGen = turbine;
+                }
             }
-            else if (currGen is WindTurbineArray)
+            catch(Exception ex)
             {
-                WindTurbineArray array = (WindTurbineArray)currGen;
-                currArrayAmount = array.Amount;
-                currGen = array.getWindTurbine();
+                Console.WriteLine(ex.ToString());
             }
-            else if (currGen is WindTurbineExisting)
-            {
-                WindTurbineExisting turbine = (WindTurbineExisting)currGen;
-                currArrayAmount = 1;
-                currGen = turbine;
-            }
-
             //calculating gen heights here
             //how many repeats?
             int repeats = 1;
@@ -148,14 +154,11 @@ namespace WinFormsApp1
                 if (minute == 0) currTime = currTime + "0";
                 if (hour < 10) currTime = "0" + currTime;
             }
-            List<int> homeHeights;
-            //average heights
-            if (checkBoxAverage.Checked == true)
-            {
-                homeHeights = currHouse.getAverageDailyData();
-            }
 
+            //average heights
+            if (listBoxModelHouses.Items.Count == 0) homeHeights = null;
             else homeHeights = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
+
             List<int> contenders = new List<int>();
             //*
             //find the actual hiehgest out of genHeigts and houseHeights
@@ -173,27 +176,8 @@ namespace WinFormsApp1
             }
 
             maxVal = contenders.Max();
-
-            if (!radioButtonAll.Checked)
-            {
-                canvas.Refresh();
-                labelPanel.Refresh();
-            }
-        }
-
-        private void DailyForecast_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// redraws every seccond
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void paintTimer_Tick(object sender, EventArgs e)
-        {
-
+            canvas.Refresh();
+            labelPanel.Refresh();
         }
 
         private void doDrawing()
@@ -248,73 +232,17 @@ namespace WinFormsApp1
             g.DrawLine(pen, 0, canvas.Height, 0, 0);
             g.DrawLine(pen, 0, canvas.Height - 1, canvas.Width, canvas.Height - 1);
 
+            //round up to the nearest 500
+            int localmaxVal = 500 * (int)Math.Round((decimal)(maxVal / 500));
+            //if (localmaxVal < 2000) maxVal = 2000;
+            if (localmaxVal <= maxVal) maxVal += 500;
 
             if (listBoxModelHouses.SelectedIndex != -1)
             {
-                List<int> homeHeights;
-                pen.Width = 2;
-                pen.Color = Color.Crimson;
-                int xInc = canvas.Width / 48;
-                int x = 0;
-                int y = 0;
-                int workingHeight = canvas.Height - (int)(canvas.Height * 0.1);
-
-                //average heights
-                if (checkBoxAverage.Checked == true)
-                {
-                    homeHeights = currHouse.getAverageDailyData();
-                }
-
-                else homeHeights = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
-
-
                 //display what is in heights
                 if (homeHeights != null)
                 {
-
-                    //round up to the nearest 500
-                    int localmaxVal = 500 * (int)Math.Round((decimal)(maxVal / 500));
-                    //if (localmaxVal < 2000) maxVal = 2000;
-                    if (localmaxVal <= maxVal) maxVal += 500;
-                    //*/
-
-                    Point[] points = new Point[homeHeights.Count + 1];
-                    points[0] = new Point(x, canvas.Height - workingHeight * (homeHeights[0] / maxVal));
-                    //actual data
-                    int prevX = x;
-                    int prevY = canvas.Height - (int)workingHeight * (homeHeights[0] / maxVal);
-                    int index = 1;
-
-                    foreach (int height in homeHeights)
-                    {
-                        x += xInc;
-                        y = canvas.Height - (int)(workingHeight * height / maxVal);
-                        if (!checkBoxSmooth.Checked) g.DrawLine(pen, prevX, prevY - PADDING, x, y - PADDING);
-                        prevX = x;
-                        prevY = y;
-                        points[index] = new Point(x, y - PADDING);
-                        index++;
-                        consume += height;
-                    }
-                    if (checkBoxSmooth.Checked) g.DrawCurve(pen, points);
-
-                    if (!radioButtonAll.Checked)
-                    {
-                        //Display Data in boxes;
-                        fillRect(panelElectric, currHouse.getElectricPercent());
-                        fillRect(panelMains, currHouse.getMainsPercent());
-                        fillRect(panelOther, currHouse.getOtherPercent());
-                        //consumption
-                        labelAverageDaily.Text = currHouse.getDailyConsumption() + " kWh";
-                    }
-                    else
-                    {
-                        fillRect(panelElectric, currHouse.AverageElectric);
-                        fillRect(panelMains, currHouse.AverageMains);
-                        fillRect(panelOther, currHouse.AverageOther);
-                        //consumption
-                        labelAverageDaily.Text = currHouse.getDailyConsumption() + " kWh";
-                    }
+                    put_data(homeHeights, canvas, Color.Crimson);
                 }
                 else
                 {
@@ -325,38 +253,7 @@ namespace WinFormsApp1
 
             if (listBoxGenerators.SelectedIndex != -1)
             {
-                pen.Width = 2;
-                pen.Color = Color.Green;
-                int xInc = canvas.Width / 48;
-                int x = 0;
-                int y = 0;
-                int workingHeight = canvas.Height - (int)(canvas.Height * 0.1);
-
-                Point[] points = new Point[genHeights.Count + 1];
-                points[0] = new Point(x, canvas.Height - (int)workingHeight * (genHeights[0] / maxVal));
-
-                //actual data
-                int prevX = x;
-                int prevY = canvas.Height - (int)workingHeight * (genHeights[0] / maxVal);
-                int index = 1;
-
-                foreach (int height in genHeights)
-                {
-                    x += xInc;
-                    y = canvas.Height - (int)(workingHeight * height / maxVal);
-                    if (!checkBoxSmooth.Checked)
-                    {
-                        //MessageBox.Show("x: " + x + ", y: " + y + ", prevX: " + prevX + ", prevY: " + prevY);
-                        g.DrawLine(pen, prevX, prevY - PADDING, x, y - PADDING);
-                    }
-                    prevX = x;
-                    prevY = y;
-                    points[index] = new Point(x, y - PADDING);
-                    index++;
-                    gen += height;
-                }
-                if (checkBoxSmooth.Checked) g.DrawCurve(pen, points);
-                
+                put_data(genHeights, canvas, Color.Green);
             }
 
             //display what is in heights
@@ -364,55 +261,26 @@ namespace WinFormsApp1
             {
                 //get the factory load profile
                 List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+                //convert to ints
+                List<int> factoryInts = new List<int>();
 
-                //ok now display!
-                pen.Width = 2;
-                pen.Color = Color.Yellow;
-                int xInc = canvas.Width / 48;
-                int x = 0;
-                int y = 0;
-                int workingHeight = canvas.Height - (int)(canvas.Height * 0.1);
-
-                Point[] points = new Point[factoryHeights.Count + 1];
-                points[0] = new Point(x, canvas.Height - workingHeight * (int)(factoryHeights[0] / maxVal));
-
-                //actual data
-                int prevX = x;
-                int prevY = canvas.Height - workingHeight * (int)(factoryHeights[0] / maxVal);
-                int index = 1;
-
-                foreach (int height in factoryHeights)
+                foreach (double h in factoryHeights)
                 {
-                    x += xInc;
-                    y = canvas.Height - (int)(workingHeight * height / maxVal);
-                    if (!checkBoxSmooth.Checked)
-                    {
-                        //MessageBox.Show("x: " + x + ", y: " + y + ", prevX: " + prevX + ", prevY: " + prevY);
-                        g.DrawLine(pen, prevX, prevY - PADDING, x, y - PADDING);
-                    }
-                    prevX = x;
-                    prevY = y;
-                    points[index] = new Point(x, y - PADDING);
-                    index++;
-                    consume += height;
+                    factoryInts.Add((int)h);
                 }
-                if (checkBoxSmooth.Checked) g.DrawCurve(pen, points);
+                put_data(factoryInts, canvas, Color.Yellow);
+                foreach (double height in factoryHeights)
+                {
+                    consume += (int)height;
+                }
+
             }
             labelGenerate.Text = gen + " W";
             labelConsume.Text = consume + " W";
             int net = gen - consume;
             labelNet.Text = net + " W";
-            if (net < 0 ) { labelNet.ForeColor = Color.Red; }
-            else { labelNet.ForeColor = Color.Green;}
-        }
-
-        private void fillRect(Panel p, double percent)
-        {
-            box = p.CreateGraphics();
-            brush.Color = Color.DarkGray;
-            box.FillRectangle(brush, new Rectangle(0, 0, p.Width, p.Height));
-            brush.Color = Color.Crimson;
-            box.FillRectangle(brush, new Rectangle(0, 0, (int)(p.Width * percent), p.Height));
+            if (net < 0) { labelNet.ForeColor = Color.Red; }
+            else { labelNet.ForeColor = Color.Green; }
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -464,97 +332,50 @@ namespace WinFormsApp1
             }
         }
 
+        public void put_data(List<int> heights, Panel targetCanvas, Color lineColor)
+        {
+            //ok now display!
+            pen.Width = 2;
+            pen.Color = lineColor;
+            int xInc = targetCanvas.Width / 48;
+            int x = 0;
+            int y = 0;
+            int workingHeight = targetCanvas.Height - (int)(targetCanvas.Height * 0.1);
+
+            Point[] points = new Point[heights.Count + 1];
+            points[0] = new Point(x, targetCanvas.Height - workingHeight * (int)(heights[0] / maxVal));
+
+            //actual data
+            int prevX = x;
+            int prevY = targetCanvas.Height - workingHeight * (int)(heights[0] / maxVal);
+            int index = 1;
+
+            foreach (int height in heights)
+            {
+                x += xInc;
+                y = targetCanvas.Height - (int)(workingHeight * height / maxVal);
+                if (!checkBoxSmooth.Checked)
+                {
+                    g.DrawLine(pen, prevX, prevY - PADDING, x, y - PADDING);
+                }
+                prevX = x;
+                prevY = y;
+                points[index] = new Point(x, y - PADDING);
+                index++;
+            }
+            if (checkBoxSmooth.Checked) g.DrawCurve(pen, points);
+        }
+
         private void checkBoxSmooth_CheckedChanged(object sender, EventArgs e)
         {
             canvas.Refresh();
             labelPanel.Refresh();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            changeDataDisplayed();
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxAverage.Checked = false;
-            changeDataDisplayed();
-        }
-
         private void changeDataDisplayed()
         {
-            bool allHouses = radioButtonAll.Checked;
+            if (listBoxModelHouses.SelectedItems.Count >= 0 && listBoxModelHouses.Items.Count > 0) listBoxModelHouses.SelectedIndex = 0;
 
-            if (allHouses)
-            {
-                double electricPercentAverage = 0;
-                double gasPercentAverage = 0;
-                double otherPercentAverage = 0;
-                bool missingDataFlag = false;
-                //For the CURRENT DAY
-                int[] totalHeights = new int[48];
-
-                foreach (EnergyOut h in Cache.genListOut)
-                {
-                    if (h is HouseModel)
-                    {
-                        HouseModel houseModel = (HouseModel)h;
-                        //average each thing for the boxes
-                        electricPercentAverage += houseModel.getElectricPercent();
-                        gasPercentAverage += houseModel.getMainsPercent();
-                        otherPercentAverage += houseModel.getOtherPercent();
-
-                        //CURRENT DATE
-                        List<int> currentDayHeights = houseModel.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
-                        if (currentDayHeights == null)
-                        {
-                            missingDataFlag = true;
-                        }
-                        else
-                        {
-                            try
-                            {
-                                for (int i = 0; i < totalHeights.Length; i++)
-                                {
-                                    totalHeights[i] += currentDayHeights[i];
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.ToString());
-                                Console.WriteLine("[ERROR]: Some missing data was skipped when totalling daily consumption.");
-                            }
-                        }
-                    }
-                }
-                if (missingDataFlag)
-                {
-                    labelMissingData.Text = "! Some Data is missing in these totals !";
-                }
-                else
-                {
-                    labelMissingData.Text = "";
-                }
-
-                currHouse = new HouseModel(true);
-                currHouse.putDay(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year, totalHeights.ToList<int>());
-
-                electricPercentAverage = electricPercentAverage / Cache.houseModels.Count;
-                gasPercentAverage = gasPercentAverage / Cache.houseModels.Count;
-                otherPercentAverage = otherPercentAverage / Cache.houseModels.Count;
-
-                currHouse.AverageElectric = electricPercentAverage;
-                currHouse.AverageMains = gasPercentAverage;
-                currHouse.AverageOther = otherPercentAverage;
-
-
-            }
-            else if (!allHouses)
-            {
-                if (listBoxModelHouses.SelectedItems.Count >= 0 && listBoxModelHouses.Items.Count > 0) listBoxModelHouses.SelectedIndex = 0;
-            }
-            canvas.Refresh();
-            labelPanel.Refresh();
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)
@@ -574,14 +395,16 @@ namespace WinFormsApp1
 
             if (currSum != cacheValue)
             {
+                listBoxModelHouses.SelectedIndex = currHouseIndex;
+                listBoxGenerators.SelectedIndex = currGenIndex;
                 cacheValue = currSum;
+                if (listBoxGenerators.SelectedIndex != -1) recalculateGenTotals();
                 updateDate();
                 updateLists();
                 changeDataDisplayed();
-                if (listBoxGenerators.SelectedIndex != -1) recalculateGenTotals();
+                canvas.Refresh();
+                labelPanel.Refresh();
                 doDrawing();
-                listBoxModelHouses.SelectedIndex = currHouseIndex;
-                listBoxGenerators.SelectedIndex = currGenIndex;
             }
         }
 
