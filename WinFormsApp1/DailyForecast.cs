@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -32,6 +33,8 @@ namespace WinFormsApp1
         int maxVal = 2000;
         const int PADDING = 5;
         string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        double percentSunrise = 0;
+        double percentSunset = 0;
 
         bool overlayFactoryLoad = false;
         List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
@@ -63,6 +66,8 @@ namespace WinFormsApp1
             labelCurrDay.Text = $"{months[Cache.currDay.Month - 1]} {Cache.currDay.Day}";
             labelSunrise.Text = Cache.currDay.getSunriseString();
             labelSunset.Text = Cache.currDay.getSunsetString();
+            percentSunrise = GetPercentageOfDay(Cache.currDay.getSunrise24hr());
+            percentSunset = GetPercentageOfDay(Cache.currDay.getSunset24hr());
         }
 
         private void listBoxModelHouses_SelectedIndexChanged(object sender, EventArgs e)
@@ -114,7 +119,7 @@ namespace WinFormsApp1
                     currGen = turbine;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
@@ -196,6 +201,12 @@ namespace WinFormsApp1
             }
             //graph detail
 
+            //draw the sunlight and nighttime graphics if checked (this goes under everything)
+            if (checkBoxDaylight.Checked)
+            {
+                DrawSunlightGradient(g, percentSunrise, percentSunset);
+            }
+
             //vert lines
             pen.Color = Color.LightGray;
             for (int i = 0; i < canvas.Width; i = i + canvas.Width / 24)
@@ -225,12 +236,14 @@ namespace WinFormsApp1
 
             pen.Width = 1;
             pen.Color = Color.Black;
-            //labels
-            // Set format of string.
 
             //borders
-            g.DrawLine(pen, 0, canvas.Height, 0, 0);
-            g.DrawLine(pen, 0, canvas.Height - 1, canvas.Width, canvas.Height - 1);
+            g.DrawLine(pen, 1, canvas.Height, 1, 1);
+            g.DrawLine(pen, 1, canvas.Height - 1, canvas.Width, canvas.Height - 1);
+            g.DrawLine(pen, 1, 1, canvas.Width, 1);
+            g.DrawLine(pen, canvas.Width - 1, 0, canvas.Width - 1, canvas.Height);
+
+            
 
             //round up to the nearest 500
             int localmaxVal = 500 * (int)Math.Round((decimal)(maxVal / 500));
@@ -375,7 +388,6 @@ namespace WinFormsApp1
         private void changeDataDisplayed()
         {
             if (listBoxModelHouses.SelectedItems.Count >= 0 && listBoxModelHouses.Items.Count > 0) listBoxModelHouses.SelectedIndex = 0;
-
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)
@@ -398,8 +410,8 @@ namespace WinFormsApp1
                 listBoxModelHouses.SelectedIndex = currHouseIndex;
                 listBoxGenerators.SelectedIndex = currGenIndex;
                 cacheValue = currSum;
-                if (listBoxGenerators.SelectedIndex != -1) recalculateGenTotals();
                 updateDate();
+                if (listBoxGenerators.SelectedIndex != -1) recalculateGenTotals();
                 updateLists();
                 changeDataDisplayed();
                 canvas.Refresh();
@@ -417,6 +429,7 @@ namespace WinFormsApp1
 
         private void canvas_MouseClick(object sender, MouseEventArgs e)
         {
+            /*
             if (e.Button == MouseButtons.Left)
             {
                 maxVal = maxVal * 2;
@@ -429,6 +442,72 @@ namespace WinFormsApp1
                 canvas.Refresh();
                 labelPanel.Refresh();
             }
+            */
+        }
+
+        public double GetPercentageOfDay(string time)
+        {
+            DateTime dateTime;
+            if (!DateTime.TryParseExact(time, "HHmm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                throw new ArgumentException("Invalid time format, must be in 24-hour format: HHmm");
+            }
+
+            double totalSecondsInDay = TimeSpan.FromDays(1).TotalSeconds;
+            double secondsElapsed = dateTime.TimeOfDay.TotalSeconds;
+            double percentageOfDay = secondsElapsed / totalSecondsInDay * 100.0;
+
+            return Math.Round(percentageOfDay, 2) / 100;
+        }
+
+        private void checkBoxDaylight_CheckedChanged(object sender, EventArgs e)
+        {
+            updateDate();
+            canvas.Refresh();
+            labelPanel.Refresh();
+        }
+
+
+        private void DrawSunlightGradient(Graphics canv, double sunrisePercent, double sunsetPercent)
+        {
+            // Define the colors and positions in the gradient
+            Color[] gradientColors = new Color[]
+            {
+                Color.FromArgb(128,0, 0, 0),  // Midnight color
+                Color.FromArgb(128,0, 0, 30),  // Night color
+                Color.FromArgb(128,255, 255, 0),  // Sunrise color
+                Color.FromArgb(128,255, 255, 100),  // Day color
+                Color.FromArgb(128,255, 255, 0),  // Sunset color
+                Color.FromArgb(128,0, 0, 30),  // Night color
+                Color.FromArgb(128,0, 0, 0)  // Midnight color
+            };
+
+            float[] gradientPositions = new float[]
+            {
+                0.0f,  // Midnight color position
+                (float)sunrisePercent - 0.1f,  // Night color position
+                (float)sunrisePercent,  // Sunrise color position
+                0.5f,  // Day color position
+                (float)sunsetPercent,  // Sunset color position
+                (float)sunsetPercent + 0.1f,  // Night color position
+                1.0f  // Midnight color position
+            };
+
+            // Create a color blend object and set its colors and positions
+            ColorBlend blend = new ColorBlend();
+            blend.Colors = gradientColors;
+            blend.Positions = gradientPositions;
+
+            // Create a linear gradient brush with the blend
+            LinearGradientBrush brush = new LinearGradientBrush(
+                new PointF(0, 0),
+                new PointF(canvas.Width, 0),
+                Color.Black,
+                Color.Black);
+            brush.InterpolationColors = blend;
+
+            // Fill the canvas with the gradient
+            canv.FillRectangle(brush, 0, 0, canvas.Width, canvas.Height);
         }
     }
 }

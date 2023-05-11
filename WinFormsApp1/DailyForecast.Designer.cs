@@ -51,6 +51,7 @@
             label14 = new System.Windows.Forms.Label();
             labelNet = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
+            checkBoxDaylight = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // labelCurrDay
@@ -77,12 +78,11 @@
             // 
             // canvas
             // 
-            canvas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             canvas.AutoSize = true;
             canvas.BackColor = System.Drawing.SystemColors.ControlLight;
             canvas.Location = new System.Drawing.Point(47, 190);
             canvas.Name = "canvas";
-            canvas.Size = new System.Drawing.Size(881, 332);
+            canvas.Size = new System.Drawing.Size(881, 336);
             canvas.TabIndex = 4;
             canvas.Paint += panel1_Paint;
             canvas.MouseClick += canvas_MouseClick;
@@ -151,7 +151,7 @@
             // checkBoxArrayTotal
             // 
             checkBoxArrayTotal.AutoSize = true;
-            checkBoxArrayTotal.Location = new System.Drawing.Point(8, 44);
+            checkBoxArrayTotal.Location = new System.Drawing.Point(8, 47);
             checkBoxArrayTotal.Name = "checkBoxArrayTotal";
             checkBoxArrayTotal.Size = new System.Drawing.Size(108, 19);
             checkBoxArrayTotal.TabIndex = 26;
@@ -193,7 +193,7 @@
             // checkBoxFactoyLoad
             // 
             checkBoxFactoyLoad.AutoSize = true;
-            checkBoxFactoyLoad.Location = new System.Drawing.Point(8, 68);
+            checkBoxFactoyLoad.Location = new System.Drawing.Point(8, 72);
             checkBoxFactoyLoad.Name = "checkBoxFactoyLoad";
             checkBoxFactoyLoad.Size = new System.Drawing.Size(137, 19);
             checkBoxFactoyLoad.TabIndex = 30;
@@ -272,12 +272,24 @@
             label10.TabIndex = 19;
             label10.Text = "Average Daily Comsumption (kWh):";
             // 
+            // checkBoxDaylight
+            // 
+            checkBoxDaylight.AutoSize = true;
+            checkBoxDaylight.Location = new System.Drawing.Point(8, 165);
+            checkBoxDaylight.Name = "checkBoxDaylight";
+            checkBoxDaylight.Size = new System.Drawing.Size(104, 19);
+            checkBoxDaylight.TabIndex = 37;
+            checkBoxDaylight.Text = "Visual Daylight";
+            checkBoxDaylight.UseVisualStyleBackColor = true;
+            checkBoxDaylight.CheckedChanged += checkBoxDaylight_CheckedChanged;
+            // 
             // DailyForecast
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new System.Drawing.Size(932, 526);
+            Controls.Add(checkBoxDaylight);
             Controls.Add(labelNet);
             Controls.Add(label14);
             Controls.Add(labelGenerate);
@@ -300,7 +312,7 @@
             Controls.Add(listBoxModelHouses);
             Controls.Add(labelCurrDay);
             Name = "DailyForecast";
-            Text = "Daily Analysis";
+            Text = " ";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -329,5 +341,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label labelNet;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox checkBoxDaylight;
     }
 }
