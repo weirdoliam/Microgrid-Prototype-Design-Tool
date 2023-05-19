@@ -407,7 +407,7 @@ namespace WinFormsApp1
             }
 
             //The main factory of the application
-            //public static DairyFactory mainFactory = new DairyFactory("Default Factory");
+            //public static FactoryModel mainFactory = new FactoryModel("Default Factory");
             Console.WriteLine("Factory: ");
             Console.WriteLine(Cache.mainFactory.ToString());
         }

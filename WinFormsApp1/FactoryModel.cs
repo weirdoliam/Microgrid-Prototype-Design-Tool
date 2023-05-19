@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace WinFormsApp1
 {
-    class DairyFactory : EnergyOut
+    class FactoryModel : EnergyOut
     {
 
         // Properties
@@ -20,27 +20,27 @@ namespace WinFormsApp1
         private Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges = new Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>>();
 
         //Variable load, and associated bool
-        private List<double> predefinedLoad = new List<double>();
+        private List<double> genericLoad = new List<double>();
         private bool usesPreLoad = false;
 
         // Constructor
-        public DairyFactory(string name)
+        public FactoryModel(string name)
         {
             Name = name;
             machines = new List<Tuple<string, double>>();
             machineTimeRanges = new Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>>();
         }
 
-        public DairyFactory(string name, List<Tuple<string, double>> machines, Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges, List<double> load, bool preLoaded) : this(name)
+        public FactoryModel(string name, List<Tuple<string, double>> machines, Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges, List<double> load, bool preLoaded) : this(name)
         {
             this.machines = machines;
             this.machineTimeRanges = machineTimeRanges;
-            this.predefinedLoad = load;
+            this.genericLoad = load;
             this.usesPreLoad = preLoaded;
         }
 
-        public DairyFactory Clone() {
-            return new DairyFactory(this.Name, this.machines, this.MachineTimeRanges, this.predefinedLoad, this.usesPreLoad);
+        public FactoryModel Clone() {
+            return new FactoryModel(this.Name, this.machines, this.MachineTimeRanges, this.genericLoad, this.usesPreLoad);
         }
 
 
@@ -78,7 +78,7 @@ namespace WinFormsApp1
         {
             if (usesPreLoad)
             {
-                return predefinedLoad;
+                return genericLoad;
             }
             try
             {
@@ -220,13 +220,13 @@ namespace WinFormsApp1
 
         public void setVariableLoad(List<double> load)
         {
-            predefinedLoad = load;
+            genericLoad = load;
             usesPreLoad = true;
         }
 
         public void clearVariableLoad()
         {
-            predefinedLoad = new List<double>();
+            genericLoad = new List<double>();
             usesPreLoad = false;
         }
 

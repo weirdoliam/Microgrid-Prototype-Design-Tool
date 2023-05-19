@@ -14,8 +14,8 @@ namespace WinFormsApp1
     public partial class FactoryConfig : Form
     {
 
-        DairyFactory snapshot = null;
-        DairyFactory mainFactory = Cache.mainFactory;
+        FactoryModel snapshot = null;
+        FactoryModel mainFactory = Cache.mainFactory;
         public FactoryConfig()
         {
             InitializeComponent();
