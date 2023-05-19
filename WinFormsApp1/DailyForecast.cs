@@ -205,10 +205,14 @@ namespace WinFormsApp1
             if (checkBoxDaylight.Checked)
             {
                 DrawSunlightGradient(g, percentSunrise, percentSunset);
+                pen.Color = Color.White;
+            }
+            else
+            {
+                pen.Color = Color.LightGray;
             }
 
             //vert lines
-            pen.Color = Color.LightGray;
             for (int i = 0; i < canvas.Width; i = i + canvas.Width / 24)
             {
                 g.DrawLine(pen, i, canvas.Height, i, 0);
@@ -243,19 +247,23 @@ namespace WinFormsApp1
             g.DrawLine(pen, 1, 1, canvas.Width, 1);
             g.DrawLine(pen, canvas.Width - 1, 0, canvas.Width - 1, canvas.Height);
 
-            
+
 
             //round up to the nearest 500
             int localmaxVal = 500 * (int)Math.Round((decimal)(maxVal / 500));
             //if (localmaxVal < 2000) maxVal = 2000;
-            if (localmaxVal <= maxVal) maxVal += 500;
+            if (localmaxVal > maxVal) maxVal += 500;
 
             if (listBoxModelHouses.SelectedIndex != -1)
             {
                 //display what is in heights
                 if (homeHeights != null)
                 {
-                    put_data(homeHeights, canvas, Color.Crimson);
+                    put_data(homeHeights, canvas, Color.Crimson, 3);
+                    foreach (double height in homeHeights)
+                    {
+                        consume += (int)height;
+                    }
                 }
                 else
                 {
@@ -266,7 +274,11 @@ namespace WinFormsApp1
 
             if (listBoxGenerators.SelectedIndex != -1)
             {
-                put_data(genHeights, canvas, Color.Green);
+                put_data(genHeights, canvas, Color.Green, 3);
+                foreach (double height in genHeights)
+                {
+                    gen += (int)height;
+                }
             }
 
             //display what is in heights
@@ -281,7 +293,7 @@ namespace WinFormsApp1
                 {
                     factoryInts.Add((int)h);
                 }
-                put_data(factoryInts, canvas, Color.Yellow);
+                put_data(factoryInts, canvas, Color.Yellow, 3);
                 foreach (double height in factoryHeights)
                 {
                     consume += (int)height;
@@ -302,11 +314,6 @@ namespace WinFormsApp1
             doDrawing();
         }
 
-        private void checkBoxAverage_CheckedChanged(object sender, EventArgs e)
-        {
-            canvas.Refresh();
-            labelPanel.Refresh();
-        }
 
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
@@ -345,10 +352,10 @@ namespace WinFormsApp1
             }
         }
 
-        public void put_data(List<int> heights, Panel targetCanvas, Color lineColor)
+        public void put_data(List<int> heights, Panel targetCanvas, Color lineColor, int width)
         {
             //ok now display!
-            pen.Width = 2;
+            pen.Width = width;
             pen.Color = lineColor;
             int xInc = targetCanvas.Width / 48;
             int x = 0;
@@ -473,13 +480,13 @@ namespace WinFormsApp1
             // Define the colors and positions in the gradient
             Color[] gradientColors = new Color[]
             {
-                Color.FromArgb(128,0, 0, 0),  // Midnight color
-                Color.FromArgb(128,0, 0, 30),  // Night color
-                Color.FromArgb(128,255, 255, 0),  // Sunrise color
-                Color.FromArgb(128,255, 255, 100),  // Day color
-                Color.FromArgb(128,255, 255, 0),  // Sunset color
-                Color.FromArgb(128,0, 0, 30),  // Night color
-                Color.FromArgb(128,0, 0, 0)  // Midnight color
+                Color.FromArgb(200,0, 0, 0),  // Midnight color
+                Color.FromArgb(200,0, 0, 30),  // Night color
+                Color.FromArgb(200,255,166,179),  // Sunrise color
+                Color.FromArgb(200,135, 206, 235),  // Day color
+                Color.FromArgb(200,239, 82, 0),  // Sunset color
+                Color.FromArgb(200,0, 0, 30),  // Night color
+                Color.FromArgb(200,0, 0, 0)  // Midnight color
             };
 
             float[] gradientPositions = new float[]
@@ -489,7 +496,7 @@ namespace WinFormsApp1
                 (float)sunrisePercent,  // Sunrise color position
                 0.5f,  // Day color position
                 (float)sunsetPercent,  // Sunset color position
-                (float)sunsetPercent + 0.1f,  // Night color position
+                (float)sunsetPercent + 0.05f,  // Night color position
                 1.0f  // Midnight color position
             };
 
@@ -508,6 +515,12 @@ namespace WinFormsApp1
 
             // Fill the canvas with the gradient
             canv.FillRectangle(brush, 0, 0, canvas.Width, canvas.Height);
+        }
+
+        private void DailyForecast_Resize(object sender, EventArgs e)
+        {
+            canvas.Refresh();
+            labelPanel.Refresh();
         }
     }
 }
