@@ -37,13 +37,25 @@ namespace WinFormsApp1
         double percentSunset = 0;
 
         bool overlayFactoryLoad = false;
-        List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+        List<double> factoryHeights = null;
 
         public DailyForecast()
         {
             InitializeComponent();
 
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
+            if (Cache.mainFactory.UsesCompLoad)
+            {
+                List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
+                if (factoryHeights != null)
+                {
+                    Console.WriteLine($"Recieved factoryHeights OK. Sample:{factoryHeights[5]}, count: {factoryHeights.Count}");
+                }
+            }
+            else
+            {
+                List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+            }
         }
 
         //updateListBoxes
@@ -287,19 +299,21 @@ namespace WinFormsApp1
                 //Let's make sure we're not getting a specific load first
                 if (Cache.mainFactory.UsesCompLoad)
                 {
-                    List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
+                    factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
+
                 }
                 else
                 {
-                    List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+                    factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
                 }
 
                 if (factoryHeights == null)
                 {
-                    g.DrawString("Factory data for today not found.", Font, brush, 10, 10);
+                    g.DrawString("Factory data for today not found.", drawFont, drawBrush, canvas.Width / 2, canvas.Height / 3);
                 }
                 else
                 {
+                    Console.WriteLine($"Recieved factoryHeights OK. Sample:{factoryHeights[5]}, count: {factoryHeights.Count}");
                     //convert to ints
                     List<int> factoryInts = new List<int>();
 
@@ -446,6 +460,7 @@ namespace WinFormsApp1
         private void checkBoxFactoyLoad_CheckedChanged(object sender, EventArgs e)
         {
             overlayFactoryLoad = checkBoxFactoyLoad.Checked;
+            recalculateGenTotals();
             canvas.Refresh();
             labelPanel.Refresh();
         }

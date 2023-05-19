@@ -199,6 +199,7 @@
             // updateTimer
             // 
             updateTimer.Enabled = true;
+            updateTimer.Interval = 1000;
             updateTimer.Tick += updateTimer_Tick;
             // 
             // checkBoxFactoyLoad

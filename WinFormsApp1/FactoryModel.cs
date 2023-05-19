@@ -90,14 +90,24 @@ namespace WinFormsApp1
             List<double> data = new List<double>();
             if (!usesCompLoad) return null;
             //we ignore year in date
-            int d = date.Day;
-            int m = date.Month;
-            string monthDay = $"{m}-{d}";
+            string d = date.Day + "";
+            string m = date.Month + "";
+            //Format appropriately
+            if (date.Day < 10)
+            {
+                d = "0" + d;
+            }
+            if(date.Month < 10) 
+            {
+                m = "0" + m;
+            }
+            string monthDay = $"{m}_{d}";
             if (comprehensiveLoad.ContainsKey(monthDay))
             {
                 double[] arrayData = comprehensiveLoad[monthDay];
                 foreach (int i in arrayData)
                 {
+                    Console.WriteLine("Adding data we already have ouptut list: " + i);
                     data.Add(i);
                 }
                 return data;
@@ -110,6 +120,7 @@ namespace WinFormsApp1
                 double[] arrayData = comprehensiveLoad[monthDay];
                 foreach (int i in arrayData)
                 {
+                    Console.WriteLine("Adding to ouptut list: " + i);
                     data.Add(i);
                 }
                 return data;
@@ -118,6 +129,7 @@ namespace WinFormsApp1
 
         private bool readInDay(string monthDay)
         {
+            Console.WriteLine($"Reading in Day: {monthDay}");
             //identify file existence
             DirectoryInfo directory = new DirectoryInfo(compLoadPath);
             bool found = false;
@@ -135,14 +147,20 @@ namespace WinFormsApp1
                     {
                         found = true; // File with the search string exists
                         pathToFile = file.FullName;
+                        Console.WriteLine("Location:\n" + pathToFile);
                     }
                 }
             }
             else
             {
+                Console.WriteLine("Failure - Directory doesn't exist");
                 return false;
             }
-            if(!found) return false;
+            if (!found)
+            {
+                Console.WriteLine("Failure - file with contents not found");
+                return false;
+            }
 
             //setup array
             double[] powerReadings = new double[288]; // 288 readings for 24 hours (5-minute intervals)
@@ -159,7 +177,16 @@ namespace WinFormsApp1
                 reader.ReadLine();
                 while(!reader.EndOfStream) {
                     //get the value all at once
-                    powerReadings[index] = int.Parse(reader.ReadLine().Split(',')[3]);
+                    try
+                    {
+                        string datum = reader.ReadLine().Split(',')[3];
+                        Console.WriteLine("Read Datum: " + datum);
+                        powerReadings[index] = double.Parse(datum);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Issue reading data: " + ex.Message);
+                    }
                     index++;
                 }
             }
@@ -177,6 +204,7 @@ namespace WinFormsApp1
             }
             //save the aggregatedPower
             comprehensiveLoad[monthDay] = aggregatedPower;
+            Console.WriteLine("Success!");
             return true;
         }
 
