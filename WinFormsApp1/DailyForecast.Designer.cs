@@ -32,16 +32,16 @@
             labelCurrDay = new System.Windows.Forms.Label();
             listBoxModelHouses = new System.Windows.Forms.ListBox();
             canvas = new System.Windows.Forms.Panel();
+            label11 = new System.Windows.Forms.Label();
+            label12 = new System.Windows.Forms.Label();
+            labelSunrise = new System.Windows.Forms.Label();
+            labelSunset = new System.Windows.Forms.Label();
             labelPanel = new System.Windows.Forms.Panel();
             checkBoxSmooth = new System.Windows.Forms.CheckBox();
             labelAverageDaily = new System.Windows.Forms.Label();
             listBoxGenerators = new System.Windows.Forms.ListBox();
-            labelSunrise = new System.Windows.Forms.Label();
-            labelSunset = new System.Windows.Forms.Label();
             checkBoxArrayTotal = new System.Windows.Forms.CheckBox();
             labelMissingData = new System.Windows.Forms.Label();
-            label11 = new System.Windows.Forms.Label();
-            label12 = new System.Windows.Forms.Label();
             updateTimer = new System.Windows.Forms.Timer(components);
             checkBoxFactoyLoad = new System.Windows.Forms.CheckBox();
             label1 = new System.Windows.Forms.Label();
@@ -53,9 +53,8 @@
             label10 = new System.Windows.Forms.Label();
             checkBoxDaylight = new System.Windows.Forms.CheckBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
-            groupBox2 = new System.Windows.Forms.GroupBox();
-            panelXaxis = new System.Windows.Forms.Panel();
             checkBoxAssBat = new System.Windows.Forms.CheckBox();
+            groupBox2 = new System.Windows.Forms.GroupBox();
             canvas.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -87,7 +86,6 @@
             // 
             canvas.AutoSize = true;
             canvas.BackColor = System.Drawing.SystemColors.ControlLight;
-            canvas.Controls.Add(panelXaxis);
             canvas.Controls.Add(label11);
             canvas.Controls.Add(label12);
             canvas.Controls.Add(labelSunrise);
@@ -99,6 +97,42 @@
             canvas.TabIndex = 4;
             canvas.Paint += panel1_Paint;
             canvas.MouseClick += canvas_MouseClick;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new System.Drawing.Point(264, 9);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(51, 15);
+            label11.TabIndex = 28;
+            label11.Text = "Sunrise: ";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(623, 9);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(48, 15);
+            label12.TabIndex = 29;
+            label12.Text = "Sunset: ";
+            // 
+            // labelSunrise
+            // 
+            labelSunrise.AutoSize = true;
+            labelSunrise.Location = new System.Drawing.Point(311, 9);
+            labelSunrise.Name = "labelSunrise";
+            labelSunrise.Size = new System.Drawing.Size(44, 15);
+            labelSunrise.TabIndex = 24;
+            labelSunrise.Text = "sunrise";
+            // 
+            // labelSunset
+            // 
+            labelSunset.AutoSize = true;
+            labelSunset.Location = new System.Drawing.Point(672, 9);
+            labelSunset.Name = "labelSunset";
+            labelSunset.Size = new System.Drawing.Size(41, 15);
+            labelSunset.TabIndex = 25;
+            labelSunset.Text = "sunset";
             // 
             // labelPanel
             // 
@@ -143,24 +177,6 @@
             listBoxGenerators.TabIndex = 23;
             listBoxGenerators.SelectedIndexChanged += listBoxGenerators_SelectedIndexChanged;
             // 
-            // labelSunrise
-            // 
-            labelSunrise.AutoSize = true;
-            labelSunrise.Location = new System.Drawing.Point(311, 9);
-            labelSunrise.Name = "labelSunrise";
-            labelSunrise.Size = new System.Drawing.Size(44, 15);
-            labelSunrise.TabIndex = 24;
-            labelSunrise.Text = "sunrise";
-            // 
-            // labelSunset
-            // 
-            labelSunset.AutoSize = true;
-            labelSunset.Location = new System.Drawing.Point(672, 9);
-            labelSunset.Name = "labelSunset";
-            labelSunset.Size = new System.Drawing.Size(41, 15);
-            labelSunset.TabIndex = 25;
-            labelSunset.Text = "sunset";
-            // 
             // checkBoxArrayTotal
             // 
             checkBoxArrayTotal.AutoSize = true;
@@ -179,24 +195,6 @@
             labelMissingData.Name = "labelMissingData";
             labelMissingData.Size = new System.Drawing.Size(0, 15);
             labelMissingData.TabIndex = 27;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(264, 9);
-            label11.Name = "label11";
-            label11.Size = new System.Drawing.Size(51, 15);
-            label11.TabIndex = 28;
-            label11.Text = "Sunrise: ";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(623, 9);
-            label12.Name = "label12";
-            label12.Size = new System.Drawing.Size(48, 15);
-            label12.TabIndex = 29;
-            label12.Text = "Sunset: ";
             // 
             // updateTimer
             // 
@@ -322,6 +320,16 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Graph conrol and information";
             // 
+            // checkBoxAssBat
+            // 
+            checkBoxAssBat.AutoSize = true;
+            checkBoxAssBat.Location = new System.Drawing.Point(11, 162);
+            checkBoxAssBat.Name = "checkBoxAssBat";
+            checkBoxAssBat.Size = new System.Drawing.Size(203, 19);
+            checkBoxAssBat.TabIndex = 38;
+            checkBoxAssBat.Text = "Overlay Associated Storage (Blue)";
+            checkBoxAssBat.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(canvas);
@@ -333,24 +341,6 @@
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             groupBox2.Text = "Data";
-            // 
-            // panelXaxis
-            // 
-            panelXaxis.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panelXaxis.Location = new System.Drawing.Point(0, 331);
-            panelXaxis.Name = "panelXaxis";
-            panelXaxis.Size = new System.Drawing.Size(995, 36);
-            panelXaxis.TabIndex = 0;
-            // 
-            // checkBoxAssBat
-            // 
-            checkBoxAssBat.AutoSize = true;
-            checkBoxAssBat.Location = new System.Drawing.Point(11, 162);
-            checkBoxAssBat.Name = "checkBoxAssBat";
-            checkBoxAssBat.Size = new System.Drawing.Size(203, 19);
-            checkBoxAssBat.TabIndex = 38;
-            checkBoxAssBat.Text = "Overlay Associated Storage (Blue)";
-            checkBoxAssBat.UseVisualStyleBackColor = true;
             // 
             // DailyForecast
             // 
@@ -401,7 +391,6 @@
         private System.Windows.Forms.CheckBox checkBoxDaylight;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Panel panelXaxis;
         private System.Windows.Forms.CheckBox checkBoxAssBat;
     }
 }

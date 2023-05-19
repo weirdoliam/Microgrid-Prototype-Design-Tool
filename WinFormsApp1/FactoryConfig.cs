@@ -30,7 +30,8 @@ namespace WinFormsApp1
             openFileDialog1.Filter = "(csv files (*.csv)|*.csv";
         }
 
-        public void reloadMachines() {
+        public void reloadMachines()
+        {
             listBoxMachines.Items.Clear();
             if (mainFactory.Machines.Count > 0)
             {
@@ -56,18 +57,19 @@ namespace WinFormsApp1
             //clear listbox
             listBoxMachineTimes.Items.Clear();
             if (listBoxMachines.SelectedIndex == -1) return;
-            
+
             //List each time associated with machine
             //get name
             string machineName = (string)listBoxMachines.Items[listBoxMachines.SelectedIndex];
             //if that name exists in our dictionary
-            if (mainFactory.MachineTimeRanges.ContainsKey(machineName)){
+            if (mainFactory.MachineTimeRanges.ContainsKey(machineName))
+            {
                 //get the list of timespan tuples
                 List<Tuple<TimeSpan, TimeSpan>> currTimes = mainFactory.MachineTimeRanges[machineName];
-                
+
                 //DEBUG
                 Console.WriteLine(currTimes.Count.ToString());
-                
+
                 //display each tuple in the listbox
                 if (currTimes.Count > 0)
                 {
@@ -140,6 +142,19 @@ namespace WinFormsApp1
         private void buttonClearImport_Click(object sender, EventArgs e)
         {
             Cache.mainFactory.clearVariableLoad();
+        }
+
+        private void buttonComp_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    Cache.mainFactory.setComprehensiveLoad(fbd.SelectedPath);
+                }
+            }
         }
     }
 }

@@ -284,19 +284,35 @@ namespace WinFormsApp1
             //display what is in heights
             if (overlayFactoryLoad)
             {
-                //get the factory load profile
-                List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
-                //convert to ints
-                List<int> factoryInts = new List<int>();
-
-                foreach (double h in factoryHeights)
+                //Let's make sure we're not getting a specific load first
+                if (Cache.mainFactory.UsesCompLoad)
                 {
-                    factoryInts.Add((int)h);
+                    List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
                 }
-                put_data(factoryInts, canvas, Color.Yellow, 3);
-                foreach (double height in factoryHeights)
+                else
                 {
-                    consume += (int)height;
+                    List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+                }
+
+                if (factoryHeights == null)
+                {
+                    g.DrawString("Factory data for today not found.", Font, brush, 10, 10);
+                }
+                else
+                {
+                    //convert to ints
+                    List<int> factoryInts = new List<int>();
+
+                    foreach (double h in factoryHeights)
+                    {
+                        factoryInts.Add((int)h);
+                    }
+                    //display
+                    put_data(factoryInts, canvas, Color.Yellow, 3);
+                    foreach (double height in factoryHeights)
+                    {
+                        consume += (int)height;
+                    }
                 }
 
             }
