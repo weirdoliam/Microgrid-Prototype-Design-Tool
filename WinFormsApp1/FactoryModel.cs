@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace WinFormsApp1
 {
@@ -23,6 +24,13 @@ namespace WinFormsApp1
         private List<double> genericLoad = new List<double>();
         private bool usesPreLoad = false;
 
+        //Comprehensive load, and associated bool
+        //Path to data
+        private string compLoadPath = null;
+        //date, data (in half-hour intervals)
+        private Dictionary<string, double[]> comprehensiveLoad = new Dictionary<string,double[]>();
+        private bool usesCompLoad = false;
+
         // Constructor
         public FactoryModel(string name)
         {
@@ -40,7 +48,7 @@ namespace WinFormsApp1
         }
 
         public FactoryModel Clone() {
-            return new FactoryModel(this.Name, this.machines, this.MachineTimeRanges, this.genericLoad, this.usesPreLoad);
+            return new FactoryModel(Name, machines, MachineTimeRanges, genericLoad, usesPreLoad);
         }
 
 
@@ -72,6 +80,101 @@ namespace WinFormsApp1
             // Convert total wattage to kWh
             double hourlyPowerConsumption = totalWattage / 1000;
             return hourlyPowerConsumption;
+        }
+
+        public List<double> GetHourlyConsumptionList(DateTime date)
+        {
+            List<double> data = new List<double>();
+            if (!usesCompLoad) return null;
+            //we ignore year in date
+            int d = date.Day;
+            int m = date.Month;
+            string monthDay = $"{m}-{d}";
+            if (comprehensiveLoad.ContainsKey(monthDay))
+            {
+                double[] arrayData = comprehensiveLoad[monthDay];
+                foreach (int i in arrayData)
+                {
+                    data.Add(i);
+                }
+                return data;
+            }
+            else
+            {
+                bool success = readInDay(monthDay);
+                if (!success) return null; 
+
+                double[] arrayData = comprehensiveLoad[monthDay];
+                foreach (int i in arrayData)
+                {
+                    data.Add(i);
+                }
+                return data;
+            }                                                             
+        }
+
+        private bool readInDay(string monthDay)
+        {
+            //identify file existence
+            DirectoryInfo directory = new DirectoryInfo(compLoadPath);
+            bool found = false;
+            string pathToFile = null;
+            // Check if the directory exists
+            if (directory.Exists)
+            {
+                // Get all the files in the directory
+                FileInfo[] files = directory.GetFiles();
+
+                // Iterate over the files and check if any file name contains the search string
+                foreach (FileInfo file in files)
+                {
+                    if (file.Name.Contains(monthDay))
+                    {
+                        found = true; // File with the search string exists
+                        pathToFile = file.FullName;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            if(!found) return false;
+
+            //setup array
+            double[] powerReadings = new double[288]; // 288 readings for 24 hours (5-minute intervals)
+            // Populate the powerReadings array with zeros initially
+            for (int i = 0; i < powerReadings.Length; i++)
+            {
+                powerReadings[i] = 0.0;
+            }
+
+            //read in data
+            using(var reader = new StreamReader(pathToFile)) {
+                //skip the header
+                int index = 0;
+                reader.ReadLine();
+                while(!reader.EndOfStream) {
+                    //get the value all at once
+                    powerReadings[index] = int.Parse(reader.ReadLine().Split(',')[3]);
+                    index++;
+                }
+            }
+
+            // Create an array to store the aggregated 30-minute power consumption
+            double[] aggregatedPower = new double[48]; // 48 intervals for 24 hours (30-minute intervals)
+
+            // Iterate over the 5-minute readings and aggregate them into 30-minute intervals
+            for (int i = 0; i < 288; i++)
+            {
+                int intervalIndex = i / 6; // Divide the index by 6 to get the corresponding 30-minute interval index
+
+                // Add the 5-minute reading to the corresponding 30-minute interval
+                aggregatedPower[intervalIndex] += powerReadings[i];
+            }
+            //save the aggregatedPower
+            comprehensiveLoad[monthDay] = aggregatedPower;
+            return true;
         }
 
         public List<double> GetHourlyConsumptionList()
@@ -198,9 +301,23 @@ namespace WinFormsApp1
             }
         }
 
+        //The following code handles comprehensive loads
+        public void setComprehensiveLoad(string pathToLoad)
+        {
+            compLoadPath = pathToLoad;
+            usesCompLoad = true;
+            usesPreLoad = false;
+        }
+
+        public void clearComprehensiveLoad()
+        {
+            compLoadPath = null;
+            usesCompLoad = false;
+        }
+
         public override string getArrayDescription()
         {
-            return $"Dairy Factory, {Name}";
+            return $"Factory Model, {Name}";
         }
 
         public override int getDailyConsumption()
@@ -222,6 +339,7 @@ namespace WinFormsApp1
         {
             genericLoad = load;
             usesPreLoad = true;
+            usesCompLoad = false;
         }
 
         public void clearVariableLoad()
