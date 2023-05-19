@@ -12,8 +12,6 @@ namespace WinFormsApp1
         public List<Tuple<string, double>> Machines { get => machines; }
         public Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> MachineTimeRanges { get => machineTimeRanges; }
 
-        
-
         //variable loads per item. 
         //Flexibility in how a load is defined
 
