@@ -70,7 +70,6 @@ namespace WinFormsApp1
             pictureBox1 = new System.Windows.Forms.PictureBox();
             pictureBox4 = new System.Windows.Forms.PictureBox();
             panel1 = new System.Windows.Forms.Panel();
-            nNovChildWindowHost1 = new Nevron.Nov.Windows.Forms.NNovChildWindowHost();
             labelFactName = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             groupBoxGeneration.SuspendLayout();
@@ -184,38 +183,38 @@ namespace WinFormsApp1
             // 
             generalCaseToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             generalCaseToolStripMenuItem.Name = "generalCaseToolStripMenuItem";
-            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             generalCaseToolStripMenuItem.Text = "General Case";
             // 
             // dailyInsigtsToolStripMenuItem
             // 
             dailyInsigtsToolStripMenuItem.Name = "dailyInsigtsToolStripMenuItem";
-            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             dailyInsigtsToolStripMenuItem.Text = "Daily Analysis";
             dailyInsigtsToolStripMenuItem.Click += dailyInsigtsToolStripMenuItem_Click;
             // 
             // nextQuarterToolStripMenuItem
             // 
             nextQuarterToolStripMenuItem.Name = "nextQuarterToolStripMenuItem";
-            nextQuarterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            nextQuarterToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             nextQuarterToolStripMenuItem.Text = "Quater Year";
             // 
             // nextHalfYearToolStripMenuItem
             // 
             nextHalfYearToolStripMenuItem.Name = "nextHalfYearToolStripMenuItem";
-            nextHalfYearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            nextHalfYearToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             nextHalfYearToolStripMenuItem.Text = "Half-Year";
             // 
             // fullYearForecastToolStripMenuItem
             // 
             fullYearForecastToolStripMenuItem.Name = "fullYearForecastToolStripMenuItem";
-            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             fullYearForecastToolStripMenuItem.Text = "Full Year";
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            toolStripMenuItem1.Size = new System.Drawing.Size(143, 6);
             // 
             // toolsToolStripMenuItem
             // 
@@ -378,9 +377,9 @@ namespace WinFormsApp1
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.otherAssets;
-            pictureBox1.Location = new System.Drawing.Point(370, 3);
+            pictureBox1.Location = new System.Drawing.Point(370, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new System.Drawing.Size(89, 77);
+            pictureBox1.Size = new System.Drawing.Size(89, 88);
             pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 17;
             pictureBox1.TabStop = false;
@@ -399,7 +398,6 @@ namespace WinFormsApp1
             // panel1
             // 
             panel1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            panel1.Controls.Add(nNovChildWindowHost1);
             panel1.Controls.Add(labelGridAssets);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -407,13 +405,6 @@ namespace WinFormsApp1
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(1264, 91);
             panel1.TabIndex = 19;
-            // 
-            // nNovChildWindowHost1
-            // 
-            nNovChildWindowHost1.Location = new System.Drawing.Point(298, 70);
-            nNovChildWindowHost1.Name = "nNovChildWindowHost1";
-            nNovChildWindowHost1.Size = new System.Drawing.Size(75, 23);
-            nNovChildWindowHost1.TabIndex = 18;
             // 
             // labelFactName
             // 

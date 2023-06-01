@@ -186,8 +186,9 @@ namespace WinFormsApp1
 
             //default additions
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 15);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 25);
             Cache.genListin.Add(s);
+            Cache.genListOut.Add(Cache.houseModels[0]);
         }
 
         private void HouseModelAdder(object sender, EventArgs e)
@@ -406,7 +407,7 @@ namespace WinFormsApp1
             }
 
             //The main factory of the application
-            //public static DairyFactory mainFactory = new DairyFactory("Default Factory");
+            //public static FactoryModel mainFactory = new FactoryModel("Default Factory");
             Console.WriteLine("Factory: ");
             Console.WriteLine(Cache.mainFactory.ToString());
         }

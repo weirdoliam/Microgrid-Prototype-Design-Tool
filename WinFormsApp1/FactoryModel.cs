@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace WinFormsApp1
 {
-    class DairyFactory : EnergyOut
+    class FactoryModel : EnergyOut
     {
 
         // Properties
         public string Name { get; set; }
         public List<Tuple<string, double>> Machines { get => machines; }
         public Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> MachineTimeRanges { get => machineTimeRanges; }
+        public bool UsesCompLoad { get => usesCompLoad; }
+        public string CompLoadPath { get => compLoadPath; }
 
-        
 
         //variable loads per item. 
         //Flexibility in how a load is defined
@@ -22,27 +24,34 @@ namespace WinFormsApp1
         private Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges = new Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>>();
 
         //Variable load, and associated bool
-        private List<double> predefinedLoad = new List<double>();
+        private List<double> genericLoad = new List<double>();
         private bool usesPreLoad = false;
 
+        //Comprehensive load, and associated bool
+        //Path to data
+        private string compLoadPath = null;
+        //date, data (in half-hour intervals)
+        private Dictionary<string, double[]> comprehensiveLoad = new Dictionary<string,double[]>();
+        private bool usesCompLoad = false;
+
         // Constructor
-        public DairyFactory(string name)
+        public FactoryModel(string name)
         {
             Name = name;
             machines = new List<Tuple<string, double>>();
             machineTimeRanges = new Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>>();
         }
 
-        public DairyFactory(string name, List<Tuple<string, double>> machines, Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges, List<double> load, bool preLoaded) : this(name)
+        public FactoryModel(string name, List<Tuple<string, double>> machines, Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges, List<double> load, bool preLoaded) : this(name)
         {
             this.machines = machines;
             this.machineTimeRanges = machineTimeRanges;
-            this.predefinedLoad = load;
+            this.genericLoad = load;
             this.usesPreLoad = preLoaded;
         }
 
-        public DairyFactory Clone() {
-            return new DairyFactory(this.Name, this.machines, this.MachineTimeRanges, this.predefinedLoad, this.usesPreLoad);
+        public FactoryModel Clone() {
+            return new FactoryModel(Name, machines, MachineTimeRanges, genericLoad, usesPreLoad);
         }
 
 
@@ -76,11 +85,134 @@ namespace WinFormsApp1
             return hourlyPowerConsumption;
         }
 
+        public List<double> GetHourlyConsumptionList(DateTime date)
+        {
+            List<double> data = new List<double>();
+            if (!usesCompLoad) return null;
+            //we ignore year in date
+            string d = date.Day + "";
+            string m = date.Month + "";
+            //Format appropriately
+            if (date.Day < 10)
+            {
+                d = "0" + d;
+            }
+            if(date.Month < 10) 
+            {
+                m = "0" + m;
+            }
+            string monthDay = $"{m}_{d}";
+            if (comprehensiveLoad.ContainsKey(monthDay))
+            {
+                double[] arrayData = comprehensiveLoad[monthDay];
+                foreach (int i in arrayData)
+                {
+                    Console.WriteLine("Adding data we already have ouptut list: " + i);
+                    data.Add(i);
+                }
+                return data;
+            }
+            else
+            {
+                bool success = readInDay(monthDay);
+                if (!success) return null; 
+
+                double[] arrayData = comprehensiveLoad[monthDay];
+                foreach (int i in arrayData)
+                {
+                    Console.WriteLine("Adding to ouptut list: " + i);
+                    data.Add(i);
+                }
+                return data;
+            }                                                             
+        }
+
+        private bool readInDay(string monthDay)
+        {
+            Console.WriteLine($"Reading in Day: {monthDay}");
+            //identify file existence
+            DirectoryInfo directory = new DirectoryInfo(compLoadPath);
+            bool found = false;
+            string pathToFile = null;
+            // Check if the directory exists
+            if (directory.Exists)
+            {
+                // Get all the files in the directory
+                FileInfo[] files = directory.GetFiles();
+
+                // Iterate over the files and check if any file name contains the search string
+                foreach (FileInfo file in files)
+                {
+                    if (file.Name.Contains(monthDay))
+                    {
+                        found = true; // File with the search string exists
+                        pathToFile = file.FullName;
+                        Console.WriteLine("Location:\n" + pathToFile);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failure - Directory doesn't exist");
+                return false;
+            }
+            if (!found)
+            {
+                Console.WriteLine("Failure - file with contents not found");
+                return false;
+            }
+
+            //setup array
+            double[] powerReadings = new double[288]; // 288 readings for 24 hours (5-minute intervals)
+            // Populate the powerReadings array with zeros initially
+            for (int i = 0; i < powerReadings.Length; i++)
+            {
+                powerReadings[i] = 0.0;
+            }
+
+            //read in data
+            using(var reader = new StreamReader(pathToFile)) {
+                //skip the header
+                int index = 0;
+                reader.ReadLine();
+                while(!reader.EndOfStream) {
+                    //get the value all at once
+                    try
+                    {
+                        string datum = reader.ReadLine().Split(',')[3];
+                        Console.WriteLine("Read Datum: " + datum);
+                        powerReadings[index] = double.Parse(datum);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Issue reading data: " + ex.Message);
+                    }
+                    index++;
+                }
+            }
+
+            // Create an array to store the aggregated 30-minute power consumption
+            double[] aggregatedPower = new double[48]; // 48 intervals for 24 hours (30-minute intervals)
+
+            // Iterate over the 5-minute readings and aggregate them into 30-minute intervals
+            for (int i = 0; i < 288; i++)
+            {
+                int intervalIndex = i / 6; // Divide the index by 6 to get the corresponding 30-minute interval index
+
+                // Add the 5-minute reading to the corresponding 30-minute interval
+                aggregatedPower[intervalIndex] += powerReadings[i];
+            }
+            //save the aggregatedPower
+            comprehensiveLoad[monthDay] = aggregatedPower;
+            Console.WriteLine("Success!");
+            return true;
+        }
+
         public List<double> GetHourlyConsumptionList()
         {
             if (usesPreLoad)
             {
-                return predefinedLoad;
+                return genericLoad;
             }
             try
             {
@@ -200,9 +332,23 @@ namespace WinFormsApp1
             }
         }
 
+        //The following code handles comprehensive loads
+        public void setComprehensiveLoad(string pathToLoad)
+        {
+            compLoadPath = pathToLoad;
+            usesCompLoad = true;
+            usesPreLoad = false;
+        }
+
+        public void clearComprehensiveLoad()
+        {
+            compLoadPath = null;
+            usesCompLoad = false;
+        }
+
         public override string getArrayDescription()
         {
-            return $"Dairy Factory, {Name}";
+            return $"Factory Model, {Name}";
         }
 
         public override int getDailyConsumption()
@@ -222,13 +368,14 @@ namespace WinFormsApp1
 
         public void setVariableLoad(List<double> load)
         {
-            predefinedLoad = load;
+            genericLoad = load;
             usesPreLoad = true;
+            usesCompLoad = false;
         }
 
         public void clearVariableLoad()
         {
-            predefinedLoad = new List<double>();
+            genericLoad = new List<double>();
             usesPreLoad = false;
         }
 
