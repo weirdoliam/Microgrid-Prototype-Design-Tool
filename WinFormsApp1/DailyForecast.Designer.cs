@@ -91,9 +91,9 @@
             canvas.Controls.Add(labelSunrise);
             canvas.Controls.Add(labelSunset);
             canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            canvas.Location = new System.Drawing.Point(43, 19);
+            canvas.Location = new System.Drawing.Point(53, 19);
             canvas.Name = "canvas";
-            canvas.Size = new System.Drawing.Size(995, 367);
+            canvas.Size = new System.Drawing.Size(985, 367);
             canvas.TabIndex = 4;
             canvas.Paint += panel1_Paint;
             canvas.MouseClick += canvas_MouseClick;
@@ -140,7 +140,7 @@
             labelPanel.Dock = System.Windows.Forms.DockStyle.Left;
             labelPanel.Location = new System.Drawing.Point(3, 19);
             labelPanel.Name = "labelPanel";
-            labelPanel.Size = new System.Drawing.Size(40, 367);
+            labelPanel.Size = new System.Drawing.Size(50, 367);
             labelPanel.TabIndex = 11;
             labelPanel.Paint += panel1_Paint_1;
             // 
