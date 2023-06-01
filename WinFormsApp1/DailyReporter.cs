@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace WinFormsApp1
@@ -42,11 +43,31 @@ namespace WinFormsApp1
                 if (hour < 10) currTime = "0" + currTime;
             }
 
+            //Overall Gen done. It wokrs. No complaints
+
 
             //from all consumers, calculate the consumption load
-            //factory load added separately.
-            List<double> factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
+            List<int> overallConsumption = new List<int>();
 
+
+            //factory load added separately.
+            List<double> factoryLoad = Cache.mainFactory.GetHourlyConsumptionList(date);
+            if (factoryLoad == null) factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
+
+            List<int> factoryInts = new List<int>();
+            foreach (double d in factoryLoad) factoryInts.Add((int)d);
+
+            List<List<int>> lists = new List<List<int>>();
+            foreach (EnergyOut consumer in Cache.genListOut)
+            {
+                if (consumer is HouseModel)
+                {
+                    HouseModel house = (HouseModel)consumer;
+                    lists.Add(house.getDailyData(parsedDate));
+                }
+            }
+            List<int> resultList = lists.Aggregate((acc, curr) => acc.Zip(curr, (a, b) => a + b).ToList());
+            overallConsumption = resultList.Zip(factoryInts, (a, b) => a + b).ToList();
             //for all batteries and storage, calculate the state of power storage through the day, based on current supply vs current demand
 
 
@@ -54,7 +75,7 @@ namespace WinFormsApp1
 
 
             //return report 
-            return overallGen;
+            return overallConsumption;
         }
     }
 }

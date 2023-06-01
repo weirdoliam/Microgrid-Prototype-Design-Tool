@@ -172,6 +172,7 @@ namespace WinFormsApp1
                 for (int j = 0; j < repeats; j++)
                 {
                     if (currGen == null) break;
+                    
                     currTotal += currGen.getHalfHourlyGeneration(date + $" {currTime}", i);
                 }
                 genHeights.Add(currTotal);
