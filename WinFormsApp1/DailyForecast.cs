@@ -46,15 +46,11 @@ namespace WinFormsApp1
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
             if (Cache.mainFactory.UsesCompLoad)
             {
-                List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
-                if (factoryHeights != null)
-                {
-                    Console.WriteLine($"Recieved factoryHeights OK. Sample:{factoryHeights[5]}, count: {factoryHeights.Count}");
-                }
+                factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
             }
             else
             {
-                List<double> factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+                factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
             }
         }
 
@@ -63,6 +59,8 @@ namespace WinFormsApp1
         {
             listBoxModelHouses.Items.Clear();
             listBoxGenerators.Items.Clear();
+            //add the factory :)
+            listBoxModelHouses.Items.Add($"Factory: {Cache.mainFactory.Name}");
             foreach (EnergyOut h in Cache.genListOut)
             {
                 listBoxModelHouses.Items.Add(h.ToString());
@@ -84,16 +82,33 @@ namespace WinFormsApp1
 
         private void listBoxModelHouses_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (Cache.genListOut[listBoxModelHouses.SelectedIndex] is HouseModel)
+            int index = listBoxModelHouses.SelectedIndex;
+            if (index > 0)
             {
-                currHouseIndex = listBoxModelHouses.SelectedIndex;
-                currHouse = (HouseModel)Cache.genListOut[listBoxModelHouses.SelectedIndex];
-                List<int> dailyData = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
-                canvas.Refresh();
-                labelPanel.Refresh();
+                index -= 1;
+                overlayFactoryLoad = false;
+                if (Cache.genListOut[index] is HouseModel)
+                {
+                    currHouseIndex = listBoxModelHouses.SelectedIndex - 1;
+                    currHouse = (HouseModel)Cache.genListOut[currHouseIndex];
+                    homeHeights = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
+                }
             }
-
+            else
+            {
+                //use factory data
+                overlayFactoryLoad = true;
+                if (Cache.mainFactory.UsesCompLoad)
+                {
+                    factoryHeights = Cache.mainFactory.GetHourlyConsumptionList(Cache.currDay.getSunrise());
+                }
+                else
+                {
+                    factoryHeights = Cache.mainFactory.GetHourlyConsumptionList();
+                }
+                homeHeights = null;
+            }
+            recalculateGenTotals();
         }
 
         private void listBoxGenerators_SelectedIndexChanged(object sender, EventArgs e)
@@ -173,8 +188,7 @@ namespace WinFormsApp1
             }
 
             //average heights
-            if (listBoxModelHouses.Items.Count == 0) homeHeights = null;
-            else homeHeights = currHouse.getDailyData(Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year);
+            //Home heights done elsewhere
 
             List<int> contenders = new List<int>();
             //*
@@ -207,10 +221,6 @@ namespace WinFormsApp1
             int consume = 0;
             int gen = 0;
 
-            if (currHouse == null)
-            {
-                return;
-            }
             //graph detail
 
             //draw the sunlight and nighttime graphics if checked (this goes under everything)
@@ -266,7 +276,7 @@ namespace WinFormsApp1
             //if (localmaxVal < 2000) maxVal = 2000;
             if (localmaxVal > maxVal) maxVal += 500;
 
-            if (listBoxModelHouses.SelectedIndex != -1)
+            if (listBoxModelHouses.SelectedIndex > 0)
             {
                 //display what is in heights
                 if (homeHeights != null)
@@ -313,7 +323,7 @@ namespace WinFormsApp1
                 }
                 else
                 {
-                    Console.WriteLine($"Recieved factoryHeights OK. Sample:{factoryHeights[5]}, count: {factoryHeights.Count}");
+                    //Console.WriteLine($"Recieved factoryHeights OK. Sample:{factoryHeights[5]}, count: {factoryHeights.Count}");
                     //convert to ints
                     List<int> factoryInts = new List<int>();
 
@@ -455,14 +465,6 @@ namespace WinFormsApp1
                 labelPanel.Refresh();
                 doDrawing();
             }
-        }
-
-        private void checkBoxFactoyLoad_CheckedChanged(object sender, EventArgs e)
-        {
-            overlayFactoryLoad = checkBoxFactoyLoad.Checked;
-            recalculateGenTotals();
-            canvas.Refresh();
-            labelPanel.Refresh();
         }
 
         private void canvas_MouseClick(object sender, MouseEventArgs e)

@@ -43,7 +43,6 @@
             checkBoxArrayTotal = new System.Windows.Forms.CheckBox();
             labelMissingData = new System.Windows.Forms.Label();
             updateTimer = new System.Windows.Forms.Timer(components);
-            checkBoxFactoyLoad = new System.Windows.Forms.CheckBox();
             label1 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             labelConsume = new System.Windows.Forms.Label();
@@ -147,7 +146,7 @@
             // checkBoxSmooth
             // 
             checkBoxSmooth.AutoSize = true;
-            checkBoxSmooth.Location = new System.Drawing.Point(11, 112);
+            checkBoxSmooth.Location = new System.Drawing.Point(11, 87);
             checkBoxSmooth.Name = "checkBoxSmooth";
             checkBoxSmooth.Size = new System.Drawing.Size(102, 19);
             checkBoxSmooth.TabIndex = 12;
@@ -201,17 +200,6 @@
             updateTimer.Enabled = true;
             updateTimer.Interval = 1000;
             updateTimer.Tick += updateTimer_Tick;
-            // 
-            // checkBoxFactoyLoad
-            // 
-            checkBoxFactoyLoad.AutoSize = true;
-            checkBoxFactoyLoad.Location = new System.Drawing.Point(11, 87);
-            checkBoxFactoyLoad.Name = "checkBoxFactoyLoad";
-            checkBoxFactoyLoad.Size = new System.Drawing.Size(182, 19);
-            checkBoxFactoyLoad.TabIndex = 30;
-            checkBoxFactoyLoad.Text = "Overlay Factory Load (Yellow)";
-            checkBoxFactoyLoad.UseVisualStyleBackColor = true;
-            checkBoxFactoyLoad.CheckedChanged += checkBoxFactoyLoad_CheckedChanged;
             // 
             // label1
             // 
@@ -287,7 +275,7 @@
             // checkBoxDaylight
             // 
             checkBoxDaylight.AutoSize = true;
-            checkBoxDaylight.Location = new System.Drawing.Point(11, 137);
+            checkBoxDaylight.Location = new System.Drawing.Point(11, 112);
             checkBoxDaylight.Name = "checkBoxDaylight";
             checkBoxDaylight.Size = new System.Drawing.Size(104, 19);
             checkBoxDaylight.TabIndex = 37;
@@ -306,7 +294,6 @@
             groupBox1.Controls.Add(labelGenerate);
             groupBox1.Controls.Add(checkBoxArrayTotal);
             groupBox1.Controls.Add(labelConsume);
-            groupBox1.Controls.Add(checkBoxFactoyLoad);
             groupBox1.Controls.Add(label13);
             groupBox1.Controls.Add(listBoxGenerators);
             groupBox1.Controls.Add(label1);
@@ -324,7 +311,7 @@
             // checkBoxAssBat
             // 
             checkBoxAssBat.AutoSize = true;
-            checkBoxAssBat.Location = new System.Drawing.Point(11, 162);
+            checkBoxAssBat.Location = new System.Drawing.Point(11, 137);
             checkBoxAssBat.Name = "checkBoxAssBat";
             checkBoxAssBat.Size = new System.Drawing.Size(203, 19);
             checkBoxAssBat.TabIndex = 38;
@@ -381,7 +368,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Timer updateTimer;
-        private System.Windows.Forms.CheckBox checkBoxFactoyLoad;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label labelConsume;

@@ -37,11 +37,11 @@
             buttonApply = new System.Windows.Forms.Button();
             buttonCancel = new System.Windows.Forms.Button();
             panel1 = new System.Windows.Forms.Panel();
-            buttonClearImport = new System.Windows.Forms.Button();
-            buttonPreLoad = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             label3 = new System.Windows.Forms.Label();
             listBoxMachineTimes = new System.Windows.Forms.ListBox();
+            buttonClearImport = new System.Windows.Forms.Button();
+            buttonPreLoad = new System.Windows.Forms.Button();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             buttonComp = new System.Windows.Forms.Button();
             label4 = new System.Windows.Forms.Label();
@@ -56,19 +56,17 @@
             panelParticulars.Controls.Add(buttonNewItem);
             panelParticulars.Controls.Add(label2);
             panelParticulars.Controls.Add(listBoxMachines);
-            panelParticulars.Controls.Add(textBoxName);
-            panelParticulars.Controls.Add(label1);
-            panelParticulars.Location = new System.Drawing.Point(7, 12);
+            panelParticulars.Location = new System.Drawing.Point(7, 39);
             panelParticulars.Name = "panelParticulars";
-            panelParticulars.Size = new System.Drawing.Size(267, 265);
+            panelParticulars.Size = new System.Drawing.Size(265, 238);
             panelParticulars.TabIndex = 0;
             // 
             // buttonNewItem
             // 
             buttonNewItem.Dock = System.Windows.Forms.DockStyle.Bottom;
-            buttonNewItem.Location = new System.Drawing.Point(0, 230);
+            buttonNewItem.Location = new System.Drawing.Point(0, 203);
             buttonNewItem.Name = "buttonNewItem";
-            buttonNewItem.Size = new System.Drawing.Size(267, 35);
+            buttonNewItem.Size = new System.Drawing.Size(265, 35);
             buttonNewItem.TabIndex = 3;
             buttonNewItem.Text = "New Machine";
             buttonNewItem.UseVisualStyleBackColor = true;
@@ -89,25 +87,25 @@
             listBoxMachines.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             listBoxMachines.FormattingEnabled = true;
             listBoxMachines.ItemHeight = 15;
-            listBoxMachines.Location = new System.Drawing.Point(0, 55);
+            listBoxMachines.Location = new System.Drawing.Point(0, 57);
             listBoxMachines.Name = "listBoxMachines";
-            listBoxMachines.Size = new System.Drawing.Size(264, 169);
+            listBoxMachines.Size = new System.Drawing.Size(261, 154);
             listBoxMachines.TabIndex = 2;
             listBoxMachines.SelectedIndexChanged += listBoxMachines_SelectedIndexChanged;
             // 
             // textBoxName
             // 
             textBoxName.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            textBoxName.Location = new System.Drawing.Point(69, 3);
+            textBoxName.Location = new System.Drawing.Point(48, 6);
             textBoxName.Name = "textBoxName";
-            textBoxName.Size = new System.Drawing.Size(193, 23);
+            textBoxName.Size = new System.Drawing.Size(224, 23);
             textBoxName.TabIndex = 1;
             // 
             // label1
             // 
             label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(3, 6);
+            label1.Location = new System.Drawing.Point(7, 9);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(45, 15);
             label1.TabIndex = 0;
@@ -127,7 +125,7 @@
             // buttonCancel
             // 
             buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            buttonCancel.Location = new System.Drawing.Point(174, 536);
+            buttonCancel.Location = new System.Drawing.Point(442, 536);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new System.Drawing.Size(100, 23);
             buttonCancel.TabIndex = 2;
@@ -143,37 +141,15 @@
             panel1.Controls.Add(listBoxMachineTimes);
             panel1.Location = new System.Drawing.Point(7, 283);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(266, 199);
+            panel1.Size = new System.Drawing.Size(265, 199);
             panel1.TabIndex = 3;
-            // 
-            // buttonClearImport
-            // 
-            buttonClearImport.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            buttonClearImport.Location = new System.Drawing.Point(202, 507);
-            buttonClearImport.Name = "buttonClearImport";
-            buttonClearImport.Size = new System.Drawing.Size(70, 23);
-            buttonClearImport.TabIndex = 6;
-            buttonClearImport.Text = "Clear";
-            buttonClearImport.UseVisualStyleBackColor = true;
-            buttonClearImport.Click += buttonClearImport_Click;
-            // 
-            // buttonPreLoad
-            // 
-            buttonPreLoad.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            buttonPreLoad.Location = new System.Drawing.Point(7, 507);
-            buttonPreLoad.Name = "buttonPreLoad";
-            buttonPreLoad.Size = new System.Drawing.Size(70, 23);
-            buttonPreLoad.TabIndex = 5;
-            buttonPreLoad.Text = "Generic";
-            buttonPreLoad.UseVisualStyleBackColor = true;
-            buttonPreLoad.Click += buttonPreLoad_Click;
             // 
             // button1
             // 
             button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             button1.Location = new System.Drawing.Point(1, 166);
             button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(264, 29);
+            button1.Size = new System.Drawing.Size(261, 29);
             button1.TabIndex = 4;
             button1.Text = "New Time Range";
             button1.UseVisualStyleBackColor = true;
@@ -196,8 +172,30 @@
             listBoxMachineTimes.ItemHeight = 15;
             listBoxMachineTimes.Location = new System.Drawing.Point(1, 21);
             listBoxMachineTimes.Name = "listBoxMachineTimes";
-            listBoxMachineTimes.Size = new System.Drawing.Size(265, 139);
+            listBoxMachineTimes.Size = new System.Drawing.Size(261, 139);
             listBoxMachineTimes.TabIndex = 4;
+            // 
+            // buttonClearImport
+            // 
+            buttonClearImport.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonClearImport.Location = new System.Drawing.Point(83, 507);
+            buttonClearImport.Name = "buttonClearImport";
+            buttonClearImport.Size = new System.Drawing.Size(100, 23);
+            buttonClearImport.TabIndex = 6;
+            buttonClearImport.Text = "Clear Load";
+            buttonClearImport.UseVisualStyleBackColor = true;
+            buttonClearImport.Click += buttonClearImport_Click;
+            // 
+            // buttonPreLoad
+            // 
+            buttonPreLoad.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonPreLoad.Location = new System.Drawing.Point(7, 507);
+            buttonPreLoad.Name = "buttonPreLoad";
+            buttonPreLoad.Size = new System.Drawing.Size(70, 23);
+            buttonPreLoad.TabIndex = 5;
+            buttonPreLoad.Text = "Generic";
+            buttonPreLoad.UseVisualStyleBackColor = true;
+            buttonPreLoad.Click += buttonPreLoad_Click;
             // 
             // openFileDialog1
             // 
@@ -206,7 +204,7 @@
             // buttonComp
             // 
             buttonComp.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            buttonComp.Location = new System.Drawing.Point(83, 507);
+            buttonComp.Location = new System.Drawing.Point(367, 5);
             buttonComp.Name = "buttonComp";
             buttonComp.Size = new System.Drawing.Size(113, 23);
             buttonComp.TabIndex = 7;
@@ -228,11 +226,13 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(282, 562);
+            ClientSize = new System.Drawing.Size(550, 562);
             Controls.Add(label4);
             Controls.Add(buttonComp);
             Controls.Add(buttonClearImport);
+            Controls.Add(textBoxName);
             Controls.Add(panel1);
+            Controls.Add(label1);
             Controls.Add(buttonPreLoad);
             Controls.Add(buttonCancel);
             Controls.Add(buttonApply);
