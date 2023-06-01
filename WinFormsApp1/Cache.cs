@@ -22,7 +22,7 @@ namespace WinFormsApp1
         public static List<HouseModel> houseModels = new List<HouseModel>();
 
         //The main factory of the application
-        public static DairyFactory mainFactory = new DairyFactory("Default Factory");
+        public static FactoryModel mainFactory = new FactoryModel("Default Factory");
 
         //weather
         //Looks like there's nothing here... yet
