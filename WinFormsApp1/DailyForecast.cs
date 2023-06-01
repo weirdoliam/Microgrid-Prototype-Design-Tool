@@ -171,6 +171,7 @@ namespace WinFormsApp1
                 currTotal = 0;
                 for (int j = 0; j < repeats; j++)
                 {
+                    if (currGen == null) break;
                     currTotal += currGen.getHalfHourlyGeneration(date + $" {currTime}", i);
                     //currTotal += currGen.getHalfHourlyGeneration(date + " " + currTime, i);
                 }
@@ -246,6 +247,7 @@ namespace WinFormsApp1
             if (maxVal > 10000) scale = Math.Floor(maxVal / 100.0) * 10;
 
             if (maxVal > 1000000) scale = Math.Floor(maxVal / 100000.0) * 10000;
+            if (maxVal == 0) maxVal = 1000;
 
             int wh = canvas.Height - (int)(canvas.Height * 0.1);
             for (int i = 0; i <= maxVal; i++)

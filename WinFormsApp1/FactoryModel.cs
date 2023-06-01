@@ -13,7 +13,7 @@ namespace WinFormsApp1
         public List<Tuple<string, double>> Machines { get => machines; }
         public Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> MachineTimeRanges { get => machineTimeRanges; }
         public bool UsesCompLoad { get => usesCompLoad; }
-
+        public string CompLoadPath { get => compLoadPath; }
 
 
         //variable loads per item. 

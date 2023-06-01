@@ -63,6 +63,18 @@
   <metadata name="folderBrowserDialogMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>166, 22</value>
   </metadata>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>Comprehensive Load Usage:
+If you have data available, you may read it into the application. Data is read in ratio 1:1 for file vs day.
+Naming convention: yyyy_MM_DD_total.csv.
+
+Data layout within the csv should be:
+Date, data,P_Avg[W],Total Electricty Usage
+
+Columns 1 and 4 are mainly used, so 3 and 4 can be populated with 0s if necessary
+
+Data coverage is displayed below.</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>49</value>
   </metadata>
