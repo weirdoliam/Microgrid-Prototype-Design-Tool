@@ -416,6 +416,13 @@ namespace WinFormsApp1
         {
             //We want to read a file in and replace the arrays in cache
         }
+
+        private void dayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Open form and stuff to do daily thingy :))
+            DailyReportViewer d = new DailyReportViewer();
+            d.ShowDialog();
+        }
     }
 }
 

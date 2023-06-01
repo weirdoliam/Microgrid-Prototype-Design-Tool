@@ -173,7 +173,6 @@ namespace WinFormsApp1
                 {
                     if (currGen == null) break;
                     currTotal += currGen.getHalfHourlyGeneration(date + $" {currTime}", i);
-                    //currTotal += currGen.getHalfHourlyGeneration(date + " " + currTime, i);
                 }
                 genHeights.Add(currTotal);
                 minute += 30;

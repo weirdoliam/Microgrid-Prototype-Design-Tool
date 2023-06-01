@@ -68,7 +68,7 @@ namespace WinFormsApp1
             DateTime currentDateTime = DateTime.Parse(currTime);
 
             //hardcoded - generally around 5 hours till we're cooking with GAS for solar panels
-            int hoursTillEfficiency = 7;
+            int hoursTillEfficiency = 5;
             int secconds = hoursTillEfficiency * 3600;
 
             //time to start counting down to sunset instead of up after sunrise
