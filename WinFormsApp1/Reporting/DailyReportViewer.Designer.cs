@@ -39,6 +39,7 @@
             mainCanvas.Size = new System.Drawing.Size(800, 450);
             mainCanvas.TabIndex = 0;
             mainCanvas.Paint += mainCanvas_Paint;
+            mainCanvas.Resize += mainCanvas_Resize;
             // 
             // DailyReportViewer
             // 

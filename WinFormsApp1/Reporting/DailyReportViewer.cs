@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.Reporting;
 
 namespace WinFormsApp1
 {
@@ -14,24 +15,35 @@ namespace WinFormsApp1
     public partial class DailyReportViewer : Form
     {
         const int PADDING = 5;
+        int maxVal = 1;
+        Graphics g;
+        DayReport currData = null;
 
         public DailyReportViewer()
         {
             InitializeComponent();
-
             //once form is initialized, call the main display report method
-            process_report();
+            g = mainCanvas.CreateGraphics();
+            mainCanvas.Invalidate();
         }
 
         private void process_report()
         {
-            put_data(DailyReporter.GenerateReport(Cache.currDay.getSunrise()), mainCanvas, Color.Red, 1);
+            if (currData == null)
+            {
+                DayReport todaysData = DailyReporter.GenerateReport(Cache.currDay.getSunrise());
+                maxVal = todaysData.Max();
+                currData = todaysData;                
+            }
+            //Draw!
+            put_data(currData.Consumption, mainCanvas, Color.Red, 4);
+            put_data(currData.Generation, mainCanvas, Color.Green, 4);
+            put_data(currData.BatteryCharge, mainCanvas, Color.Blue, 2);
+            put_data(currData.GridNeeds, mainCanvas, Color.Yellow, 2);
         }
 
         public void put_data(List<int> heights, Panel targetCanvas, Color lineColor, int width)
         {
-            Graphics g = targetCanvas.CreateGraphics();
-            int maxVal = heights.Max();
             if (maxVal == 0) maxVal = 1;
             Pen pen = new Pen(lineColor);
             //ok now display!
@@ -60,7 +72,14 @@ namespace WinFormsApp1
 
         private void mainCanvas_Paint(object sender, PaintEventArgs e)
         {
+            g = mainCanvas.CreateGraphics();
+            g.Clear(Color.White);
             process_report();
+        }
+
+        private void mainCanvas_Resize(object sender, EventArgs e)
+        {
+            mainCanvas.Invalidate();
         }
     }
 }

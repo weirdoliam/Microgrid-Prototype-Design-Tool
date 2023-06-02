@@ -6,15 +6,15 @@ using System.Linq;
 using System.Text;
 using WinFormsApp1.EnergyStorage;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Reporting
 {
     internal static class DailyReporter
     {
 
 
         // Calculates entire content, from scratch Will break it down once it's created
-        
-        public static List<int> GenerateReport(DateTime date)
+
+        public static DayReport GenerateReport(DateTime date)
         {
             //From all generators, calculate the generation load
             List<int> overallGen = new List<int>();
@@ -23,7 +23,7 @@ namespace WinFormsApp1
             string currTime = "00:00";
             int hour = 0;
             int minute = 0;
-            
+
             for (int i = 0; i < 48; i++)
             {
                 int currTotal = 0;
@@ -33,7 +33,7 @@ namespace WinFormsApp1
                 }
 
                 overallGen.Add(currTotal);
-                
+
                 minute += 30;
 
                 if (minute == 60)
@@ -52,10 +52,16 @@ namespace WinFormsApp1
             //from all consumers, calculate the consumption load
             List<int> overallConsumption = new List<int>();
 
-
+            List<double> factoryLoad = new List<double>();
             //factory load added separately.
-            List<double> factoryLoad = Cache.mainFactory.GetHourlyConsumptionList(date);
-            if (factoryLoad == null) factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
+            if (Cache.mainFactory.UsesCompLoad)
+            {
+                factoryLoad = Cache.mainFactory.GetHourlyConsumptionList(date);
+                if (factoryLoad == null) factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
+            }
+            else {
+                factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
+            }
 
             List<int> factoryInts = new List<int>();
             foreach (double d in factoryLoad) factoryInts.Add((int)d);
@@ -87,18 +93,20 @@ namespace WinFormsApp1
                 }
             }
             LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery");
-            
+
             //Generate a list of state of charge throughout the day
             List<int> storageCharge = new List<int>();
+            //Generate a list of times when the grid requires power from the grid, and when it gives to the grid
+            List<int> gridNeeds = new List<int>();
+
             //For times of demand when storage is empty, take power from grid instead (therefore adding more carbon emissions, or cost)
             int currDemand, currSupply, net = 0;
             double giveToGrid = 0;
             double needFromGrid = 0;
-            double excess = 0;
             double recievedCharge, currCharge = 0;
             decimal todaysCostFromGrid = 0;
-            
-            for(int i = 0; i < 48; i++)
+
+            for (int i = 0; i < 48; i++)
             {
                 currDemand = overallConsumption[i];
                 currSupply = overallGen[i];
@@ -123,14 +131,14 @@ namespace WinFormsApp1
                 }
                 currCharge = reportBattry.ChargeLevel;
                 //Console.WriteLine($"Current Charge after calculations: {currCharge}");
-                excess = excess + (needFromGrid - giveToGrid);
+                gridNeeds.Add((int)(needFromGrid - giveToGrid));
                 storageCharge.Add((int)currCharge);
             }
             // Hamilton	21.2c
-            todaysCostFromGrid = (decimal)(excess/1000 * 0.212);
+            todaysCostFromGrid = (decimal)(gridNeeds.Sum() / 1000 * 0.212);
             Console.WriteLine($"${todaysCostFromGrid.Round(2)}");
             //return report 
-            return storageCharge;
+            return new DayReport(overallConsumption,overallGen,storageCharge, gridNeeds);
         }
     }
 }

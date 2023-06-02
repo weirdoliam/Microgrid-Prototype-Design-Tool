@@ -187,7 +187,7 @@ namespace WinFormsApp1
 
             //default additions
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 25);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 1);
             Cache.genListin.Add(s);
             Cache.genListOut.Add(Cache.houseModels[0]);
         }
