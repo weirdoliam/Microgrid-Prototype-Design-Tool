@@ -44,14 +44,17 @@ namespace WinFormsApp1
             consumptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             simpleHousesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             houseModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            forecastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            generalCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            dailyInsigtsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            fullYearForecastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             factoryConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             weatherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            forecastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            generalCaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            dailyInsigtsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            overallAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            dayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            monthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            fullYearForecastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             labelGridAssets = new System.Windows.Forms.Label();
             groupBoxGeneration = new System.Windows.Forms.GroupBox();
             pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -68,9 +71,8 @@ namespace WinFormsApp1
             pictureBox4 = new System.Windows.Forms.PictureBox();
             panel1 = new System.Windows.Forms.Panel();
             labelFactName = new System.Windows.Forms.Label();
-            monthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            dayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            overallAnalysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            batteryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            lithiumIonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             groupBoxGeneration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -102,32 +104,32 @@ namespace WinFormsApp1
             // 
             saveScenarioToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             saveScenarioToolStripMenuItem.Name = "saveScenarioToolStripMenuItem";
-            saveScenarioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            saveScenarioToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             saveScenarioToolStripMenuItem.Text = "Scenario";
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            loadToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            saveToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            saveAsToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             saveAsToolStripMenuItem.Text = "Save as";
             // 
             // addToolStripMenuItem
             // 
-            addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { generationToolStripMenuItem, specificToolStripMenuItem, consumptionToolStripMenuItem });
+            addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { generationToolStripMenuItem, specificToolStripMenuItem, consumptionToolStripMenuItem, batteryToolStripMenuItem });
             addToolStripMenuItem.Name = "addToolStripMenuItem";
             addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             addToolStripMenuItem.Text = "&Add";
@@ -172,33 +174,6 @@ namespace WinFormsApp1
             houseModelToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             houseModelToolStripMenuItem.Text = "House Model";
             // 
-            // forecastToolStripMenuItem
-            // 
-            forecastToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { generalCaseToolStripMenuItem, dailyInsigtsToolStripMenuItem, overallAnalysisToolStripMenuItem, dayToolStripMenuItem, monthToolStripMenuItem, fullYearForecastToolStripMenuItem });
-            forecastToolStripMenuItem.Name = "forecastToolStripMenuItem";
-            forecastToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            forecastToolStripMenuItem.Text = "&Model";
-            // 
-            // generalCaseToolStripMenuItem
-            // 
-            generalCaseToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
-            generalCaseToolStripMenuItem.Name = "generalCaseToolStripMenuItem";
-            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            generalCaseToolStripMenuItem.Text = "Comparison";
-            // 
-            // dailyInsigtsToolStripMenuItem
-            // 
-            dailyInsigtsToolStripMenuItem.Name = "dailyInsigtsToolStripMenuItem";
-            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            dailyInsigtsToolStripMenuItem.Text = "Daily Analysis";
-            dailyInsigtsToolStripMenuItem.Click += dailyInsigtsToolStripMenuItem_Click;
-            // 
-            // fullYearForecastToolStripMenuItem
-            // 
-            fullYearForecastToolStripMenuItem.Name = "fullYearForecastToolStripMenuItem";
-            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            fullYearForecastToolStripMenuItem.Text = "Full Year";
-            // 
             // toolsToolStripMenuItem
             // 
             toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { factoryConfigurationToolStripMenuItem, weatherToolStripMenuItem, dateToolStripMenuItem });
@@ -226,6 +201,53 @@ namespace WinFormsApp1
             dateToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             dateToolStripMenuItem.Text = "Date";
             dateToolStripMenuItem.Click += dateToolStripMenuItem_Click;
+            // 
+            // forecastToolStripMenuItem
+            // 
+            forecastToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { generalCaseToolStripMenuItem, dailyInsigtsToolStripMenuItem, overallAnalysisToolStripMenuItem, dayToolStripMenuItem, monthToolStripMenuItem, fullYearForecastToolStripMenuItem });
+            forecastToolStripMenuItem.Name = "forecastToolStripMenuItem";
+            forecastToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            forecastToolStripMenuItem.Text = "&Model";
+            // 
+            // generalCaseToolStripMenuItem
+            // 
+            generalCaseToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
+            generalCaseToolStripMenuItem.Name = "generalCaseToolStripMenuItem";
+            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            generalCaseToolStripMenuItem.Text = "Comparison";
+            // 
+            // dailyInsigtsToolStripMenuItem
+            // 
+            dailyInsigtsToolStripMenuItem.Name = "dailyInsigtsToolStripMenuItem";
+            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            dailyInsigtsToolStripMenuItem.Text = "Daily Analysis";
+            dailyInsigtsToolStripMenuItem.Click += dailyInsigtsToolStripMenuItem_Click;
+            // 
+            // overallAnalysisToolStripMenuItem
+            // 
+            overallAnalysisToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
+            overallAnalysisToolStripMenuItem.Name = "overallAnalysisToolStripMenuItem";
+            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            overallAnalysisToolStripMenuItem.Text = "Overall Analysis";
+            // 
+            // dayToolStripMenuItem
+            // 
+            dayToolStripMenuItem.Name = "dayToolStripMenuItem";
+            dayToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            dayToolStripMenuItem.Text = "Day";
+            dayToolStripMenuItem.Click += dayToolStripMenuItem_Click;
+            // 
+            // monthToolStripMenuItem
+            // 
+            monthToolStripMenuItem.Name = "monthToolStripMenuItem";
+            monthToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            monthToolStripMenuItem.Text = "Month";
+            // 
+            // fullYearForecastToolStripMenuItem
+            // 
+            fullYearForecastToolStripMenuItem.Name = "fullYearForecastToolStripMenuItem";
+            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            fullYearForecastToolStripMenuItem.Text = "Full Year";
             // 
             // labelGridAssets
             // 
@@ -400,25 +422,19 @@ namespace WinFormsApp1
             labelFactName.TabIndex = 9;
             labelFactName.Text = "factory_name";
             // 
-            // monthToolStripMenuItem
+            // batteryToolStripMenuItem
             // 
-            monthToolStripMenuItem.Name = "monthToolStripMenuItem";
-            monthToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            monthToolStripMenuItem.Text = "Month";
+            batteryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { lithiumIonToolStripMenuItem });
+            batteryToolStripMenuItem.Name = "batteryToolStripMenuItem";
+            batteryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            batteryToolStripMenuItem.Text = "Battery";
             // 
-            // dayToolStripMenuItem
+            // lithiumIonToolStripMenuItem
             // 
-            dayToolStripMenuItem.Name = "dayToolStripMenuItem";
-            dayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            dayToolStripMenuItem.Text = "Day";
-            dayToolStripMenuItem.Click += dayToolStripMenuItem_Click;
-            // 
-            // overallAnalysisToolStripMenuItem
-            // 
-            overallAnalysisToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
-            overallAnalysisToolStripMenuItem.Name = "overallAnalysisToolStripMenuItem";
-            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            overallAnalysisToolStripMenuItem.Text = "Overall Analysis";
+            lithiumIonToolStripMenuItem.Name = "lithiumIonToolStripMenuItem";
+            lithiumIonToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            lithiumIonToolStripMenuItem.Text = "Lithium Ion";
+            lithiumIonToolStripMenuItem.Click += lithiumIonToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -498,6 +514,8 @@ namespace WinFormsApp1
         private System.Windows.Forms.ToolStripMenuItem overallAnalysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monthToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem batteryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lithiumIonToolStripMenuItem;
     }
 }
 

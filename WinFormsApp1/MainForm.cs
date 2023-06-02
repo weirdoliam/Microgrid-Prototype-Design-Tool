@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using WinFormsApp1.EnergyStorage;
 
 namespace WinFormsApp1
 {
@@ -422,6 +423,14 @@ namespace WinFormsApp1
             //Open form and stuff to do daily thingy :))
             DailyReportViewer d = new DailyReportViewer();
             d.ShowDialog();
+        }
+
+        private void lithiumIonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 300, "Test Battery"));
+            }
         }
     }
 }

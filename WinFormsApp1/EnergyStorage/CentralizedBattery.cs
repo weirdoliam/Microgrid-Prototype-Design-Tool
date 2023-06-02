@@ -28,9 +28,10 @@ namespace WinFormsApp1.EnergyStorage
             return ChargeLevel - old_charge;
         }
 
-        public override void Discharge(double amount)
+        public override double Discharge(double amount)
         {
             ChargeLevel = Math.Max(ChargeLevel - amount, 0);
+            return ChargeLevel;
         }
     }
 }

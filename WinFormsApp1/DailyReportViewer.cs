@@ -32,6 +32,7 @@ namespace WinFormsApp1
         {
             Graphics g = targetCanvas.CreateGraphics();
             int maxVal = heights.Max();
+            if (maxVal == 0) maxVal = 1;
             Pen pen = new Pen(lineColor);
             //ok now display!
             pen.Width = width;
