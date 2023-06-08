@@ -38,7 +38,7 @@ namespace WinFormsApp1
         protected double CutInSpeed { get => cutInSpeed; set => cutInSpeed = value; }
         protected double RatedSpeed { get => ratedSpeed; set => ratedSpeed = value; }
         protected double CutOutSpeed { get => cutOutSpeed; set => cutOutSpeed = value; }
-        protected int Amount { get => amount; set => amount = value; }
+        public int Amount { get => amount; set => amount = value; }
         protected bool IsArray1 { get => isArray1; set => isArray1 = value; }
 
 
@@ -171,26 +171,27 @@ namespace WinFormsApp1
             //only if we have a power curve do we return something
            
 
-                //get nearest .5 below and above
+            //get nearest .5 below and above
 
-                double lower = rounder(windspeed);
-                double upper = rounder(windspeed + 0.5);
+            double lower = rounder(windspeed);
+            double upper = rounder(windspeed + 0.5);
 
-                if (lower > windspeed)
-                {
-                    upper = lower;
-                    lower = rounder(windspeed - 0.5);
-                }
-                if (upper > 35)
-                {
-                    upper = 35;
-                }
-                int upperWattage = curve[upper];
-                int lowerWattage = curve[lower];
-
-                return (int)((upperWattage + lowerWattage) / 2);
-                //*/
-                //return curve[rounder(windspeed)];
+            if (lower > windspeed)
+            {
+                upper = lower;
+                lower = rounder(windspeed - 0.5);
+            }
+            if (upper > 35)
+            {
+                upper = 35;
+            }
+            int upperWattage = curve[upper];
+            int lowerWattage = curve[lower];
+            int val = (int)((upperWattage + lowerWattage) / 2);
+            if (isArray) return val * amount;
+            return val;
+            //*/
+            //return curve[rounder(windspeed)];
           
         }
 

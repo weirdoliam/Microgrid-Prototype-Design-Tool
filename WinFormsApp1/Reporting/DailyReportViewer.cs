@@ -27,6 +27,7 @@ namespace WinFormsApp1
         StringFormat drawFormat = new StringFormat();
         Font drawFont = new Font("Arial", 10);
         string response = "Awaiting Responce...";
+        string sk = "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";
 
         public DailyReportViewer()
         {
@@ -58,8 +59,36 @@ namespace WinFormsApp1
                     "There is not reason to explain what the totals represent, that is implied. " +
                     "Include in your response only the report, and nothing else. Try not to repeat yourself." + prompt;
                 Console.WriteLine(prompt);
-                await sendRequest(prompt);
+                //await sendRequest(prompt);
             }
+
+            //BOXES
+            //Generation Percent
+            labelWindPercent.Text = $"{Math.Round(currData.WindPercent * 100, 2)}%";
+            labelSolarPercent.Text = $"{Math.Round(currData.SolarPercent * 100, 2)}%";
+            //In kWh
+            int cleanEnergy = currData.RetrieveItem("Overall Generation").Item2.Sum() / 1000;
+            int emissionsEnergy = currData.RetrieveItem("Overall Grid Needs").Item2.Sum() / 1000;
+            int consumption = currData.RetrieveItem("Overall Consumption").Item2.Sum() / 1000;
+            //Emissions Factor
+            double emissionEmissonFactor = 0.25;
+            double cleanEmissionFactor = 0;
+            double cleanEnergyProportion = (double)cleanEnergy / (double)(cleanEnergy + emissionsEnergy);
+            double overallEmissionFactor = (cleanEnergyProportion * cleanEmissionFactor) + ((1 - cleanEnergyProportion) * emissionEmissonFactor);
+            double emissions = Math.Round(consumption * overallEmissionFactor, 4);
+            string unit = " kWh";
+            //Labels!!!
+            labelCo2.Text = Math.Min(emissions, 0) + "kgCO2/kWh";
+            labelDirty.Text = Math.Min(emissionsEnergy, 0) + unit;
+            labelRenew.Text = cleanEnergy + unit;
+            labelTotalConsumption.Text = consumption + unit;
+            labelTotalStorage.Text = currData.GridCapacity.Capacity / 1000 + " kW";
+            int net = consumption - cleanEnergy;
+            labelInternalNet.Text = Math.Abs(net) + unit;
+            labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
+
+
+
             List<int> contenders = new List<int>();
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
@@ -68,6 +97,7 @@ namespace WinFormsApp1
             maxVal = contenders.Count > 0 ? contenders.Max() : 1;
 
             panelY.Invalidate();
+            panelX.Invalidate();
             //drawXAxis();
             //drawBorder();
             //Calculate the MaxValue
@@ -79,43 +109,11 @@ namespace WinFormsApp1
             {
                 stringBrush.Color = colors[i];
                 //Draw the string at the top of the screen, 10 pixel offset both x and y to begin with
-                g.DrawString("--- " + checkedItem.ToString(), new Font("Arial", 10), stringBrush, 10, y);
+                g.DrawString("---- " + checkedItem.ToString(), new Font("Arial", 10), stringBrush, 10, y);
                 put_data(currData.RetrieveItem(checkedItem.ToString()).Item2, mainCanvas, colors[i], 3);
                 //offset y by 15 px
                 y += 15;
                 i++;
-
-            }
-        }
-
-        private void drawBorder()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void drawXAxis()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void drawYAxis(int largestValue)
-        {
-            int intervals = 10;
-            int roundingTo = 1000;
-            int y = panelY.Height;
-            int x = panelY.Width;
-            int yPxIncrement = panelY.Height / intervals;
-            //Round up largest value to nearest thousand
-            int roundedVal = (largestValue - (largestValue % 1000)) + 1000;
-            int yValIncrement = roundedVal / intervals;
-            Pen p = new Pen(Color.Black);
-
-            for (int i = 1; i <= intervals; i++)
-            {
-                stringBrush.Color = Color.Black;
-                gy.DrawLine(p, x, y, x-10, y);
-                gy.DrawString(i * yValIncrement + "", drawFont, stringBrush, 0, y);
-                y -= yPxIncrement;
             }
         }
 
@@ -163,6 +161,37 @@ namespace WinFormsApp1
             g = mainCanvas.CreateGraphics();
             g.Clear(Color.White);
             process_report();
+        }
+
+        private void panelX_Paint(object sender, PaintEventArgs e)
+        {
+            gx = panelX.CreateGraphics();
+            int workingWidth = panelX.Width - panelY.Width;
+            int xTarre = panelY.Width;
+            int points = 48;
+            int xInc = workingWidth / points;
+            int y = panelX.Height / 2;
+            string currTime = "00:00";
+            int hour = 0;
+            int minute = 0;
+            stringBrush.Color = Color.Black;
+            int increment = workingWidth < 350 ? 12 : 4;
+            increment = workingWidth > 1200 ? 2 : increment;
+
+            for (int i = 0; i < points; i++)
+            {
+                if (i % increment == 0) gx.DrawString(currTime, drawFont, stringBrush, xTarre - 13, y);
+                xTarre += xInc;
+                minute += 30;
+                if (minute == 60)
+                {
+                    minute = 0;
+                    hour++;
+                }
+                currTime = hour + ":" + minute;
+                if (minute == 0) currTime = currTime + "0";
+                if (hour < 10) currTime = "0" + currTime;
+            }
         }
 
         private void panelY_Paint(object sender, PaintEventArgs e)
@@ -239,7 +268,7 @@ namespace WinFormsApp1
 
             HttpClient client = new HttpClient();
 
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer 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");
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {sk}");
 
             var initResponce = await client.PostAsync(endpoint, content);
 

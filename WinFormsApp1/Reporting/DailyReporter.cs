@@ -16,6 +16,11 @@ namespace WinFormsApp1.Reporting
 
         public static DayReport GenerateReport(DateTime date)
         {
+            int totalWatts = 0;
+            int solarGeneration = 0;
+            int otherGeneration = 0;
+            int windGeneration = 0;
+
             //Deliverable
             DayReport dayReport = new DayReport($"{date.Day}.{date.Month}.{date.Year}");
             //From all generators, calculate the generation load
@@ -31,7 +36,22 @@ namespace WinFormsApp1.Reporting
                 int currTotal = 0;
                 foreach (EnergyIn generator in Cache.genListin)
                 {
-                    currTotal += generator.getHalfHourlyGeneration($"{parsedDate} {currTime}", i);
+                    int gen = generator.getHalfHourlyGeneration($"{parsedDate} {currTime}", i);
+                    currTotal += gen;
+                    totalWatts += gen;
+                    
+                    if (generator is SolarPanelArray)
+                    {
+                        solarGeneration += gen;
+                    }
+                    if (generator is WindTurbineArray)
+                    {
+                        windGeneration += gen;
+                    }
+                    if (generator is WindTurbineExisting)
+                    {
+                        windGeneration += gen;
+                    }
                 }
 
                 overallGen.Add(currTotal);
@@ -48,6 +68,10 @@ namespace WinFormsApp1.Reporting
                 if (hour < 10) currTime = "0" + currTime;
             }
             dayReport.InsertItem("Overall Generation", overallGen);
+            //do generator totals
+            dayReport.WindPercent = (double)windGeneration / (double)totalWatts;
+            dayReport.SolarPercent = (double)solarGeneration / (double)totalWatts;
+            dayReport.OtherPercent = (double)otherGeneration / (double)totalWatts;
             //Overall Gen done. It wokrs. No complaints
 
 
@@ -140,12 +164,14 @@ namespace WinFormsApp1.Reporting
             }
             dayReport.InsertItem("Battery Usage", storageCharge);
             dayReport.InsertItem("Overall Grid Needs", gridNeeds);
-
+            //battery alignment
+            dayReport.GridCapacity = reportBattry;
             // Hamilton	21.2c
             todaysCostFromGrid = (decimal)(gridNeeds.Sum() / 1000 * 0.212);
             Console.WriteLine($"${todaysCostFromGrid.Round(2)}");
+            
             //return report 
-
+            
             return dayReport;
         }
     }

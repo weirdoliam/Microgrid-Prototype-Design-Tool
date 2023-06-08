@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WinFormsApp1.EnergyStorage;
 
 namespace WinFormsApp1.Reporting
 {
@@ -9,6 +10,12 @@ namespace WinFormsApp1.Reporting
     {
         List<Tuple<string, List<int>>> tupleList;
         string date;
+
+        public double SolarPercent { get; set; }
+        public double WindPercent { get; set; }
+        public double OtherPercent { get; set; }
+
+        public LithiumIonBattery GridCapacity { get; set; }
 
         public DayReport(string date)
         {
@@ -43,6 +50,9 @@ namespace WinFormsApp1.Reporting
             {
                 prompt += $", {tup.Item1}: {tup.Item2.Sum()} watts";
             }
+            prompt += $", Solar Generation: {Math.Round(SolarPercent, 4) * 100}%";
+            prompt += $", Wind Generation: {Math.Round(WindPercent, 4) * 100}%";
+
 
             return prompt;
         }
