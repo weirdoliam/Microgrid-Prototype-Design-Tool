@@ -432,6 +432,14 @@ namespace WinFormsApp1
                 Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 600, "Test Battery"));
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (HouseModel h in Cache.houseModels)
+            {
+                Cache.genListOut.Add(h);
+            }
+        }
     }
 }
 

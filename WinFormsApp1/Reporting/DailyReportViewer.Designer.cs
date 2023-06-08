@@ -337,6 +337,7 @@
             // richTextBoxResponce
             // 
             richTextBoxResponce.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            richTextBoxResponce.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             richTextBoxResponce.Location = new System.Drawing.Point(6, 214);
             richTextBoxResponce.Name = "richTextBoxResponce";
             richTextBoxResponce.Size = new System.Drawing.Size(995, 124);

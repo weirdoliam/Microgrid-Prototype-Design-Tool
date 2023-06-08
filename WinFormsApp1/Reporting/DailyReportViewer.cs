@@ -28,6 +28,7 @@ namespace WinFormsApp1
         Font drawFont = new Font("Arial", 10);
         string response = "Awaiting Responce...";
         string sk = "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";
+        bool promptSent = false;
 
         public DailyReportViewer()
         {
@@ -53,15 +54,8 @@ namespace WinFormsApp1
                 //Setup CheckBoxes once
                 drawCheckBoxes();
 
-                //Get GPT Report
-                string prompt = currData.getSummary();
-                prompt = "Write me a report on the following totals about a day of power data, and comment on interesting values. " +
-                    "There is not reason to explain what the totals represent, that is implied. " +
-                    "Include in your response only the report, and nothing else. Try not to repeat yourself." + prompt;
-                Console.WriteLine(prompt);
-                //await sendRequest(prompt);
             }
-
+            // ------ The following calculations should be integrated into the dailyreport.
             //BOXES
             //Generation Percent
             labelWindPercent.Text = $"{Math.Round(currData.WindPercent * 100, 2)}%";
@@ -78,8 +72,8 @@ namespace WinFormsApp1
             double emissions = Math.Round(consumption * overallEmissionFactor, 4);
             string unit = " kWh";
             //Labels!!!
-            labelCo2.Text = Math.Min(emissions, 0) + "kgCO2/kWh";
-            labelDirty.Text = Math.Min(emissionsEnergy, 0) + unit;
+            labelCo2.Text = Math.Max(emissions, 0) + "kgCO2/kWh";
+            labelDirty.Text = Math.Max(emissionsEnergy, 0) + unit;
             labelRenew.Text = cleanEnergy + unit;
             labelTotalConsumption.Text = consumption + unit;
             labelTotalStorage.Text = currData.GridCapacity.Capacity / 1000 + " kW";
@@ -87,7 +81,17 @@ namespace WinFormsApp1
             labelInternalNet.Text = Math.Abs(net) + unit;
             labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
 
-
+            if (!promptSent)
+            {
+                promptSent = true;
+                //Get GPT Report
+                string prompt = currData.getSummary();
+                prompt = "Write me a report on the following totals about a day of power data, and comment on interesting values. " +
+                    "There is not reason to explain what the totals represent, that is implied. " +
+                    "Include in your response only the report, and nothing else. Try not to repeat yourself." + prompt + $"{emissions} kgCO2/kWh today.";
+                Console.WriteLine(prompt);
+                //await sendRequest(prompt);
+            }
 
             List<int> contenders = new List<int>();
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
@@ -252,7 +256,6 @@ namespace WinFormsApp1
             var messages = new[]
             {
                 new { role = "user", content = request }
-                //new { role = "user", content = request }
             };
 
             var data = new
@@ -275,9 +278,13 @@ namespace WinFormsApp1
             string responseContent = await initResponce.Content.ReadAsStringAsync();
 
             var jsonResponce = JObject.Parse(responseContent);
-
-            response = jsonResponce["choices"][0]["message"]["content"].Value<string>();
-
+            try
+            {
+                response = jsonResponce["choices"][0]["message"]["content"].Value<string>();
+            }
+            catch {
+                response = "There was an issue communicating with ChatGPT-3.5-turbo. ";
+            }
             writeResponse();
         }
 

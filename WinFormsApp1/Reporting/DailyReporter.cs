@@ -98,7 +98,8 @@ namespace WinFormsApp1.Reporting
                 if (consumer is HouseModel)
                 {
                     HouseModel house = (HouseModel)consumer;
-                    lists.Add(house.getDailyData(parsedDate));
+                    List<int> dailyData = house.getDailyData(parsedDate);
+                    if (dailyData != null) lists.Add(dailyData);
                 }
             }
             List<int> resultList = lists.Aggregate((acc, curr) => acc.Zip(curr, (a, b) => a + b).ToList());
