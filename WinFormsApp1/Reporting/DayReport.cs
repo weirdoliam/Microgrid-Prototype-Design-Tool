@@ -7,34 +7,44 @@ namespace WinFormsApp1.Reporting
 {
     internal class DayReport
     {
-        public List<int> Consumption { get; set; }
-        public List<int> Generation { get; set; }
-        public List<int> BatteryCharge { get; set; }
-        public List<int> GridNeeds { get; set; }
+        List<Tuple<string, List<int>>> tupleList;
+        string date;
 
-        public int TotalConsumption => Consumption.Sum();
-        public int TotalGeneration => Generation.Sum();
-        public int PowerFromGrid => GridNeeds.Sum();
-       
-        public DayReport(List<int> consumption, List<int> generation, List<int> batteryCharge, List<int> gridNeeds)
+        public DayReport(string date)
         {
-            Consumption = consumption;
-            Generation = generation;
-            BatteryCharge = batteryCharge;
-            GridNeeds = gridNeeds;
+            tupleList = new List<Tuple<string, List<int>>>();
+            this.date = date;
         }
-        /// <summary>
-        /// Get the largest value in the report
-        /// </summary>
-        /// <returns>The largest value in all lists (W)</returns>
-        public int Max()
+
+        public List<Tuple<string, List<int>>> TupleList { get => tupleList; }
+
+        public void InsertItem(string name, List<int> values)
         {
-            List<int> contenders = new List<int>();
-            contenders.Add(Generation.Max());
-            contenders.Add(Consumption.Max());
-            contenders.Add(BatteryCharge.Max());
-            contenders.Add(GridNeeds.Max());
-            return contenders.Max();
+            Tuple<string, List<int>> tuple = new Tuple<string, List<int>>(name, values);
+            tupleList.Add(tuple);
+        }
+
+        public Tuple<string, List<int>> RetrieveItem(string name)
+        {
+            Tuple<string, List<int>> tuple = tupleList.Find(t => t.Item1 == name);
+            if (tuple != null)
+            {
+                return tuple;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string getSummary() {
+            string prompt = $"Summary for {date}: ";
+            foreach (Tuple<string, List<int>> tup in TupleList)
+            {
+                prompt += $", {tup.Item1}: {tup.Item2.Sum()} watts";
+            }
+
+            return prompt;
         }
     }
 }

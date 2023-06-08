@@ -338,7 +338,7 @@ namespace WinFormsApp1
 
         private void dailyInsigtsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DailyForecast f = new DailyForecast();
+            LoadComparison f = new LoadComparison();
             f.Show();
         }
 
@@ -427,9 +427,9 @@ namespace WinFormsApp1
 
         private void lithiumIonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 1; i++)
             {
-                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 300, "Test Battery"));
+                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 600, "Test Battery"));
             }
         }
     }

@@ -16,6 +16,8 @@ namespace WinFormsApp1.Reporting
 
         public static DayReport GenerateReport(DateTime date)
         {
+            //Deliverable
+            DayReport dayReport = new DayReport($"{date.Day}.{date.Month}.{date.Year}");
             //From all generators, calculate the generation load
             List<int> overallGen = new List<int>();
 
@@ -45,7 +47,7 @@ namespace WinFormsApp1.Reporting
                 if (minute == 0) currTime = currTime + "0";
                 if (hour < 10) currTime = "0" + currTime;
             }
-
+            dayReport.InsertItem("Overall Generation", overallGen);
             //Overall Gen done. It wokrs. No complaints
 
 
@@ -77,6 +79,8 @@ namespace WinFormsApp1.Reporting
             }
             List<int> resultList = lists.Aggregate((acc, curr) => acc.Zip(curr, (a, b) => a + b).ToList());
             overallConsumption = resultList.Zip(factoryInts, (a, b) => a + b).ToList();
+            dayReport.InsertItem("Overall Consumption", overallConsumption);
+            //Daily Consumption done.
 
             //for all batteries and storage, calculate the state of power storage through the day, based on current supply vs current demand
 
@@ -134,11 +138,15 @@ namespace WinFormsApp1.Reporting
                 gridNeeds.Add((int)(needFromGrid - giveToGrid));
                 storageCharge.Add((int)currCharge);
             }
+            dayReport.InsertItem("Battery Usage", storageCharge);
+            dayReport.InsertItem("Overall Grid Needs", gridNeeds);
+
             // Hamilton	21.2c
             todaysCostFromGrid = (decimal)(gridNeeds.Sum() / 1000 * 0.212);
             Console.WriteLine($"${todaysCostFromGrid.Round(2)}");
             //return report 
-            return new DayReport(overallConsumption,overallGen,storageCharge, gridNeeds);
+
+            return dayReport;
         }
     }
 }
