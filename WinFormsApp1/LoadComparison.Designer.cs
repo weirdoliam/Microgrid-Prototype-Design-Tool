@@ -1,6 +1,6 @@
 ﻿namespace WinFormsApp1
 {
-    partial class DailyForecast
+    partial class LoadComparison
     {
         /// <summary>
         /// Required designer variable.

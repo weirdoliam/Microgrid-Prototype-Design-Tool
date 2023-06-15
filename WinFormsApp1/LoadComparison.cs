@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    public partial class DailyForecast : Form
+    public partial class LoadComparison : Form
     {
         EnergyIn currGen = null;
         int currArrayAmount = 0;
@@ -39,7 +39,7 @@ namespace WinFormsApp1
         bool overlayFactoryLoad = false;
         List<double> factoryHeights = null;
 
-        public DailyForecast()
+        public LoadComparison()
         {
             InitializeComponent();
 
@@ -172,8 +172,8 @@ namespace WinFormsApp1
                 for (int j = 0; j < repeats; j++)
                 {
                     if (currGen == null) break;
+
                     currTotal += currGen.getHalfHourlyGeneration(date + $" {currTime}", i);
-                    //currTotal += currGen.getHalfHourlyGeneration(date + " " + currTime, i);
                 }
                 genHeights.Add(currTotal);
                 minute += 30;
@@ -334,7 +334,7 @@ namespace WinFormsApp1
                         factoryInts.Add((int)h);
                     }
                     //display
-                    put_data(factoryInts, canvas, Color.Yellow, 3);
+                    put_data(factoryInts, canvas, Color.Orange, 3);
                     foreach (double height in factoryHeights)
                     {
                         consume += (int)height;

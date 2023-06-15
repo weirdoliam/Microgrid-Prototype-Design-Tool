@@ -12,6 +12,6 @@ namespace WinFormsApp1.EnergyStorage
 
         // Charge returns
         public abstract double Charge(double amount);
-        public abstract void Discharge(double amount);
+        public abstract double Discharge(double amount);
     }
 }
