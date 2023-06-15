@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WinFormsApp1.EnergyStorage;
 
 namespace WinFormsApp1
 {
@@ -18,14 +19,17 @@ namespace WinFormsApp1
         //Energy consumer objects
         public static List<EnergyOut> genListOut = new List<EnergyOut>();
 
+        //Energy Storage objects
+        public static List<EnergyStorageUnit> energyStorageUnits = new List<EnergyStorageUnit>();
+
         //Complex Houses (availalbe)
         public static List<HouseModel> houseModels = new List<HouseModel>();
 
         //The main factory of the application
         public static FactoryModel mainFactory = new FactoryModel("Default Factory");
 
-        //weather
-        //Looks like there's nothing here... yet
+        //Windspeed model class
+        public static WindSpeedModel windModel = new WindSpeedModel();
 
         //Time stuff
         public static List<DayRiseTimes> yearSunTimes = new List<DayRiseTimes>();
@@ -33,8 +37,7 @@ namespace WinFormsApp1
         //default is now with no sunrise or sunset, but is overwritten promptly by form1 (Main form)
         public static DayRiseTimes currDay = new DayRiseTimes(DateTime.Now, DateTime.Now, TimeSpan.Zero);
 
-        //Windspeed model class
-        public static WindSpeedModel windModel = new WindSpeedModel();
+        
 
     }
 }

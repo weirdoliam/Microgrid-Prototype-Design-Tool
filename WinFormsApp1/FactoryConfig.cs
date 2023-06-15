@@ -144,6 +144,7 @@ namespace WinFormsApp1
         private void buttonClearImport_Click(object sender, EventArgs e)
         {
             Cache.mainFactory.clearVariableLoad();
+            Cache.mainFactory.clearComprehensiveLoad();
         }
 
         private void buttonComp_Click(object sender, EventArgs e)

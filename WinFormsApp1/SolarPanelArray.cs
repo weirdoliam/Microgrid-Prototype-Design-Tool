@@ -33,6 +33,24 @@ namespace WinFormsApp1
             return type + " Solar Array, " + amount + " units";
         }
 
+        public override int getHalfHourlyGeneration(string currTime, int iterationNo)
+        {
+            return base.getHalfHourlyGeneration(currTime, iterationNo) * amount;
+        }
+
+        /// <summary>
+        /// Overload for removing product of array
+        /// </summary>
+        /// <param name="currTime"></param>
+        /// <param name="iterationNo"></param>
+        /// <param name="accumulate">If you want to exclude the totaling of all arrays enter FALSE</param>
+        /// <returns></returns>
+        public int getHalfHourlyGeneration(string currTime, int iterationNo, bool accumulate)
+        {
+            if (!accumulate) return base.getHalfHourlyGeneration(currTime, iterationNo);
+            else return this.getHalfHourlyGeneration(currTime, iterationNo);
+        }
+
         public SolarPanel getPanelObject() {
             return new SolarPanel(type, width, length, watts, cells, material);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using WinFormsApp1.EnergyStorage;
 
 namespace WinFormsApp1
 {
@@ -186,7 +187,7 @@ namespace WinFormsApp1
 
             //default additions
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 25);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 1);
             Cache.genListin.Add(s);
             Cache.genListOut.Add(Cache.houseModels[0]);
         }
@@ -337,7 +338,7 @@ namespace WinFormsApp1
 
         private void dailyInsigtsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DailyForecast f = new DailyForecast();
+            LoadComparison f = new LoadComparison();
             f.Show();
         }
 
@@ -415,6 +416,39 @@ namespace WinFormsApp1
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //We want to read a file in and replace the arrays in cache
+        }
+
+        private void dayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Open form and stuff to do daily thingy :))
+            DailyReportViewer d = new DailyReportViewer();
+            d.ShowDialog();
+        }
+
+        private void lithiumIonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 1000, "Test Battery"));
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (HouseModel h in Cache.houseModels)
+            {
+                Cache.genListOut.Add(h);
+            }
+        }
+
+        private void largeScaleStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cache.energyStorageUnits.Add(new LithiumIonBattery(20000, 1000, "Test Battery"));
+        }
+
+        private void resetStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cache.energyStorageUnits.Clear();
         }
     }
 }
