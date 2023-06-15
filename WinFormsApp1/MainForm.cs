@@ -429,7 +429,7 @@ namespace WinFormsApp1
         {
             for (int i = 0; i < 1; i++)
             {
-                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 600, "Test Battery"));
+                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 1000, "Test Battery"));
             }
         }
 
@@ -439,6 +439,16 @@ namespace WinFormsApp1
             {
                 Cache.genListOut.Add(h);
             }
+        }
+
+        private void largeScaleStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cache.energyStorageUnits.Add(new LithiumIonBattery(20000, 1000, "Test Battery"));
+        }
+
+        private void resetStorageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cache.energyStorageUnits.Clear();
         }
     }
 }

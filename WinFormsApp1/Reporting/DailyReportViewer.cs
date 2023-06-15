@@ -86,11 +86,11 @@ namespace WinFormsApp1
                 promptSent = true;
                 //Get GPT Report
                 string prompt = currData.getSummary();
-                prompt = "Write me a report on the following totals about a day of power data, and comment on interesting values. " +
+                prompt = "Analyze and comment on interesting values in the following totals. Its a day of power usage. " +
                     "There is not reason to explain what the totals represent, that is implied. " +
                     "Include in your response only the report, and nothing else. Try not to repeat yourself." + prompt + $"{emissions} kgCO2/kWh today.";
                 Console.WriteLine(prompt);
-                //await sendRequest(prompt);
+                await sendRequest(prompt);
             }
 
             List<int> contenders = new List<int>();

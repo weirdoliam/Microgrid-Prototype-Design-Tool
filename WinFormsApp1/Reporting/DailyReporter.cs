@@ -11,9 +11,7 @@ namespace WinFormsApp1.Reporting
     internal static class DailyReporter
     {
 
-
         // Calculates entire content, from scratch Will break it down once it's created
-
         public static DayReport GenerateReport(DateTime date)
         {
             int totalWatts = 0;
