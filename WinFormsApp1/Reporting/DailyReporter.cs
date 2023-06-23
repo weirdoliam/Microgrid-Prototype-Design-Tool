@@ -18,6 +18,7 @@ namespace WinFormsApp1.Reporting
             int solarGeneration = 0;
             int otherGeneration = 0;
             int windGeneration = 0;
+          
 
             //Deliverable
             DayReport dayReport = new DayReport($"{date.Day}.{date.Month}.{date.Year}");
@@ -110,6 +111,7 @@ namespace WinFormsApp1.Reporting
             //THere's a couple ways I wanna do this. One is to create an instance of a large battery which has the sums of all other batteries combined, and this will be used for the report.
             double totalCapacity = 0;
             double totalChargeRate = 0;
+            decimal totalCost = 0;
             foreach (EnergyStorageUnit esu in Cache.energyStorageUnits)
             {
                 if (esu is LithiumIonBattery)
@@ -117,9 +119,10 @@ namespace WinFormsApp1.Reporting
                     LithiumIonBattery lib = (LithiumIonBattery)esu;
                     totalCapacity += lib.Capacity;
                     totalChargeRate += lib.MaxChargeRate;
+                    totalCost += lib.Price;
                 }
             }
-            LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery");
+            LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery", totalCost);
 
             //Generate a list of state of charge throughout the day
             List<int> storageCharge = new List<int>();
@@ -165,12 +168,7 @@ namespace WinFormsApp1.Reporting
             dayReport.InsertItem("Overall Grid Needs", gridNeeds);
             //battery alignment
             dayReport.GridCapacity = reportBattry;
-            // Hamilton	21.2c
-            todaysCostFromGrid = (decimal)(gridNeeds.Sum() / 1000 * 0.212);
-            Console.WriteLine($"${todaysCostFromGrid.Round(2)}");
-            
-            //return report 
-            
+                        
             return dayReport;
         }
     }

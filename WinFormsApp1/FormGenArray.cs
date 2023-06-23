@@ -33,7 +33,6 @@ namespace WinFormsApp1
             }
         }
 
-
         /// <summary>
         /// SOLAR PANEL BUTTON
         /// </summary>

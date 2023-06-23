@@ -10,27 +10,24 @@ namespace WinFormsApp1.Reporting
     {
         List<Tuple<string, List<int>>> tupleList;
         string date;
-
+        //Emissions Factor
+        private double emissionEmissonFactor = 0.025;
+        private double cleanEmissionFactor = 0;
         public double SolarPercent { get; set; }
         public double WindPercent { get; set; }
         public double OtherPercent { get; set; }
-
         public LithiumIonBattery GridCapacity { get; set; }
-
         public DayReport(string date)
         {
             tupleList = new List<Tuple<string, List<int>>>();
             this.date = date;
         }
-
         public List<Tuple<string, List<int>>> TupleList { get => tupleList; }
-
         public void InsertItem(string name, List<int> values)
         {
             Tuple<string, List<int>> tuple = new Tuple<string, List<int>>(name, values);
             tupleList.Add(tuple);
         }
-
         public Tuple<string, List<int>> RetrieveItem(string name)
         {
             Tuple<string, List<int>> tuple = tupleList.Find(t => t.Item1 == name);
@@ -43,7 +40,6 @@ namespace WinFormsApp1.Reporting
                 return null;
             }
         }
-
         public string getSummary() {
             string prompt = $"Summary for {date}: ";
             foreach (Tuple<string, List<int>> tup in TupleList)
@@ -55,6 +51,41 @@ namespace WinFormsApp1.Reporting
 
 
             return prompt;
+        }
+        public double getWindPercent()
+        {
+            return Math.Round(WindPercent * 100, 2);
+        }
+        public double getSolarPercent()
+        {
+            return Math.Round(SolarPercent * 100, 2);
+        }
+        public double getCleanEnergy()
+        {
+            return this.RetrieveItem("Overall Generation").Item2.Sum();
+        }
+        public double getEmissionEnergy()
+        {
+            return this.RetrieveItem("Overall Grid Needs").Item2.Sum();
+        }
+        public int getConsumption()
+        {
+            return this.RetrieveItem("Overall Consumption").Item2.Sum();
+        }
+        public double getEmissions()
+        {
+            double cleanEnergyProportion = (double)getCleanEnergy() / (double)(getCleanEnergy() + getEmissionEnergy());
+            double overallEmissionFactor = (cleanEnergyProportion * cleanEmissionFactor) + ((1 - cleanEnergyProportion) * emissionEmissonFactor);
+            return Math.Round(getConsumption() * overallEmissionFactor, 4);
+        }
+        public double getNet() {
+            return getConsumption() - getCleanEnergy();
+        }
+        public decimal getGridCost() {
+            return Math.Round((decimal)((getEmissionEnergy()/1000) * 0.212),2);
+        }
+        public decimal getGenSavings() {
+            return Math.Round((decimal)((getCleanEnergy() / 1000) * 0.212), 2);
         }
     }
 }

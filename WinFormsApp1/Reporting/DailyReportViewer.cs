@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MathNet.Numerics;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace WinFormsApp1
         SolidBrush stringBrush = new SolidBrush(Color.Black);
         StringFormat drawFormat = new StringFormat();
         Font drawFont = new Font("Arial", 10);
+        Pen pen = new Pen(Color.Gray);
         string response = "Awaiting Responce...";
         string sk = "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";
         bool promptSent = false;
@@ -58,29 +60,33 @@ namespace WinFormsApp1
             // ------ The following calculations should be integrated into the dailyreport.
             //BOXES
             //Generation Percent
-            labelWindPercent.Text = $"{Math.Round(currData.WindPercent * 100, 2)}%";
-            labelSolarPercent.Text = $"{Math.Round(currData.SolarPercent * 100, 2)}%";
+            labelWindPercent.Text = $"{currData.getWindPercent()}%";
+            labelSolarPercent.Text = $"{currData.getSolarPercent()}%";
             //In kWh
-            int cleanEnergy = currData.RetrieveItem("Overall Generation").Item2.Sum() / 1000;
-            int emissionsEnergy = currData.RetrieveItem("Overall Grid Needs").Item2.Sum() / 1000;
-            int consumption = currData.RetrieveItem("Overall Consumption").Item2.Sum() / 1000;
-            //Emissions Factor
-            double emissionEmissonFactor = 0.25;
-            double cleanEmissionFactor = 0;
-            double cleanEnergyProportion = (double)cleanEnergy / (double)(cleanEnergy + emissionsEnergy);
-            double overallEmissionFactor = (cleanEnergyProportion * cleanEmissionFactor) + ((1 - cleanEnergyProportion) * emissionEmissonFactor);
-            double emissions = Math.Round(consumption * overallEmissionFactor, 4);
+            int cleanEnergy = (int)currData.getCleanEnergy() / 1000;
+            int emissionsEnergy = (int)currData.getEmissionEnergy() / 1000;
+            int consumption = (int)currData.getConsumption() / 1000;
+            double emissions = currData.getEmissions();
             string unit = " kWh";
             //Labels!!!
-            labelCo2.Text = Math.Max(emissions, 0) + "kgCO2/kWh";
+            labelCo2.Text = Math.Max(emissions, 0) + " kgCO2/kWh";
             labelDirty.Text = Math.Max(emissionsEnergy, 0) + unit;
             labelRenew.Text = cleanEnergy + unit;
             labelTotalConsumption.Text = consumption + unit;
             labelTotalStorage.Text = currData.GridCapacity.Capacity / 1000 + " kW";
-            int net = consumption - cleanEnergy;
+            int net = (int)currData.getNet() / 1000;
             labelInternalNet.Text = Math.Abs(net) + unit;
             labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
-
+            decimal setup = Cache.getSetupCost();
+            //Cost Analysis
+            // Hamilton	21.2c
+            labelGridCost.Text = "$" + currData.getGridCost();
+            labelSaved.Text = "$" + currData.getGenSavings();
+            labelSetupCost.Text = "$" + setup;
+            double daysTillPayDone = (int)(setup / currData.getGenSavings());
+            string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
+            daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;
+            labelPayback.Text = $"{Math.Round(daysTillPayDone,2)} {time}";
             if (!promptSent)
             {
                 promptSent = true;
@@ -102,13 +108,49 @@ namespace WinFormsApp1
 
             panelY.Invalidate();
             panelX.Invalidate();
-            //drawXAxis();
-            //drawBorder();
+
+            //vert lines
+            for (int j = 0; j < mainCanvas.Width; j = j + mainCanvas.Width / 24)
+            {
+                g.DrawLine(pen, j, mainCanvas.Height, j, 0);
+
+            }
+
+            //horiz lines
+            double scale = Math.Floor(maxVal / 50.0) * 5;
+            if (maxVal > 10000) scale = Math.Floor(maxVal / 100.0) * 10;
+
+            if (maxVal > 1000000) scale = Math.Floor(maxVal / 100000.0) * 10000;
+            if (maxVal == 0) maxVal = 1000;
+
+            int wh = mainCanvas.Height - (int)(mainCanvas.Height * 0.1);
+            for (int k = 0; k <= maxVal; k++)
+            {
+                int yVal = mainCanvas.Height - (int)(wh * k / maxVal);
+                if (scale != 0)
+                {
+                    if (k % scale == 0 & k != 0)
+                    {
+                        g.DrawLine(pen, 0, yVal, mainCanvas.Width, yVal);
+                    }
+                }
+            }
+
+            pen.Width = 1;
+            pen.Color = Color.Black;
+
+            //borders
+            g.DrawLine(pen, 1, mainCanvas.Height, 1, 1);
+            g.DrawLine(pen, 1, mainCanvas.Height - 1, mainCanvas.Width, mainCanvas.Height - 1);
+            g.DrawLine(pen, 1, 1, mainCanvas.Width, 1);
+            g.DrawLine(pen, mainCanvas.Width - 1, 0, mainCanvas.Width - 1, mainCanvas.Height);
             //Calculate the MaxValue
             //Draw!
             int i = 0;
             int y = 10;
             Color[] colors = new Color[] { Color.Green, Color.Red, Color.Blue, Color.Orange, Color.Olive, Color.Gray, Color.Gold };
+            
+            //Put all da data
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
                 stringBrush.Color = colors[i];
@@ -226,7 +268,8 @@ namespace WinFormsApp1
                     if (i % scale == 0 & i != 0)
                     {
                         SizeF strSize = gy.MeasureString($"{i}MW", new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Point));
-                        int strX = xVal - (int)strSize.Width;
+                        //int strX = xVal - (int)strSize.Width;
+                        int strX = 3;
                         int yVal = mainCanvas.Height - (int)(workingHeight * i / maxVal);
                         if (unit == 0) gy.DrawString(i + "", drawFont, stringBrush, strX, yVal - 9, drawFormat);
                         else if (unit == 1) gy.DrawString(i / 1000 + "kW", drawFont, stringBrush, strX, yVal - 9, drawFormat);
@@ -282,7 +325,8 @@ namespace WinFormsApp1
             {
                 response = jsonResponce["choices"][0]["message"]["content"].Value<string>();
             }
-            catch {
+            catch
+            {
                 response = "There was an issue communicating with ChatGPT-3.5-turbo. ";
             }
             writeResponse();

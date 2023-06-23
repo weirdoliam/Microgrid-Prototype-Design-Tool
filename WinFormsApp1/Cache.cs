@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics;
+using System;
 using System.Collections.Generic;
 using WinFormsApp1.EnergyStorage;
 
@@ -36,9 +37,19 @@ namespace WinFormsApp1
 
         //default is now with no sunrise or sunset, but is overwritten promptly by form1 (Main form)
         public static DayRiseTimes currDay = new DayRiseTimes(DateTime.Now, DateTime.Now, TimeSpan.Zero);
-
-        
-
+        //Calculates the cost of each battery and generator
+        public static decimal getSetupCost() {
+            decimal sum = 0;
+            foreach (EnergyIn e in genListin)
+            {
+                sum += e.Price;
+            }
+            foreach (EnergyStorageUnit e in energyStorageUnits)
+            {
+                sum += e.Price;
+            }
+            return sum;
+        }
     }
 }
 

@@ -15,6 +15,7 @@ namespace WinFormsApp1
         {
             this.amount = amount;
             isArray = true;
+            Price = amount * Price;
         }
 
         public override int getDailyEmissions()

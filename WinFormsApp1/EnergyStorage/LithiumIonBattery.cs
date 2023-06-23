@@ -17,12 +17,13 @@ namespace WinFormsApp1.EnergyStorage
         public double MaxChargeRate { get => _maxChargeRate; set => _maxChargeRate = value; }
 
         // Constructor
-        public LithiumIonBattery(double capacity, double maxChargeRate, string name)
+        public LithiumIonBattery(double capacity, double maxChargeRate, string name, decimal price)
         {
             Capacity = capacity;
             ChargeLevel = capacity;
             _maxChargeRate = maxChargeRate;
             _name = name;
+            Price = price;
         }
 
         /// <summary>

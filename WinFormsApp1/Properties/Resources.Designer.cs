@@ -103,6 +103,16 @@ namespace WinFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap charge {
+            get {
+                object obj = ResourceManager.GetObject("charge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap co2 {
             get {
                 object obj = ResourceManager.GetObject("co2", resourceCulture);
@@ -156,6 +166,16 @@ namespace WinFormsApp1.Properties {
         internal static System.Drawing.Bitmap panel {
             get {
                 object obj = ResourceManager.GetObject("panel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap powa {
+            get {
+                object obj = ResourceManager.GetObject("powa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

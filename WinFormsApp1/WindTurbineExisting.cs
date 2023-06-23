@@ -26,7 +26,6 @@ namespace WinFormsApp1
 
         //amount if we're storing an "array" of these objects
         private int amount;
-        private bool isArray1;
 
         public Dictionary<double, int> Curve { get => curve; set => curve = value; }
         public string Name { get => name; set => name = value; }
@@ -39,7 +38,6 @@ namespace WinFormsApp1
         protected double RatedSpeed { get => ratedSpeed; set => ratedSpeed = value; }
         protected double CutOutSpeed { get => cutOutSpeed; set => cutOutSpeed = value; }
         public int Amount { get => amount; set => amount = value; }
-        protected bool IsArray1 { get => isArray1; set => isArray1 = value; }
 
 
         /// <summary>
@@ -73,30 +71,41 @@ namespace WinFormsApp1
             this.cutInSpeed = cutInSpeed;
             this.ratedSpeed = ratedSpeed;
             this.cutOutSpeed = cutOutSpeed;
-
             watts = ratedPower;
             amount = 1;
             isArray = false;
+            CalculatePrice();
         }
-        public WindTurbineExisting(WindTurbineExisting e, int amount)
+        public WindTurbineExisting(string name,
+            string manufacturer,
+            int ratedPower,
+            double rotorDiameter,
+            double sweptArea,
+            int numBlades,
+            double cutInSpeed,
+            double ratedSpeed,
+            double cutOutSpeed, 
+            int amount)
         {
-            this.name = e.Name;
-            this.manufacturer = e.Manufacturer;
-            this.ratedPower = e.RatedPower;
-            this.rotorDiameter = e.RotorDiameter;
-            this.sweptArea = e.SweptArea;
-            this.numBlades = e.NumBlades;
-            this.cutInSpeed = e.CutInSpeed;
-            this.ratedSpeed = e.RatedSpeed;
-            this.cutOutSpeed = e.CutOutSpeed;
-
-            watts = e.Watts;
+            this.name = name;
+            this.manufacturer = manufacturer;
+            this.ratedPower = ratedPower;
+            this.rotorDiameter = rotorDiameter;
+            this.sweptArea = sweptArea;
+            this.numBlades = numBlades;
+            this.cutInSpeed = cutInSpeed;
+            this.ratedSpeed = ratedSpeed;
+            this.cutOutSpeed = cutOutSpeed;
+            watts = ratedPower;
 
             this.amount = amount;
             isArray = true;
+            CalculatePrice();
         }
-
-
+        private void CalculatePrice()
+        {
+            Price = (decimal)(amount * watts * 1.15);
+        }
 
         public bool hasPowerCurve()
         {
@@ -109,11 +118,11 @@ namespace WinFormsApp1
             string returnString = "ExistingTurbine";
             if (curve == null)
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower}kW";
+                returnString += $"{returnString}{manufacturer},{name},{ratedPower/1000}kW";
             }
             else
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower}kW,contains power curve data";
+                returnString += $"{returnString}{manufacturer},{name},{ratedPower/1000}kW,contains power curve data";
             }
             if (isArray)
             {

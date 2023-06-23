@@ -34,7 +34,9 @@ namespace WinFormsApp1
             cells = _cells;
             material = _material;
             dailyEmissions = 0;
-            isArray = false;    
+            isArray = false;
+            //Cost per watt is about 2.5
+            Price = (decimal) 2.5 * _watts;
         }
 
         public override string getArrayDescription()
