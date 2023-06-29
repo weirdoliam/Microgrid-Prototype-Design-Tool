@@ -9,7 +9,7 @@ namespace WinFormsApp1.Reporting
     internal class DayReport
     {
         List<Tuple<string, List<int>>> tupleList;
-        string date;
+        public string Date { get; set; }
         //Emissions Factor
         private double emissionEmissonFactor = 0.025;
         private double cleanEmissionFactor = 0;
@@ -20,7 +20,7 @@ namespace WinFormsApp1.Reporting
         public DayReport(string date)
         {
             tupleList = new List<Tuple<string, List<int>>>();
-            this.date = date;
+            Date = date;
         }
         public List<Tuple<string, List<int>>> TupleList { get => tupleList; }
         public void InsertItem(string name, List<int> values)
@@ -41,7 +41,7 @@ namespace WinFormsApp1.Reporting
             }
         }
         public string getSummary() {
-            string prompt = $"Summary for {date}: ";
+            string prompt = $"Summary for {Date}: ";
             foreach (Tuple<string, List<int>> tup in TupleList)
             {
                 prompt += $", {tup.Item1}: {tup.Item2.Sum()} watts";
@@ -110,6 +110,7 @@ namespace WinFormsApp1.Reporting
             }
             return Math.Round((buyBack/1000) * (decimal)0.212, 2);
         }
+
         internal decimal getEffectiveCost()
         {
             return Math.Round((decimal)((getConsumption() / 1000) * 0.212), 2);

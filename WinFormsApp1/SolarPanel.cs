@@ -35,6 +35,7 @@ namespace WinFormsApp1
             material = _material;
             dailyEmissions = 0;
             isArray = false;
+
             //Cost per watt is about 2.5
             Price = (decimal) 2.5 * _watts;
         }

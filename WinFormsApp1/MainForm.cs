@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.Reporting;
 
 namespace WinFormsApp1
 {
@@ -449,6 +450,12 @@ namespace WinFormsApp1
         private void resetStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cache.energyStorageUnits.Clear();
+        }
+
+        private void monthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MonthyReportViewer month = new MonthyReportViewer();
+            month.ShowDialog();
         }
     }
 }

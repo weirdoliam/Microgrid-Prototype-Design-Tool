@@ -11,7 +11,7 @@ namespace WinFormsApp1.Reporting
     internal static class DailyReporter
     {
 
-        // Calculates entire content, from scratch Will break it down once it's created
+        // Calculates entire content, from scratch, will break it down once it's created
         public static DayReport GenerateReport(DateTime date)
         {
             int totalWatts = 0;
@@ -108,7 +108,7 @@ namespace WinFormsApp1.Reporting
 
             //for all batteries and storage, calculate the state of power storage through the day, based on current supply vs current demand
 
-            //THere's a couple ways I wanna do this. One is to create an instance of a large battery which has the sums of all other batteries combined, and this will be used for the report.
+            //create an instance of a large battery which has the sums of all other batteries combined, and this will be used for the report.
             double totalCapacity = 0;
             double totalChargeRate = 0;
             decimal totalCost = 0;

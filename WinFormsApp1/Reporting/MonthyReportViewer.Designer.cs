@@ -28,18 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
+            listBox1 = new System.Windows.Forms.ListBox();
+            label1 = new System.Windows.Forms.Label();
             SuspendLayout();
+            // 
+            // listBox1
+            // 
+            listBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new System.Drawing.Point(12, 27);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new System.Drawing.Size(148, 409);
+            listBox1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(37, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Totals";
             // 
             // MonthyReportViewer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(866, 452);
+            ClientSize = new System.Drawing.Size(987, 465);
+            Controls.Add(label1);
+            Controls.Add(listBox1);
             Name = "MonthyReportViewer";
             Text = "MonthyReportViewer";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
