@@ -160,6 +160,7 @@ namespace WinFormsApp1.Reporting
                     giveToGrid = 0;
                 }
                 currCharge = reportBattry.ChargeLevel;
+                
                 //Console.WriteLine($"Current Charge after calculations: {currCharge}");
                 gridNeeds.Add((int)(needFromGrid - giveToGrid));
                 storageCharge.Add((int)currCharge);

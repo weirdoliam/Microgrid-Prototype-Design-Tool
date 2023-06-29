@@ -69,24 +69,27 @@ namespace WinFormsApp1
             double emissions = currData.getEmissions();
             string unit = " kWh";
             //Labels!!!
-            labelCo2.Text = Math.Max(emissions, 0) + " kgCO2/kWh";
+            labelCo2.Text = Math.Max(emissions, 0) + " kgCO2/MWh";
             labelDirty.Text = Math.Max(emissionsEnergy, 0) + unit;
             labelRenew.Text = cleanEnergy + unit;
             labelTotalConsumption.Text = consumption + unit;
             labelTotalStorage.Text = currData.GridCapacity.Capacity / 1000 + " kW";
             int net = (int)currData.getNet() / 1000;
-            labelInternalNet.Text = Math.Abs(net) + unit;
+            labelInternalNet.Text = net + unit;
             labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
             decimal setup = Cache.getSetupCost();
             //Cost Analysis
             // Hamilton	21.2c
+            labelEffCost.Text = "$" + currData.getEffectiveCost();
             labelGridCost.Text = "$" + currData.getGridCost();
-            labelSaved.Text = "$" + currData.getGenSavings();
+            labelSaved.Text = "$" + currData.getNegatedGridCost();
             labelSetupCost.Text = "$" + setup;
-            double daysTillPayDone = (int)(setup / currData.getGenSavings());
+            labelBuyBack.Text = "$" + currData.getGridBuyBack();
+            double daysTillPayDone = (int)(setup / (currData.getDaySavings()));
+            //double daysTillPayDone = (int)(setup / (currData.getGenSavings() + currData.getGridBuyBack()));
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
             daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;
-            labelPayback.Text = $"{Math.Round(daysTillPayDone,2)} {time}";
+            labelPayback.Text = $"{Math.Round(daysTillPayDone, 2)} {time}";
             if (!promptSent)
             {
                 promptSent = true;
@@ -137,23 +140,21 @@ namespace WinFormsApp1
             }
 
             pen.Width = 1;
-            pen.Color = Color.Black;
+            pen.Color = Color.Gray;
 
             //borders
             g.DrawLine(pen, 1, mainCanvas.Height, 1, 1);
             g.DrawLine(pen, 1, mainCanvas.Height - 1, mainCanvas.Width, mainCanvas.Height - 1);
             g.DrawLine(pen, 1, 1, mainCanvas.Width, 1);
             g.DrawLine(pen, mainCanvas.Width - 1, 0, mainCanvas.Width - 1, mainCanvas.Height);
-            //Calculate the MaxValue
-            //Draw!
             int i = 0;
             int y = 10;
             Color[] colors = new Color[] { Color.Green, Color.Red, Color.Blue, Color.Orange, Color.Olive, Color.Gray, Color.Gold };
-            
+
             //Put all da data
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
-                stringBrush.Color = colors[i];
+                stringBrush.Color = colors[i % colors.Length];
                 //Draw the string at the top of the screen, 10 pixel offset both x and y to begin with
                 g.DrawString("---- " + checkedItem.ToString(), new Font("Arial", 10), stringBrush, 10, y);
                 put_data(currData.RetrieveItem(checkedItem.ToString()).Item2, mainCanvas, colors[i], 3);

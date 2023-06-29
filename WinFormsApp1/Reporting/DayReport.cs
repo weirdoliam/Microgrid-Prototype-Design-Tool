@@ -66,7 +66,16 @@ namespace WinFormsApp1.Reporting
         }
         public double getEmissionEnergy()
         {
-            return this.RetrieveItem("Overall Grid Needs").Item2.Sum();
+            List<int> gridNeedsAll = this.RetrieveItem("Overall Grid Needs").Item2;
+            double totalUsage = 0;
+            foreach (int i in gridNeedsAll)
+            {
+                if(i > 0)
+                {
+                    totalUsage += i;
+                }
+            }
+            return totalUsage;
         }
         public int getConsumption()
         {
@@ -84,8 +93,30 @@ namespace WinFormsApp1.Reporting
         public decimal getGridCost() {
             return Math.Round((decimal)((getEmissionEnergy()/1000) * 0.212),2);
         }
-        public decimal getGenSavings() {
-            return Math.Round((decimal)((getCleanEnergy() / 1000) * 0.212), 2);
+        public decimal getDaySavings() {
+            return getNegatedGridCost() + getGridBuyBack();
+        }
+        public decimal getGridBuyBack()
+        {
+            //Sum all negative values in gridNeeds
+            List<int> gridNeeds = this.RetrieveItem("Overall Grid Needs").Item2;
+            decimal buyBack = 0;
+            foreach (int value in gridNeeds)
+            {
+                if(value < 0)
+                {
+                    buyBack += Math.Abs(value);
+                }
+            }
+            return Math.Round((buyBack/1000) * (decimal)0.212, 2);
+        }
+        internal decimal getEffectiveCost()
+        {
+            return Math.Round((decimal)((getConsumption() / 1000) * 0.212), 2);
+        }
+
+        public decimal getNegatedGridCost() {
+            return getEffectiveCost() - getGridCost();
         }
     }
 }

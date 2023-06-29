@@ -33,13 +33,16 @@ namespace WinFormsApp1.EnergyStorage
         /// <returns>Energy unalbe to be charged</returns>
         public override double Charge(double amount)
         {
-            double maxChargeAmount = _maxChargeRate * Capacity;
-            double actualChargeAmount = Math.Min(amount, maxChargeAmount);
+            double not_charged = 0;
             double old_charge = ChargeLevel;
-            ChargeLevel = Math.Min(ChargeLevel + actualChargeAmount, Capacity);
-            
+            ChargeLevel = Math.Min(ChargeLevel + amount, Capacity);
+            double difference = ChargeLevel - old_charge;
+            if (difference != amount)
+            {
+                not_charged = Math.Abs(difference-amount);
+            }
             //return wasted energy
-            return ChargeLevel - old_charge;
+            return not_charged;
         }
 
         /// <summary>
