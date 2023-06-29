@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Solar
 {
     class SolarPanel : EnergyIn
     {
@@ -34,7 +34,10 @@ namespace WinFormsApp1
             cells = _cells;
             material = _material;
             dailyEmissions = 0;
-            isArray = false;    
+            isArray = false;
+
+            //Cost per watt is about 2.5
+            Price = (decimal)2.5 * _watts;
         }
 
         public override string getArrayDescription()
@@ -54,8 +57,8 @@ namespace WinFormsApp1
         //in kWh
         public override int getDailyGeneration()
         {
-            float hours = Cache.currDay.getDaylightHours() + (Cache.currDay.getDaylightMinutes()/60);
-            float kwh = (int)((watts * hours) / 1000);
+            float hours = Cache.currDay.getDaylightHours() + Cache.currDay.getDaylightMinutes() / 60;
+            float kwh = (int)(watts * hours / 1000);
             //float final = (kwh * w.sun.Effectiveness)/100;
             //MessageBox.Show("kwh: " + kwh + ", final:" + final);
             return (int)kwh;
@@ -100,7 +103,7 @@ namespace WinFormsApp1
 
                 if (currentDateTime < midday1 & currentDateTime > midday2)
                 {
-                    baseGen = Math.Min(rampedValue1,rampedValue2);
+                    baseGen = Math.Min(rampedValue1, rampedValue2);
                 }
                 else if (currentDateTime < midday1)
                 {
@@ -113,8 +116,8 @@ namespace WinFormsApp1
                 {
                     baseGen = rampedValue2;
                 }
-               
-                else 
+
+                else
                 {
                     //max eff baby
                     //no change to baseGen

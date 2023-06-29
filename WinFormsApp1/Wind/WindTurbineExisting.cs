@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Wind
 {
     internal class WindTurbineExisting : EnergyIn
     {
@@ -26,7 +26,6 @@ namespace WinFormsApp1
 
         //amount if we're storing an "array" of these objects
         private int amount;
-        private bool isArray1;
 
         public Dictionary<double, int> Curve { get => curve; set => curve = value; }
         public string Name { get => name; set => name = value; }
@@ -39,7 +38,6 @@ namespace WinFormsApp1
         protected double RatedSpeed { get => ratedSpeed; set => ratedSpeed = value; }
         protected double CutOutSpeed { get => cutOutSpeed; set => cutOutSpeed = value; }
         public int Amount { get => amount; set => amount = value; }
-        protected bool IsArray1 { get => isArray1; set => isArray1 = value; }
 
 
         /// <summary>
@@ -54,14 +52,14 @@ namespace WinFormsApp1
         /// <param name="cutInSpeed">in m/s</param>
         /// <param name="ratedSpeed">in m/s</param>
         /// <param name="cutOutSpeed">in m/s</param>
-        public WindTurbineExisting(string name, 
-            string manufacturer, 
-            int ratedPower, 
-            double rotorDiameter, 
-            double sweptArea, 
-            int numBlades, 
-            double cutInSpeed, 
-            double ratedSpeed, 
+        public WindTurbineExisting(string name,
+            string manufacturer,
+            int ratedPower,
+            double rotorDiameter,
+            double sweptArea,
+            int numBlades,
+            double cutInSpeed,
+            double ratedSpeed,
             double cutOutSpeed)
         {
             this.name = name;
@@ -73,30 +71,41 @@ namespace WinFormsApp1
             this.cutInSpeed = cutInSpeed;
             this.ratedSpeed = ratedSpeed;
             this.cutOutSpeed = cutOutSpeed;
-
             watts = ratedPower;
             amount = 1;
             isArray = false;
+            CalculatePrice();
         }
-        public WindTurbineExisting(WindTurbineExisting e, int amount)
+        public WindTurbineExisting(string name,
+            string manufacturer,
+            int ratedPower,
+            double rotorDiameter,
+            double sweptArea,
+            int numBlades,
+            double cutInSpeed,
+            double ratedSpeed,
+            double cutOutSpeed,
+            int amount)
         {
-            this.name = e.Name;
-            this.manufacturer = e.Manufacturer;
-            this.ratedPower = e.RatedPower;
-            this.rotorDiameter = e.RotorDiameter;
-            this.sweptArea = e.SweptArea;
-            this.numBlades = e.NumBlades;
-            this.cutInSpeed = e.CutInSpeed;
-            this.ratedSpeed = e.RatedSpeed;
-            this.cutOutSpeed = e.CutOutSpeed;
-
-            watts = e.Watts;
+            this.name = name;
+            this.manufacturer = manufacturer;
+            this.ratedPower = ratedPower;
+            this.rotorDiameter = rotorDiameter;
+            this.sweptArea = sweptArea;
+            this.numBlades = numBlades;
+            this.cutInSpeed = cutInSpeed;
+            this.ratedSpeed = ratedSpeed;
+            this.cutOutSpeed = cutOutSpeed;
+            watts = ratedPower;
 
             this.amount = amount;
             isArray = true;
+            CalculatePrice();
         }
-
-
+        private void CalculatePrice()
+        {
+            Price = (decimal)(amount * watts * 1.15);
+        }
 
         public bool hasPowerCurve()
         {
@@ -109,11 +118,11 @@ namespace WinFormsApp1
             string returnString = "ExistingTurbine";
             if (curve == null)
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower}kW";
+                returnString += $"{returnString}{manufacturer},{name},{ratedPower / 1000}kW";
             }
             else
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower}kW,contains power curve data";
+                returnString += $"{returnString}{manufacturer},{name},{ratedPower / 1000}kW,contains power curve data";
             }
             if (isArray)
             {
@@ -130,7 +139,7 @@ namespace WinFormsApp1
         public override int getDailyGeneration()
         {
             if (isArray) return ratedPower * 24 * amount;
-            else return ratedPower*24;
+            else return ratedPower * 24;
         }
 
         public override int getHalfHourlyGeneration(string currTime, int iterationNo)
@@ -144,10 +153,10 @@ namespace WinFormsApp1
                 List<double> windSpeeds = Cache.windModel.getDailySpeeds(justDate);
                 //get the current windspeed
                 double windspeed = windSpeeds[iterationNo];
-                returnAmount =  getExistingPerformance(windspeed)/2;
+                returnAmount = getExistingPerformance(windspeed) / 2;
 
             }
-            else 
+            else
             {
                 WindTurbine w = new WindTurbine(ratedPower, (int)rotorDiameter, 0, name);
                 returnAmount = w.getHalfHourlyGeneration(currTime, iterationNo);
@@ -164,12 +173,12 @@ namespace WinFormsApp1
         /// <returns></returns>
         public int getExistingPerformance(double windspeed)
         {
-            if(windspeed > 35)
+            if (windspeed > 35)
             {
                 return 0;
             }
             //only if we have a power curve do we return something
-           
+
 
             //get nearest .5 below and above
 
@@ -187,12 +196,12 @@ namespace WinFormsApp1
             }
             int upperWattage = curve[upper];
             int lowerWattage = curve[lower];
-            int val = (int)((upperWattage + lowerWattage) / 2);
+            int val = (upperWattage + lowerWattage) / 2;
             if (isArray) return val * amount;
             return val;
             //*/
             //return curve[rounder(windspeed)];
-          
+
         }
 
         //rounding function to help

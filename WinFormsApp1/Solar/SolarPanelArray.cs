@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Solar
 {
     internal class SolarPanelArray : SolarPanel
     {
@@ -15,6 +15,7 @@ namespace WinFormsApp1
         {
             this.amount = amount;
             isArray = true;
+            Price = amount * Price;
         }
 
         public override int getDailyEmissions()
@@ -48,10 +49,11 @@ namespace WinFormsApp1
         public int getHalfHourlyGeneration(string currTime, int iterationNo, bool accumulate)
         {
             if (!accumulate) return base.getHalfHourlyGeneration(currTime, iterationNo);
-            else return this.getHalfHourlyGeneration(currTime, iterationNo);
+            else return getHalfHourlyGeneration(currTime, iterationNo);
         }
 
-        public SolarPanel getPanelObject() {
+        public SolarPanel getPanelObject()
+        {
             return new SolarPanel(type, width, length, watts, cells, material);
         }
     }

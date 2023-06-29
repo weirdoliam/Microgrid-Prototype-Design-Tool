@@ -17,6 +17,8 @@ namespace WinFormsApp1
 
         protected int generationWatts;
 
+        public decimal Price { get; protected set; }
+
         public int Watts { get => watts; }
 
         public int Generating { get => generationWatts; set => generationWatts = value; }

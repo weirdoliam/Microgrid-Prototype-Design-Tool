@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.Solar;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
 {

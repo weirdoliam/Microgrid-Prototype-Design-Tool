@@ -5,19 +5,22 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.Solar;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1.Reporting
 {
     internal static class DailyReporter
     {
 
-        // Calculates entire content, from scratch Will break it down once it's created
+        // Calculates entire content, from scratch, will break it down once it's created
         public static DayReport GenerateReport(DateTime date)
         {
             int totalWatts = 0;
             int solarGeneration = 0;
             int otherGeneration = 0;
             int windGeneration = 0;
+          
 
             //Deliverable
             DayReport dayReport = new DayReport($"{date.Day}.{date.Month}.{date.Year}");
@@ -107,9 +110,10 @@ namespace WinFormsApp1.Reporting
 
             //for all batteries and storage, calculate the state of power storage through the day, based on current supply vs current demand
 
-            //THere's a couple ways I wanna do this. One is to create an instance of a large battery which has the sums of all other batteries combined, and this will be used for the report.
+            //create an instance of a large battery which has the sums of all other batteries combined, and this will be used for the report.
             double totalCapacity = 0;
             double totalChargeRate = 0;
+            decimal totalCost = 0;
             foreach (EnergyStorageUnit esu in Cache.energyStorageUnits)
             {
                 if (esu is LithiumIonBattery)
@@ -117,9 +121,10 @@ namespace WinFormsApp1.Reporting
                     LithiumIonBattery lib = (LithiumIonBattery)esu;
                     totalCapacity += lib.Capacity;
                     totalChargeRate += lib.MaxChargeRate;
+                    totalCost += lib.Price;
                 }
             }
-            LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery");
+            LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery", totalCost);
 
             //Generate a list of state of charge throughout the day
             List<int> storageCharge = new List<int>();
@@ -157,6 +162,7 @@ namespace WinFormsApp1.Reporting
                     giveToGrid = 0;
                 }
                 currCharge = reportBattry.ChargeLevel;
+                
                 //Console.WriteLine($"Current Charge after calculations: {currCharge}");
                 gridNeeds.Add((int)(needFromGrid - giveToGrid));
                 storageCharge.Add((int)currCharge);
@@ -165,12 +171,7 @@ namespace WinFormsApp1.Reporting
             dayReport.InsertItem("Overall Grid Needs", gridNeeds);
             //battery alignment
             dayReport.GridCapacity = reportBattry;
-            // Hamilton	21.2c
-            todaysCostFromGrid = (decimal)(gridNeeds.Sum() / 1000 * 0.212);
-            Console.WriteLine($"${todaysCostFromGrid.Round(2)}");
-            
-            //return report 
-            
+                        
             return dayReport;
         }
     }

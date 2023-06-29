@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.Solar;
 
 namespace WinFormsApp1
 {
@@ -32,7 +33,6 @@ namespace WinFormsApp1
                 labelMat.Text = "Material: Polycrystalline";
             }
         }
-
 
         /// <summary>
         /// SOLAR PANEL BUTTON

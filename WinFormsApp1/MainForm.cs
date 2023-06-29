@@ -2,6 +2,9 @@
 using System.IO;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.Reporting;
+using WinFormsApp1.Solar;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
 {
@@ -118,7 +121,7 @@ namespace WinFormsApp1
                     string[] values = line.Split(",");
                     try
                     {
-                        WindTurbineExisting wte = new WindTurbineExisting(values[1], values[3], int.Parse(values[8]), double.Parse(values[9]),
+                        WindTurbineExisting wte = new WindTurbineExisting(values[1], values[3], int.Parse(values[8]) * 1000, double.Parse(values[9]),
                             double.Parse(values[10]), int.Parse(values[12]), double.Parse(values[19]), double.Parse(values[20]), double.Parse(values[21]));
                         Cache.availableTurbines.Add(wte);
                     }
@@ -147,7 +150,7 @@ namespace WinFormsApp1
                         double windspeed = 0.0;
                         for (int i = 4; i < 75; i++)
                         {
-                            wtpc.addDataPoint(windspeed, int.Parse(values[i]));
+                            wtpc.addDataPoint(windspeed, int.Parse(values[i]) * 1000);
                             windspeed += 0.5;
                         }
                         //loop through our list of generators and associate it to them
@@ -429,7 +432,7 @@ namespace WinFormsApp1
         {
             for (int i = 0; i < 1; i++)
             {
-                Cache.energyStorageUnits.Add(new LithiumIonBattery(1500, 1000, "Test Battery"));
+                Cache.energyStorageUnits.Add(new LithiumIonBattery(2000, 1000, "Test Battery", 500));
             }
         }
 
@@ -443,12 +446,18 @@ namespace WinFormsApp1
 
         private void largeScaleStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Cache.energyStorageUnits.Add(new LithiumIonBattery(20000, 1000, "Test Battery"));
+            Cache.energyStorageUnits.Add(new LithiumIonBattery(20000, 3500, "Test Battery", 5000));
         }
 
         private void resetStorageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cache.energyStorageUnits.Clear();
+        }
+
+        private void monthToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MonthyReportViewer month = new MonthyReportViewer();
+            month.ShowDialog();
         }
     }
 }

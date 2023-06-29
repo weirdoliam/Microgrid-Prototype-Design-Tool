@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Wind
 {
     internal class WindTurbinePowerCurve
     {
@@ -41,11 +41,11 @@ namespace WinFormsApp1
 
         public bool matchesExistingTurbine(WindTurbineExisting e)
         {
-            if (e.Manufacturer == this.manufacturer && e.Name == this.name)
+            if (e.Manufacturer == manufacturer && e.Name == name)
             {
                 return true;
             }
-            else return false; 
+            else return false;
         }
     }
 }
