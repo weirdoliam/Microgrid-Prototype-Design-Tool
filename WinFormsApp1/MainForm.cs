@@ -3,6 +3,8 @@ using System.IO;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
 using WinFormsApp1.Reporting;
+using WinFormsApp1.Solar;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
 {

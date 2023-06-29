@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Wind
 {
     internal class WindSpeedModel
     {
