@@ -1,7 +1,7 @@
 ﻿using Microsoft.ML.Data;
 using System;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.ml
 {
     //heatpump,electric_cooking,gas_cooking,bottled_gas_cooking,electric_water_heating,gas_water_heating,wood_water_heating,electric_heating,gas_heating
     //,wood_heating,fossil_fuels_heating,adults,children,income,location,datetime,consumpiton_data
@@ -10,13 +10,13 @@ namespace WinFormsApp1
     {
         [LoadColumn(0)]
         public bool heatpump { get; set; }
-        
+
         [LoadColumn(1)]
         public bool electric_cooking { get; set; }
-        
+
         [LoadColumn(2)]
         public bool gas_cooking { get; set; }
-        
+
         [LoadColumn(3)]
         public bool bottled_gas_cooking { get; set; }
 

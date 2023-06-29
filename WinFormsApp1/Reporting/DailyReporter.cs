@@ -5,6 +5,8 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.Solar;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1.Reporting
 {

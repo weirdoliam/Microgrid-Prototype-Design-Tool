@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Wind
 {
     internal class WindTurbineExisting : EnergyIn
     {
@@ -52,14 +52,14 @@ namespace WinFormsApp1
         /// <param name="cutInSpeed">in m/s</param>
         /// <param name="ratedSpeed">in m/s</param>
         /// <param name="cutOutSpeed">in m/s</param>
-        public WindTurbineExisting(string name, 
-            string manufacturer, 
-            int ratedPower, 
-            double rotorDiameter, 
-            double sweptArea, 
-            int numBlades, 
-            double cutInSpeed, 
-            double ratedSpeed, 
+        public WindTurbineExisting(string name,
+            string manufacturer,
+            int ratedPower,
+            double rotorDiameter,
+            double sweptArea,
+            int numBlades,
+            double cutInSpeed,
+            double ratedSpeed,
             double cutOutSpeed)
         {
             this.name = name;
@@ -84,7 +84,7 @@ namespace WinFormsApp1
             int numBlades,
             double cutInSpeed,
             double ratedSpeed,
-            double cutOutSpeed, 
+            double cutOutSpeed,
             int amount)
         {
             this.name = name;
@@ -118,11 +118,11 @@ namespace WinFormsApp1
             string returnString = "ExistingTurbine";
             if (curve == null)
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower/1000}kW";
+                returnString += $"{returnString}{manufacturer},{name},{ratedPower / 1000}kW";
             }
             else
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower/1000}kW,contains power curve data";
+                returnString += $"{returnString}{manufacturer},{name},{ratedPower / 1000}kW,contains power curve data";
             }
             if (isArray)
             {
@@ -139,7 +139,7 @@ namespace WinFormsApp1
         public override int getDailyGeneration()
         {
             if (isArray) return ratedPower * 24 * amount;
-            else return ratedPower*24;
+            else return ratedPower * 24;
         }
 
         public override int getHalfHourlyGeneration(string currTime, int iterationNo)
@@ -153,10 +153,10 @@ namespace WinFormsApp1
                 List<double> windSpeeds = Cache.windModel.getDailySpeeds(justDate);
                 //get the current windspeed
                 double windspeed = windSpeeds[iterationNo];
-                returnAmount =  getExistingPerformance(windspeed)/2;
+                returnAmount = getExistingPerformance(windspeed) / 2;
 
             }
-            else 
+            else
             {
                 WindTurbine w = new WindTurbine(ratedPower, (int)rotorDiameter, 0, name);
                 returnAmount = w.getHalfHourlyGeneration(currTime, iterationNo);
@@ -173,12 +173,12 @@ namespace WinFormsApp1
         /// <returns></returns>
         public int getExistingPerformance(double windspeed)
         {
-            if(windspeed > 35)
+            if (windspeed > 35)
             {
                 return 0;
             }
             //only if we have a power curve do we return something
-           
+
 
             //get nearest .5 below and above
 
@@ -196,12 +196,12 @@ namespace WinFormsApp1
             }
             int upperWattage = curve[upper];
             int lowerWattage = curve[lower];
-            int val = (int)((upperWattage + lowerWattage) / 2);
+            int val = (upperWattage + lowerWattage) / 2;
             if (isArray) return val * amount;
             return val;
             //*/
             //return curve[rounder(windspeed)];
-          
+
         }
 
         //rounding function to help

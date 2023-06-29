@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
 {
