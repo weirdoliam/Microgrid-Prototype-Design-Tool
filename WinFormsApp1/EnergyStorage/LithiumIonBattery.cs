@@ -7,11 +7,13 @@ namespace WinFormsApp1.EnergyStorage
 {
     public class LithiumIonBattery : EnergyStorageUnit
     {
-        // In watts
+        // In watts/half hour
         private double _maxChargeRate;
         // give it a proper name
         private string _name;
-
+        public double Efficiency { get; set; }
+        public int Currnt { get; set; }
+        public int Voltage { get; set; }
 
         public string Name { get => _name; set => _name = value; }
         public double MaxChargeRate { get => _maxChargeRate; set => _maxChargeRate = value; }
@@ -24,6 +26,7 @@ namespace WinFormsApp1.EnergyStorage
             _maxChargeRate = maxChargeRate;
             _name = name;
             Price = price;
+            Efficiency = 0.95;
         }
 
         /// <summary>
@@ -51,8 +54,7 @@ namespace WinFormsApp1.EnergyStorage
         /// <param name="amount">Returns energy that was discharged</param>
         public override double Discharge(double amount)
         {
-            double efficiency = 0.95;
-            double effectiveReturn = amount * efficiency;
+            double effectiveReturn = amount * Efficiency;
             double old_charge = ChargeLevel;
             ChargeLevel = Math.Max(ChargeLevel - effectiveReturn, 0);
             return old_charge- ChargeLevel;

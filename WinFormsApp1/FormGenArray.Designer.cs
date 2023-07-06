@@ -29,125 +29,210 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGenArray));
-            this.labelAmount = new System.Windows.Forms.Label();
-            this.textBoxQuantity = new System.Windows.Forms.TextBox();
-            this.groupBoxSolar = new System.Windows.Forms.GroupBox();
-            this.labelMat = new System.Windows.Forms.Label();
-            this.labelWatts = new System.Windows.Forms.Label();
-            this.labelDim = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBoxSolarType = new System.Windows.Forms.ComboBox();
-            this.groupBoxSolar.SuspendLayout();
-            this.SuspendLayout();
+            labelAmount = new System.Windows.Forms.Label();
+            textBoxQuantity = new System.Windows.Forms.TextBox();
+            groupBoxSolar = new System.Windows.Forms.GroupBox();
+            textBoxCells = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            textBox1 = new System.Windows.Forms.TextBox();
+            textBoxPrice = new System.Windows.Forms.TextBox();
+            labelPrice = new System.Windows.Forms.Label();
+            textBoxWatts = new System.Windows.Forms.TextBox();
+            textBoxW = new System.Windows.Forms.TextBox();
+            textBoxMat = new System.Windows.Forms.TextBox();
+            labelMat = new System.Windows.Forms.Label();
+            labelWatts = new System.Windows.Forms.Label();
+            labelDim = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            comboBoxSolarType = new System.Windows.Forms.ComboBox();
+            button2 = new System.Windows.Forms.Button();
+            groupBoxSolar.SuspendLayout();
+            SuspendLayout();
             // 
             // labelAmount
             // 
-            this.labelAmount.AutoSize = true;
-            this.labelAmount.Location = new System.Drawing.Point(6, 59);
-            this.labelAmount.Name = "labelAmount";
-            this.labelAmount.Size = new System.Drawing.Size(34, 15);
-            this.labelAmount.TabIndex = 2;
-            this.labelAmount.Text = "# of: ";
+            labelAmount.AutoSize = true;
+            labelAmount.Location = new System.Drawing.Point(6, 210);
+            labelAmount.Name = "labelAmount";
+            labelAmount.Size = new System.Drawing.Size(34, 15);
+            labelAmount.TabIndex = 2;
+            labelAmount.Text = "# of: ";
             // 
             // textBoxQuantity
             // 
-            this.textBoxQuantity.Location = new System.Drawing.Point(49, 56);
-            this.textBoxQuantity.Name = "textBoxQuantity";
-            this.textBoxQuantity.Size = new System.Drawing.Size(39, 23);
-            this.textBoxQuantity.TabIndex = 3;
-            this.textBoxQuantity.Text = "0";
+            textBoxQuantity.Location = new System.Drawing.Point(94, 207);
+            textBoxQuantity.Name = "textBoxQuantity";
+            textBoxQuantity.Size = new System.Drawing.Size(39, 23);
+            textBoxQuantity.TabIndex = 3;
+            textBoxQuantity.Text = "0";
             // 
             // groupBoxSolar
             // 
-            this.groupBoxSolar.Controls.Add(this.labelMat);
-            this.groupBoxSolar.Controls.Add(this.labelWatts);
-            this.groupBoxSolar.Controls.Add(this.labelDim);
-            this.groupBoxSolar.Controls.Add(this.button2);
-            this.groupBoxSolar.Controls.Add(this.labelAmount);
-            this.groupBoxSolar.Controls.Add(this.textBoxQuantity);
-            this.groupBoxSolar.Controls.Add(this.label2);
-            this.groupBoxSolar.Controls.Add(this.comboBoxSolarType);
-            this.groupBoxSolar.Location = new System.Drawing.Point(12, 12);
-            this.groupBoxSolar.Name = "groupBoxSolar";
-            this.groupBoxSolar.Size = new System.Drawing.Size(235, 197);
-            this.groupBoxSolar.TabIndex = 4;
-            this.groupBoxSolar.TabStop = false;
-            this.groupBoxSolar.Text = "Solar Panel Properties";
+            groupBoxSolar.Controls.Add(textBoxCells);
+            groupBoxSolar.Controls.Add(label3);
+            groupBoxSolar.Controls.Add(label1);
+            groupBoxSolar.Controls.Add(textBox1);
+            groupBoxSolar.Controls.Add(textBoxPrice);
+            groupBoxSolar.Controls.Add(labelPrice);
+            groupBoxSolar.Controls.Add(textBoxWatts);
+            groupBoxSolar.Controls.Add(textBoxW);
+            groupBoxSolar.Controls.Add(textBoxMat);
+            groupBoxSolar.Controls.Add(labelMat);
+            groupBoxSolar.Controls.Add(labelWatts);
+            groupBoxSolar.Controls.Add(labelDim);
+            groupBoxSolar.Controls.Add(labelAmount);
+            groupBoxSolar.Controls.Add(textBoxQuantity);
+            groupBoxSolar.Controls.Add(label2);
+            groupBoxSolar.Controls.Add(comboBoxSolarType);
+            groupBoxSolar.Location = new System.Drawing.Point(12, 12);
+            groupBoxSolar.Name = "groupBoxSolar";
+            groupBoxSolar.Size = new System.Drawing.Size(246, 249);
+            groupBoxSolar.TabIndex = 4;
+            groupBoxSolar.TabStop = false;
+            groupBoxSolar.Text = "Solar Panel Properties";
+            // 
+            // textBoxCells
+            // 
+            textBoxCells.Location = new System.Drawing.Point(94, 117);
+            textBoxCells.Name = "textBoxCells";
+            textBoxCells.Size = new System.Drawing.Size(146, 23);
+            textBoxCells.TabIndex = 16;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(6, 120);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(35, 15);
+            label3.TabIndex = 15;
+            label3.Text = "Cells:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label1.Location = new System.Drawing.Point(159, 88);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(16, 20);
+            label1.TabIndex = 14;
+            label1.Text = "x";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new System.Drawing.Point(177, 87);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(63, 23);
+            textBox1.TabIndex = 13;
+            // 
+            // textBoxPrice
+            // 
+            textBoxPrice.Location = new System.Drawing.Point(94, 177);
+            textBoxPrice.Name = "textBoxPrice";
+            textBoxPrice.Size = new System.Drawing.Size(146, 23);
+            textBoxPrice.TabIndex = 12;
+            // 
+            // labelPrice
+            // 
+            labelPrice.AutoSize = true;
+            labelPrice.Location = new System.Drawing.Point(6, 180);
+            labelPrice.Name = "labelPrice";
+            labelPrice.Size = new System.Drawing.Size(39, 15);
+            labelPrice.TabIndex = 11;
+            labelPrice.Text = "Price: ";
+            // 
+            // textBoxWatts
+            // 
+            textBoxWatts.Location = new System.Drawing.Point(94, 147);
+            textBoxWatts.Name = "textBoxWatts";
+            textBoxWatts.Size = new System.Drawing.Size(146, 23);
+            textBoxWatts.TabIndex = 10;
+            // 
+            // textBoxW
+            // 
+            textBoxW.Location = new System.Drawing.Point(94, 87);
+            textBoxW.Name = "textBoxW";
+            textBoxW.Size = new System.Drawing.Size(63, 23);
+            textBoxW.TabIndex = 9;
+            // 
+            // textBoxMat
+            // 
+            textBoxMat.Location = new System.Drawing.Point(94, 57);
+            textBoxMat.Name = "textBoxMat";
+            textBoxMat.Size = new System.Drawing.Size(146, 23);
+            textBoxMat.TabIndex = 8;
             // 
             // labelMat
             // 
-            this.labelMat.AutoSize = true;
-            this.labelMat.Location = new System.Drawing.Point(6, 84);
-            this.labelMat.Name = "labelMat";
-            this.labelMat.Size = new System.Drawing.Size(56, 15);
-            this.labelMat.TabIndex = 7;
-            this.labelMat.Text = "Material: ";
+            labelMat.AutoSize = true;
+            labelMat.Location = new System.Drawing.Point(6, 60);
+            labelMat.Name = "labelMat";
+            labelMat.Size = new System.Drawing.Size(56, 15);
+            labelMat.TabIndex = 7;
+            labelMat.Text = "Material: ";
             // 
             // labelWatts
             // 
-            this.labelWatts.AutoSize = true;
-            this.labelWatts.Location = new System.Drawing.Point(6, 135);
-            this.labelWatts.Name = "labelWatts";
-            this.labelWatts.Size = new System.Drawing.Size(43, 15);
-            this.labelWatts.TabIndex = 6;
-            this.labelWatts.Text = "Watts: ";
+            labelWatts.AutoSize = true;
+            labelWatts.Location = new System.Drawing.Point(6, 150);
+            labelWatts.Name = "labelWatts";
+            labelWatts.Size = new System.Drawing.Size(43, 15);
+            labelWatts.TabIndex = 6;
+            labelWatts.Text = "Watts: ";
             // 
             // labelDim
             // 
-            this.labelDim.AutoSize = true;
-            this.labelDim.Location = new System.Drawing.Point(6, 108);
-            this.labelDim.Name = "labelDim";
-            this.labelDim.Size = new System.Drawing.Size(75, 15);
-            this.labelDim.TabIndex = 5;
-            this.labelDim.Text = "Dimensions: ";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 165);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(223, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "&Add to Grid";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            labelDim.AutoSize = true;
+            labelDim.Location = new System.Drawing.Point(6, 90);
+            labelDim.Name = "labelDim";
+            labelDim.Size = new System.Drawing.Size(75, 15);
+            labelDim.TabIndex = 5;
+            labelDim.Text = "Dimensions: ";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Type: ";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(6, 30);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(37, 15);
+            label2.TabIndex = 1;
+            label2.Text = "Type: ";
+            label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // comboBoxSolarType
             // 
-            this.comboBoxSolarType.FormattingEnabled = true;
-            this.comboBoxSolarType.Items.AddRange(new object[] {
-            "Residential (60 Cells)",
-            "Commercial (72 Cells)"});
-            this.comboBoxSolarType.Location = new System.Drawing.Point(49, 27);
-            this.comboBoxSolarType.Name = "comboBoxSolarType";
-            this.comboBoxSolarType.Size = new System.Drawing.Size(145, 23);
-            this.comboBoxSolarType.TabIndex = 1;
-            this.comboBoxSolarType.SelectedIndexChanged += new System.EventHandler(this.comboBoxSolarType_SelectedIndexChanged);
+            comboBoxSolarType.FormattingEnabled = true;
+            comboBoxSolarType.Items.AddRange(new object[] { "Residential (60 Cells)", "Commercial (72 Cells)" });
+            comboBoxSolarType.Location = new System.Drawing.Point(94, 27);
+            comboBoxSolarType.Name = "comboBoxSolarType";
+            comboBoxSolarType.Size = new System.Drawing.Size(146, 23);
+            comboBoxSolarType.TabIndex = 1;
+            comboBoxSolarType.SelectedIndexChanged += comboBoxSolarType_SelectedIndexChanged;
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(12, 267);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(246, 23);
+            button2.TabIndex = 4;
+            button2.Text = "&Add to Grid";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // FormGenArray
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(259, 219);
-            this.Controls.Add(this.groupBoxSolar);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FormGenArray";
-            this.Text = "New Energy Generation";
-            this.groupBoxSolar.ResumeLayout(false);
-            this.groupBoxSolar.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(269, 302);
+            Controls.Add(groupBoxSolar);
+            Controls.Add(button2);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Name = "FormGenArray";
+            Text = "New Energy Generation";
+            groupBoxSolar.ResumeLayout(false);
+            groupBoxSolar.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -160,5 +245,14 @@
         private System.Windows.Forms.Label labelWatts;
         private System.Windows.Forms.Label labelDim;
         private System.Windows.Forms.Label labelMat;
+        private System.Windows.Forms.TextBox textBoxWatts;
+        private System.Windows.Forms.TextBox textBoxW;
+        private System.Windows.Forms.TextBox textBoxMat;
+        private System.Windows.Forms.TextBox textBoxPrice;
+        private System.Windows.Forms.Label labelPrice;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxCells;
+        private System.Windows.Forms.Label label3;
     }
 }

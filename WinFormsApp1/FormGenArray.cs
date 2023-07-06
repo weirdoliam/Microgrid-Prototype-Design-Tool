@@ -20,17 +20,19 @@ namespace WinFormsApp1
         {
             if (comboBoxSolarType.SelectedIndex == 0)
             {
-                //new SolarPanel("Residential", 1.651f, 0.9906f, 345, 60, "Monocrystalline");
-                labelDim.Text = "Dimensions: 1.651m x 0.9906m";
-                labelMat.Text = "Material: Monocrystalline";
-                labelWatts.Text = "Watts: 250 W";
+                textBoxMat.Text = "Monocrystalline";
+                textBoxW.Text = "1.651m x 0.9906m";
+                textBoxWatts.Text = "250";
+                textBoxCells.Text = "60";
+                textBoxPrice.Text = int.Parse(textBoxWatts.Text) * 2.5 + "";
             }
             else if (comboBoxSolarType.SelectedIndex == 1)
             {
-                //new SolarPanel("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline");
-                labelDim.Text = "Dimensions: 1.9812m x 0.9906m";
-                labelWatts.Text = "Watts: 345W";
-                labelMat.Text = "Material: Polycrystalline";
+                textBoxMat.Text = "Polycrystalline";
+                textBoxW.Text = "1.9812m x 0.9906m";
+                textBoxWatts.Text = "345";
+                textBoxCells.Text = "72";
+                textBoxPrice.Text = int.Parse(textBoxWatts.Text) * 2.5 + "";
             }
         }
 
@@ -42,23 +44,29 @@ namespace WinFormsApp1
         private void button2_Click(object sender, EventArgs e)
         {
             int amount = int.Parse(textBoxQuantity.Text.ToString());
+
             if (amount > 0)
             {
-                if (comboBoxSolarType.SelectedIndex == 0)
+                try
                 {
-                    SolarPanelArray s = new SolarPanelArray("Residential", 1.651f, 0.9906f, 250, 60, "Monocrystalline", amount);
+                    string material = textBoxMat.Text;
+                    float width = float.Parse(textBoxW.Text);
+                    float length = float.Parse(textBoxW.Text);
+                    int watts = int.Parse(textBoxWatts.Text);
+                    decimal price = decimal.Parse(textBoxPrice.Text);
+                    int cells = int.Parse(textBoxCells.Text);
+                    SolarPanelArray s = new SolarPanelArray(material, width, length, watts, cells, material, amount, price);
                     Cache.genListin.Add(s);
-                    MessageBox.Show("Successfully Created Residential Soloar Panel Array of " + amount + " panel(s).");
+                    MessageBox.Show("Successfully Created Soloar Panel Array of " + amount + " panel(s).");
+                    this.Close();
                 }
-                else if (comboBoxSolarType.SelectedIndex == 1)
+                catch (Exception ex)
                 {
-                    SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", amount);
-                    Cache.genListin.Add(s);
-                    //MessageBox.Show("Successfully Created Commercial Soloar Panel Array of " + amount + " panel(s).");
+                    MessageBox.Show(ex.Message);
                 }
-                this.Close();
             }
-            else {
+            else
+            {
                 MessageBox.Show("Please install at least 1 unit.");
             }
         }

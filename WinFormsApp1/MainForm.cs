@@ -190,7 +190,7 @@ namespace WinFormsApp1
 
             //default additions
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 1);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 1, 100);
             Cache.genListin.Add(s);
             Cache.genListOut.Add(Cache.houseModels[0]);
         }
@@ -458,6 +458,12 @@ namespace WinFormsApp1
         {
             MonthyReportViewer month = new MonthyReportViewer();
             month.ShowDialog();
+        }
+
+        private void customToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddBattery addBattery = new AddBattery();
+            addBattery.ShowDialog();
         }
     }
 }

@@ -25,7 +25,8 @@ namespace WinFormsApp1.Solar
         /// <param name="_watts">Wattage of panel</param>
         /// <param name="_cells">How many solar cells in the panel</param>
         /// <param name="_material">What material the material is made out of</param>
-        public SolarPanel(string _type, float _width, float _length, int _watts, int _cells, string _material)
+        /// <param name="_price">Manually set the price of obj</param>
+        public SolarPanel(string _type, float _width, float _length, int _watts, int _cells, string _material, decimal _price)
         {
             type = _type;
             width = _width;
@@ -35,9 +36,7 @@ namespace WinFormsApp1.Solar
             material = _material;
             dailyEmissions = 0;
             isArray = false;
-
-            //Cost per watt is about 2.5
-            Price = (decimal)2.5 * _watts;
+            Price = _price;
         }
 
         public override string getArrayDescription()

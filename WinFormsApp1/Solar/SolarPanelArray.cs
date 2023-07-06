@@ -10,12 +10,12 @@ namespace WinFormsApp1.Solar
 
         public int Amount { get => amount; }
 
-        public SolarPanelArray(string _type, float _width, float _length, int _watts, int _cells, string _material, int amount)
-            : base(_type, _width, _length, _watts, _cells, _material)
+        public SolarPanelArray(string _type, float _width, float _length, int _watts, int _cells, string _material, int amount, decimal _price)
+            : base(_type, _width, _length, _watts, _cells, _material, _price)
         {
             this.amount = amount;
             isArray = true;
-            Price = amount * Price;
+            Price = amount * _price;
         }
 
         public override int getDailyEmissions()
@@ -23,7 +23,6 @@ namespace WinFormsApp1.Solar
             return base.getDailyEmissions() * amount;
         }
 
-        // in kWh
         public override int getDailyGeneration()
         {
             return base.getDailyGeneration() * amount;
@@ -54,7 +53,7 @@ namespace WinFormsApp1.Solar
 
         public SolarPanel getPanelObject()
         {
-            return new SolarPanel(type, width, length, watts, cells, material);
+            return new SolarPanel(type, width, length, watts, cells, material, Price);
         }
     }
 }
