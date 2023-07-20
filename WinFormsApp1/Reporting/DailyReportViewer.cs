@@ -69,7 +69,7 @@ namespace WinFormsApp1
             double emissions = currData.getEmissions();
             string unit = " kWh";
             //Labels!!!
-            labelCo2.Text = Math.Max(emissions, 0) + " kgCO2/MWh";
+            labelCo2.Text = Math.Max(emissions/1000, 0) + " kgCO2/kWh";
             labelDirty.Text = Math.Max(emissionsEnergy, 0) + unit;
             labelRenew.Text = cleanEnergy + unit;
             labelTotalConsumption.Text = consumption + unit;

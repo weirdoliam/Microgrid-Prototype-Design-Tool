@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -13,12 +14,34 @@ namespace WinFormsApp1.EnergyStorage
         public AddBattery()
         {
             InitializeComponent();
-
+            comboBoxType.SelectedIndex = 0;
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            
+            int amount = int.Parse(textBoxQuantity.Text);
+            if (amount <= 0) { MessageBox.Show("Please specify quantity > 0"); return; }
+            try
+            {
+                int cap = int.Parse(textBoxCap.Text);
+                int volt = int.Parse(textBoxVoltage.Text);
+                int liftcycle = int.Parse(textBoxLife.Text);
+                int current = int.Parse(textBoxCurrent.Text);
+
+                int Wh = current * volt;
+                int ct = cap / Wh;
+                decimal price = int.Parse(textBoxPrice.Text);
+                int chargeRate = Wh / 2;
+                for (int i = 0; i < amount; i++)
+                {
+                    LithiumIonBattery lib = new LithiumIonBattery(cap, chargeRate, comboBoxType.Text, price);
+                    Cache.energyStorageUnits.Add(lib);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
@@ -41,7 +64,7 @@ namespace WinFormsApp1.EnergyStorage
             int ct = cap / Wh;
             labelCharTime.Text = ct + " h";
             textBoxPrice.Text = price + "";
-            labelkWh.Text = Math.Round((double)Wh/1000, 2) + "";
+            labelkWh.Text = Math.Round((double)Wh / 1000, 2) + "";
         }
 
         private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,6 +90,51 @@ namespace WinFormsApp1.EnergyStorage
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void calulateTotals()
+        {
+            try
+            {
+                int cap = int.Parse(textBoxCap.Text);
+                int volt = int.Parse(textBoxVoltage.Text);
+                int current = int.Parse(textBoxCurrent.Text);
+                int Wh = current * volt;
+                int ct = cap / Wh;
+                labelCharTime.Text = ct + " h";
+                labelkWh.Text = Math.Round((double)Wh / 1000, 2) + "";
+            }
+            catch
+            {
+                labelCharTime.Text = "Err h";
+                labelkWh.Text = "Err kWh";
+            }
+        }
+
+        private void textBoxCap_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            calulateTotals();
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxVoltage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            calulateTotals();
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxCurrent_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            calulateTotals();
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -85,7 +85,7 @@ namespace WinFormsApp1.Reporting
         {
             double cleanEnergyProportion = (double)getCleanEnergy() / (double)(getCleanEnergy() + getEmissionEnergy());
             double overallEmissionFactor = (cleanEnergyProportion * cleanEmissionFactor) + ((1 - cleanEnergyProportion) * emissionEmissonFactor);
-            return Math.Round(getConsumption() * overallEmissionFactor, 4);
+            return Math.Round(getConsumption() * overallEmissionFactor, 2);
         }
         public double getNet() {
             return getConsumption() - getCleanEnergy();

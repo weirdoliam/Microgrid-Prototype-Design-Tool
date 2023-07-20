@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBoxBattery = new System.Windows.Forms.GroupBox();
+            labelCharTime = new System.Windows.Forms.Label();
             labelkWh = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             labelEstimatedCharge = new System.Windows.Forms.Label();
@@ -48,7 +49,6 @@
             comboBoxType = new System.Windows.Forms.ComboBox();
             buttonAdd = new System.Windows.Forms.Button();
             buttonCancel = new System.Windows.Forms.Button();
-            labelCharTime = new System.Windows.Forms.Label();
             groupBoxBattery.SuspendLayout();
             SuspendLayout();
             // 
@@ -78,6 +78,16 @@
             groupBoxBattery.TabIndex = 5;
             groupBoxBattery.TabStop = false;
             groupBoxBattery.Text = "Energy Storage";
+            // 
+            // labelCharTime
+            // 
+            labelCharTime.AutoSize = true;
+            labelCharTime.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            labelCharTime.Location = new System.Drawing.Point(169, 154);
+            labelCharTime.Name = "labelCharTime";
+            labelCharTime.Size = new System.Drawing.Size(23, 15);
+            labelCharTime.TabIndex = 23;
+            labelCharTime.Text = "0 h";
             // 
             // labelkWh
             // 
@@ -115,6 +125,7 @@
             textBoxCurrent.Name = "textBoxCurrent";
             textBoxCurrent.Size = new System.Drawing.Size(139, 23);
             textBoxCurrent.TabIndex = 18;
+            textBoxCurrent.KeyPress += textBoxCurrent_KeyPress;
             // 
             // labelCharge
             // 
@@ -131,6 +142,7 @@
             textBoxVoltage.Name = "textBoxVoltage";
             textBoxVoltage.Size = new System.Drawing.Size(139, 23);
             textBoxVoltage.TabIndex = 16;
+            textBoxVoltage.KeyPress += textBoxVoltage_KeyPress;
             // 
             // labelVoltage
             // 
@@ -166,10 +178,12 @@
             // 
             // textBoxCap
             // 
+            textBoxCap.ImeMode = System.Windows.Forms.ImeMode.On;
             textBoxCap.Location = new System.Drawing.Point(169, 58);
             textBoxCap.Name = "textBoxCap";
             textBoxCap.Size = new System.Drawing.Size(139, 23);
             textBoxCap.TabIndex = 8;
+            textBoxCap.KeyPress += textBoxCap_KeyPress;
             // 
             // labelCapacity
             // 
@@ -245,16 +259,6 @@
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += buttonCancel_Click;
-            // 
-            // labelCharTime
-            // 
-            labelCharTime.AutoSize = true;
-            labelCharTime.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            labelCharTime.Location = new System.Drawing.Point(169, 154);
-            labelCharTime.Name = "labelCharTime";
-            labelCharTime.Size = new System.Drawing.Size(23, 15);
-            labelCharTime.TabIndex = 23;
-            labelCharTime.Text = "0 h";
             // 
             // AddBattery
             // 
