@@ -238,73 +238,42 @@ namespace WinFormsApp1
 
         private void update()
         {
-            //Factory Name
-            labelFactName.Text = Cache.mainFactory.Name;
 
             //Array Items
             //added Generators
             listBoxAddedGens.Items.Clear();
+            int tot = 0;
             foreach (EnergyIn i in Cache.genListin)
             {
                 listBoxAddedGens.Items.Add(i.getArrayDescription());
-
+                tot += i.Watts;
             }
-
+            labelGenTot.Text = Cache.genListin.Count.ToString();
+            labelGenCap.Text = tot + "";
             //consumers
             int displayed = 0;
 
+            //Houses
             listBoxAddedHouses.Items.Clear();
+            listBoxAddedHouses.Items.Add("Factory: " + Cache.mainFactory.Name);
+            tot = 0;
             foreach (EnergyOut eOut in Cache.genListOut)
             {
                 listBoxAddedHouses.Items.Add(eOut.getProductDecription());
-                /*
-                if (eOut is HouseArray)
-                {
-                    HouseArray houseArray = (HouseArray)eOut;
-                    foreach (SimpleHome h in houseArray.Homes)
-                    {
-                        listBoxAddedHouses.Items.Add(h.getProductDecription());
-                        displayed++;
-                        if (displayed == 100)
-                        {
-                            break;
-                        }
-                    }
-                    if (displayed == 100)
-                    {
-                        break;
-                    }
-                }
-                */
             }
+            labelHouseTot.Text = Cache.genListOut.Count.ToString()+1;
 
-            //Dev Notes: Old code potentially useful (eek wheres the version control at people!?)
-            //totals
-            //Num Generators and total wattage
-            //display gens
-            //display watts
-            //capacity in kWh
-            //display capacity
-            //display generating power in same light
-            //current time and daylight hours 
-            //lookup current daylighthours based on current time
-
-            /* USABLE CODE
-            foreach(DayRiseTimes m in Cache.yearSunTimes)
+            //Batteries
+            listBoxStorage.Items.Clear();
+            tot = 0;
+            foreach(EnergyStorageUnit eSu in Cache.energyStorageUnits)
             {
-                if (m.Day == Cache.time.Day)
-                {
-                    if (m.Month == Cache.time.Month)
-                    {
-                        labelDaylightHours.Text = m.getDaylightHours().ToString() + "h " + m.getDaylightMinutes().ToString() + "m";
-                        Cache.currDay = m;
-                    }
-                }
+                listBoxStorage.Items.Add(eSu.ToString());
+                tot += (int)eSu.Capacity;
             }
-            */
+            labelStorageTot.Text = Cache.energyStorageUnits.Count.ToString();
+            labelCapacity.Text = tot + "";
 
-            //label consuming kwh
-            //net power gain/loss
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -373,9 +342,9 @@ namespace WinFormsApp1
 
         private void buttonRemoveHouse_Click(object sender, EventArgs e)
         {
-            int i = listBoxAddedHouses.SelectedIndex;
+            int i = listBoxAddedHouses.SelectedIndex - 1;
             listBoxAddedHouses.SelectedIndex = -1;
-            Cache.genListOut.RemoveAt(i);
+            if (i > -1 ) Cache.genListOut.RemoveAt(i);
         }
 
         private void weatherToolStripMenuItem_Click(object sender, EventArgs e)
@@ -464,6 +433,21 @@ namespace WinFormsApp1
         {
             AddBattery addBattery = new AddBattery();
             addBattery.ShowDialog();
+        }
+
+        private void pictureBox5_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox5.Image = Properties.Resources.X_Pressed;
+        }
+
+        private void pictureBox5_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox5.Image = Properties.Resources.X;
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
