@@ -59,5 +59,10 @@ namespace WinFormsApp1.EnergyStorage
             ChargeLevel = Math.Max(ChargeLevel - effectiveReturn, 0);
             return old_charge- ChargeLevel;
         }
+
+        public override string getDescription()
+        {
+            return $"{Name}, {Capacity} W";
+        }
     }
 }

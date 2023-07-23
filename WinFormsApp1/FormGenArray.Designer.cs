@@ -35,7 +35,7 @@
             textBoxCells = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            textBox1 = new System.Windows.Forms.TextBox();
+            textBoxL = new System.Windows.Forms.TextBox();
             textBoxPrice = new System.Windows.Forms.TextBox();
             labelPrice = new System.Windows.Forms.Label();
             textBoxWatts = new System.Windows.Forms.TextBox();
@@ -72,7 +72,7 @@
             groupBoxSolar.Controls.Add(textBoxCells);
             groupBoxSolar.Controls.Add(label3);
             groupBoxSolar.Controls.Add(label1);
-            groupBoxSolar.Controls.Add(textBox1);
+            groupBoxSolar.Controls.Add(textBoxL);
             groupBoxSolar.Controls.Add(textBoxPrice);
             groupBoxSolar.Controls.Add(labelPrice);
             groupBoxSolar.Controls.Add(textBoxWatts);
@@ -118,12 +118,12 @@
             label1.TabIndex = 14;
             label1.Text = "x";
             // 
-            // textBox1
+            // textBoxL
             // 
-            textBox1.Location = new System.Drawing.Point(177, 87);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(63, 23);
-            textBox1.TabIndex = 13;
+            textBoxL.Location = new System.Drawing.Point(177, 87);
+            textBoxL.Name = "textBoxL";
+            textBoxL.Size = new System.Drawing.Size(63, 23);
+            textBoxL.TabIndex = 13;
             // 
             // textBoxPrice
             // 
@@ -251,7 +251,7 @@
         private System.Windows.Forms.TextBox textBoxPrice;
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxL;
         private System.Windows.Forms.TextBox textBoxCells;
         private System.Windows.Forms.Label label3;
     }

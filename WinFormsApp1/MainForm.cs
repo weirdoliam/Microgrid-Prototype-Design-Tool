@@ -261,14 +261,14 @@ namespace WinFormsApp1
             {
                 listBoxAddedHouses.Items.Add(eOut.getProductDecription());
             }
-            labelHouseTot.Text = Cache.genListOut.Count.ToString()+1;
+            labelHouseTot.Text = (Cache.genListOut.Count + 1).ToString();
 
             //Batteries
             listBoxStorage.Items.Clear();
             tot = 0;
-            foreach(EnergyStorageUnit eSu in Cache.energyStorageUnits)
+            foreach (EnergyStorageUnit eSu in Cache.energyStorageUnits)
             {
-                listBoxStorage.Items.Add(eSu.ToString());
+                listBoxStorage.Items.Add(eSu.getDescription());
                 tot += (int)eSu.Capacity;
             }
             labelStorageTot.Text = Cache.energyStorageUnits.Count.ToString();
@@ -284,7 +284,7 @@ namespace WinFormsApp1
             currSum += Cache.genListOut.Count;
             currSum += Cache.houseModels.Count;
             currSum += Cache.availableTurbines.Count;
-
+            currSum += Cache.energyStorageUnits.Count;
             //This method executes every seccond
             if (currSum != updateNum)
             {
@@ -327,11 +327,24 @@ namespace WinFormsApp1
             else buttonRemoveGen.Enabled = false;
         }
 
+        private void listBoxStorage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxStorage.SelectedIndex >= 0) buttonRemoveBattery.Enabled = true;
+            else buttonRemoveBattery.Enabled = false;
+        }
+
         private void buttonRemoveGen_Click(object sender, EventArgs e)
         {
             int i = listBoxAddedGens.SelectedIndex;
             listBoxAddedGens.SelectedIndex = -1;
             Cache.genListin.RemoveAt(i);
+        }
+
+        private void buttonRemoveBattery_Click(object sender, EventArgs e)
+        {
+            int i = listBoxStorage.SelectedIndex;
+            listBoxStorage.SelectedIndex = -1;
+            Cache.energyStorageUnits.RemoveAt(i);
         }
 
         private void listBoxAddedHouses_SelectedIndexChanged(object sender, EventArgs e)
@@ -344,7 +357,7 @@ namespace WinFormsApp1
         {
             int i = listBoxAddedHouses.SelectedIndex - 1;
             listBoxAddedHouses.SelectedIndex = -1;
-            if (i > -1 ) Cache.genListOut.RemoveAt(i);
+            if (i > -1) Cache.genListOut.RemoveAt(i);
         }
 
         private void weatherToolStripMenuItem_Click(object sender, EventArgs e)
@@ -449,6 +462,7 @@ namespace WinFormsApp1
         {
             this.Close();
         }
+
     }
 }
 

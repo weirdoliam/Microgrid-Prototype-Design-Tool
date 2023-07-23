@@ -21,7 +21,8 @@ namespace WinFormsApp1
             if (comboBoxSolarType.SelectedIndex == 0)
             {
                 textBoxMat.Text = "Monocrystalline";
-                textBoxW.Text = "1.651m x 0.9906m";
+                textBoxW.Text = "1.651";
+                textBoxL.Text = "0.9906";
                 textBoxWatts.Text = "250";
                 textBoxCells.Text = "60";
                 textBoxPrice.Text = int.Parse(textBoxWatts.Text) * 2.5 + "";
@@ -29,7 +30,8 @@ namespace WinFormsApp1
             else if (comboBoxSolarType.SelectedIndex == 1)
             {
                 textBoxMat.Text = "Polycrystalline";
-                textBoxW.Text = "1.9812m x 0.9906m";
+                textBoxW.Text = "1.9812";
+                textBoxL.Text = "0.9906";
                 textBoxWatts.Text = "345";
                 textBoxCells.Text = "72";
                 textBoxPrice.Text = int.Parse(textBoxWatts.Text) * 2.5 + "";

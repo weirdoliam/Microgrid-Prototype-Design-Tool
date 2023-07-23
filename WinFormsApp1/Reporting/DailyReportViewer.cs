@@ -23,7 +23,6 @@ namespace WinFormsApp1
         Graphics gy;
         Graphics gx;
         DayReport currData = null;
-        Font defaultFont = new Font("Arial", 10);
         SolidBrush stringBrush = new SolidBrush(Color.Black);
         StringFormat drawFormat = new StringFormat();
         Font drawFont = new Font("Arial", 10);
@@ -157,7 +156,7 @@ namespace WinFormsApp1
                 stringBrush.Color = colors[i % colors.Length];
                 //Draw the string at the top of the screen, 10 pixel offset both x and y to begin with
                 g.DrawString("---- " + checkedItem.ToString(), new Font("Arial", 10), stringBrush, 10, y);
-                put_data(currData.RetrieveItem(checkedItem.ToString()).Item2, mainCanvas, colors[i], 3);
+                put_data(currData.RetrieveItem(checkedItem.ToString()).Item2, mainCanvas, colors[i % colors.Length], 3);
                 //offset y by 15 px
                 y += 15;
                 i++;

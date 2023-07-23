@@ -62,12 +62,18 @@ namespace WinFormsApp1
             fullYearForecastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             labelGridAssets = new System.Windows.Forms.Label();
             groupBoxGeneration = new System.Windows.Forms.GroupBox();
+            labelGenWatts = new System.Windows.Forms.Label();
+            labelGenTot = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            labelGenCap = new System.Windows.Forms.Label();
             pictureBox2 = new System.Windows.Forms.PictureBox();
             listBoxAddedGens = new System.Windows.Forms.ListBox();
             buttonRemoveGen = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             timer1 = new System.Windows.Forms.Timer(components);
             groupBoxConsumption = new System.Windows.Forms.GroupBox();
+            labelHouseTot = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
             buttonAddAll = new System.Windows.Forms.Button();
             pictureBox3 = new System.Windows.Forms.PictureBox();
             buttonRemoveHouse = new System.Windows.Forms.Button();
@@ -78,20 +84,14 @@ namespace WinFormsApp1
             pictureBox5 = new System.Windows.Forms.PictureBox();
             panel2 = new System.Windows.Forms.Panel();
             groupBox1 = new System.Windows.Forms.GroupBox();
-            pictureBox4 = new System.Windows.Forms.PictureBox();
-            button2 = new System.Windows.Forms.Button();
-            listBoxStorage = new System.Windows.Forms.ListBox();
-            label3 = new System.Windows.Forms.Label();
-            labelGenCap = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
-            label5 = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
-            label7 = new System.Windows.Forms.Label();
-            labelGenTot = new System.Windows.Forms.Label();
-            labelGenWatts = new System.Windows.Forms.Label();
             labelCapacity = new System.Windows.Forms.Label();
             labelStorageTot = new System.Windows.Forms.Label();
-            labelHouseTot = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            pictureBox4 = new System.Windows.Forms.PictureBox();
+            buttonRemoveBattery = new System.Windows.Forms.Button();
+            listBoxStorage = new System.Windows.Forms.ListBox();
+            label3 = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             groupBoxGeneration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -338,6 +338,46 @@ namespace WinFormsApp1
             groupBoxGeneration.TabStop = false;
             groupBoxGeneration.Text = "Generation";
             // 
+            // labelGenWatts
+            // 
+            labelGenWatts.AutoSize = true;
+            labelGenWatts.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelGenWatts.Location = new System.Drawing.Point(291, 423);
+            labelGenWatts.Name = "labelGenWatts";
+            labelGenWatts.Size = new System.Drawing.Size(34, 21);
+            labelGenWatts.TabIndex = 12;
+            labelGenWatts.Text = "0W";
+            // 
+            // labelGenTot
+            // 
+            labelGenTot.AutoSize = true;
+            labelGenTot.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelGenTot.Location = new System.Drawing.Point(291, 390);
+            labelGenTot.Name = "labelGenTot";
+            labelGenTot.Size = new System.Drawing.Size(19, 21);
+            labelGenTot.TabIndex = 11;
+            labelGenTot.Text = "0";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label5.Location = new System.Drawing.Point(9, 390);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(277, 21);
+            label5.TabIndex = 10;
+            label5.Text = "Total: .......................................................";
+            // 
+            // labelGenCap
+            // 
+            labelGenCap.AutoSize = true;
+            labelGenCap.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelGenCap.Location = new System.Drawing.Point(9, 423);
+            labelGenCap.Name = "labelGenCap";
+            labelGenCap.Size = new System.Drawing.Size(276, 21);
+            labelGenCap.TabIndex = 9;
+            labelGenCap.Text = "Estimated Total Wattage: ...............";
+            // 
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.lightning;
@@ -402,6 +442,26 @@ namespace WinFormsApp1
             groupBoxConsumption.TabIndex = 16;
             groupBoxConsumption.TabStop = false;
             groupBoxConsumption.Text = "Consumption";
+            // 
+            // labelHouseTot
+            // 
+            labelHouseTot.AutoSize = true;
+            labelHouseTot.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelHouseTot.Location = new System.Drawing.Point(289, 390);
+            labelHouseTot.Name = "labelHouseTot";
+            labelHouseTot.Size = new System.Drawing.Size(19, 21);
+            labelHouseTot.TabIndex = 13;
+            labelHouseTot.Text = "0";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label6.Location = new System.Drawing.Point(6, 390);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(277, 21);
+            label6.TabIndex = 11;
+            label6.Text = "Total: .......................................................";
             // 
             // buttonAddAll
             // 
@@ -513,7 +573,7 @@ namespace WinFormsApp1
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(pictureBox4);
-            groupBox1.Controls.Add(button2);
+            groupBox1.Controls.Add(buttonRemoveBattery);
             groupBox1.Controls.Add(listBoxStorage);
             groupBox1.Controls.Add(label3);
             groupBox1.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -523,117 +583,6 @@ namespace WinFormsApp1
             groupBox1.TabIndex = 17;
             groupBox1.TabStop = false;
             groupBox1.Text = "Storage";
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.Image = (System.Drawing.Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new System.Drawing.Point(6, 22);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new System.Drawing.Size(58, 58);
-            pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            pictureBox4.TabIndex = 9;
-            pictureBox4.TabStop = false;
-            // 
-            // button2
-            // 
-            button2.Enabled = false;
-            button2.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            button2.Location = new System.Drawing.Point(6, 352);
-            button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(67, 25);
-            button2.TabIndex = 9;
-            button2.Text = "Remove";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // listBoxStorage
-            // 
-            listBoxStorage.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            listBoxStorage.FormattingEnabled = true;
-            listBoxStorage.ItemHeight = 17;
-            listBoxStorage.Location = new System.Drawing.Point(6, 87);
-            listBoxStorage.Name = "listBoxStorage";
-            listBoxStorage.Size = new System.Drawing.Size(340, 259);
-            listBoxStorage.TabIndex = 7;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            label3.Location = new System.Drawing.Point(70, 37);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(187, 28);
-            label3.TabIndex = 4;
-            label3.Text = "Energy Storage";
-            // 
-            // labelGenCap
-            // 
-            labelGenCap.AutoSize = true;
-            labelGenCap.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGenCap.Location = new System.Drawing.Point(9, 423);
-            labelGenCap.Name = "labelGenCap";
-            labelGenCap.Size = new System.Drawing.Size(276, 21);
-            labelGenCap.TabIndex = 9;
-            labelGenCap.Text = "Estimated Total Wattage: ...............";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label4.Location = new System.Drawing.Point(6, 423);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(278, 21);
-            label4.TabIndex = 10;
-            label4.Text = "Estimated Total Capacity: ...............";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label5.Location = new System.Drawing.Point(9, 390);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(277, 21);
-            label5.TabIndex = 10;
-            label5.Text = "Total: .......................................................";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label6.Location = new System.Drawing.Point(6, 390);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(277, 21);
-            label6.TabIndex = 11;
-            label6.Text = "Total: .......................................................";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label7.Location = new System.Drawing.Point(6, 390);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(277, 21);
-            label7.TabIndex = 12;
-            label7.Text = "Total: .......................................................";
-            // 
-            // labelGenTot
-            // 
-            labelGenTot.AutoSize = true;
-            labelGenTot.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGenTot.Location = new System.Drawing.Point(291, 390);
-            labelGenTot.Name = "labelGenTot";
-            labelGenTot.Size = new System.Drawing.Size(19, 21);
-            labelGenTot.TabIndex = 11;
-            labelGenTot.Text = "0";
-            // 
-            // labelGenWatts
-            // 
-            labelGenWatts.AutoSize = true;
-            labelGenWatts.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGenWatts.Location = new System.Drawing.Point(291, 423);
-            labelGenWatts.Name = "labelGenWatts";
-            labelGenWatts.Size = new System.Drawing.Size(34, 21);
-            labelGenWatts.TabIndex = 12;
-            labelGenWatts.Text = "0W";
             // 
             // labelCapacity
             // 
@@ -655,15 +604,68 @@ namespace WinFormsApp1
             labelStorageTot.TabIndex = 13;
             labelStorageTot.Text = "0";
             // 
-            // labelHouseTot
+            // label7
             // 
-            labelHouseTot.AutoSize = true;
-            labelHouseTot.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelHouseTot.Location = new System.Drawing.Point(289, 390);
-            labelHouseTot.Name = "labelHouseTot";
-            labelHouseTot.Size = new System.Drawing.Size(19, 21);
-            labelHouseTot.TabIndex = 13;
-            labelHouseTot.Text = "0";
+            label7.AutoSize = true;
+            label7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label7.Location = new System.Drawing.Point(6, 390);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(277, 21);
+            label7.TabIndex = 12;
+            label7.Text = "Total: .......................................................";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label4.Location = new System.Drawing.Point(6, 423);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(278, 21);
+            label4.TabIndex = 10;
+            label4.Text = "Estimated Total Capacity: ...............";
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = (System.Drawing.Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new System.Drawing.Point(6, 22);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new System.Drawing.Size(58, 58);
+            pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pictureBox4.TabIndex = 9;
+            pictureBox4.TabStop = false;
+            // 
+            // buttonRemoveBattery
+            // 
+            buttonRemoveBattery.Enabled = false;
+            buttonRemoveBattery.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            buttonRemoveBattery.Location = new System.Drawing.Point(6, 352);
+            buttonRemoveBattery.Name = "buttonRemoveBattery";
+            buttonRemoveBattery.Size = new System.Drawing.Size(67, 25);
+            buttonRemoveBattery.TabIndex = 9;
+            buttonRemoveBattery.Text = "Remove";
+            buttonRemoveBattery.UseVisualStyleBackColor = true;
+            buttonRemoveBattery.Click += buttonRemoveBattery_Click;
+            // 
+            // listBoxStorage
+            // 
+            listBoxStorage.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            listBoxStorage.FormattingEnabled = true;
+            listBoxStorage.ItemHeight = 17;
+            listBoxStorage.Location = new System.Drawing.Point(6, 87);
+            listBoxStorage.Name = "listBoxStorage";
+            listBoxStorage.Size = new System.Drawing.Size(340, 259);
+            listBoxStorage.TabIndex = 7;
+            listBoxStorage.SelectedIndexChanged += listBoxStorage_SelectedIndexChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            label3.Location = new System.Drawing.Point(70, 37);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(187, 28);
+            label3.TabIndex = 4;
+            label3.Text = "Energy Storage";
             // 
             // MainForm
             // 
@@ -753,7 +755,7 @@ namespace WinFormsApp1
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonRemoveBattery;
         private System.Windows.Forms.ListBox listBoxStorage;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox5;
