@@ -136,20 +136,19 @@ namespace WinFormsApp1.Reporting
             double giveToGrid = 0;
             double needFromGrid = 0;
             double recievedCharge, currCharge = 0;
-            decimal todaysCostFromGrid = 0;
 
             for (int i = 0; i < 48; i++)
             {
                 currDemand = overallConsumption[i];
                 currSupply = overallGen[i];
                 net = currDemand - currSupply;
-                //Console.WriteLine($"Net: {net}");
+                Console.WriteLine($"Net: {net}");
                 //if net is less than zero we have charge!
                 if (net < 0)
                 {
-                    //Console.WriteLine($"Charging Battery: {-net}");
+                    Console.WriteLine($"Charging Battery: {-net}");
                     giveToGrid = reportBattry.Charge(-net);
-                    //Console.WriteLine($"Energy Unable to be charged in half-hour: {giveToGrid}");
+                    Console.WriteLine($"Energy Unable to be charged in half-hour: {giveToGrid}");
                     needFromGrid = 0;
                 }
                 //if net is more than zero, we deduct charge
@@ -159,6 +158,11 @@ namespace WinFormsApp1.Reporting
                     recievedCharge = reportBattry.Discharge(net);
                     needFromGrid = net - recievedCharge;
                     //Console.WriteLine($"Energy Recieved:{recievedCharge}, need from grid to makeup: {needFromGrid}");
+                    giveToGrid = 0;
+                }
+                if (net == 0)
+                {
+                    needFromGrid = 0;
                     giveToGrid = 0;
                 }
                 currCharge = reportBattry.ChargeLevel;

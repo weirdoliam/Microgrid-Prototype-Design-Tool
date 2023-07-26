@@ -14,11 +14,12 @@ using WinFormsApp1.Reporting;
 namespace WinFormsApp1
 {
 
-
     public partial class DailyReportViewer : Form
     {
         const int PADDING = 5;
         int maxVal = 1;
+        int day = 1;
+        int month = 1;
         Graphics g;
         Graphics gy;
         Graphics gx;
@@ -31,9 +32,18 @@ namespace WinFormsApp1
         string sk = "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";
         bool promptSent = false;
 
-        public DailyReportViewer()
+        public DailyReportViewer(DayReport inputDay)
         {
             InitializeComponent();
+            currData = inputDay;
+            if (currData != null)
+            {
+                drawCheckBoxes();
+                day = int.Parse(currData.Date.Split(".")[0]);
+                month = int.Parse(currData.Date.Split(".")[1]);
+                Text = day + "-" + month;
+                labelDate.Text = day + "/" + month;
+            }
             // Enable owner-drawing for the CheckedListBox
             checkedListBoxData.DrawMode = DrawMode.OwnerDrawVariable;
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
@@ -46,6 +56,7 @@ namespace WinFormsApp1
             mainCanvas.Invalidate();
         }
 
+
         private async void process_report()
         {
             if (currData == null)
@@ -54,7 +65,8 @@ namespace WinFormsApp1
                 currData = DailyReporter.GenerateReport(Cache.currDay.getSunrise());
                 //Setup CheckBoxes once
                 drawCheckBoxes();
-
+                Text = day + "-" + month;
+                labelDate.Text = day + "/" + month;
             }
             // ------ The following calculations should be integrated into the dailyreport.
             //BOXES
@@ -65,10 +77,10 @@ namespace WinFormsApp1
             int cleanEnergy = (int)currData.getCleanEnergy() / 1000;
             int emissionsEnergy = (int)currData.getEmissionEnergy() / 1000;
             int consumption = (int)currData.getConsumption() / 1000;
-            double emissions = currData.getEmissions();
+            double emissions = Math.Round(currData.getEmissions(), 2);
             string unit = " kWh";
             //Labels!!!
-            labelCo2.Text = Math.Max(emissions/1000, 0) + " kgCO2/kWh";
+            labelCo2.Text = Math.Max(Math.Round(emissions / 1000, 2), 0) + " kgCO2/kWh";
             labelDirty.Text = Math.Max(emissionsEnergy, 0) + unit;
             labelRenew.Text = cleanEnergy + unit;
             labelTotalConsumption.Text = consumption + unit;
@@ -89,6 +101,7 @@ namespace WinFormsApp1
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
             daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;
             labelPayback.Text = $"{Math.Round(daysTillPayDone, 2)} {time}";
+
             if (!promptSent)
             {
                 promptSent = true;
@@ -110,7 +123,7 @@ namespace WinFormsApp1
 
             panelY.Invalidate();
             panelX.Invalidate();
-
+            g.Clear(Color.LightGray);
             //vert lines
             for (int j = 0; j < mainCanvas.Width; j = j + mainCanvas.Width / 24)
             {
@@ -189,7 +202,6 @@ namespace WinFormsApp1
             int prevX = x;
             int prevY = targetCanvas.Height - workingHeight * (int)(heights[0] / maxVal);
             int index = 1;
-
             foreach (int height in heights)
             {
                 int tayloredHeight = height < 0 ? 0 : height;

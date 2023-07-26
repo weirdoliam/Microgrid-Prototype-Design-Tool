@@ -406,7 +406,7 @@ namespace WinFormsApp1
         private void dayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open form and stuff to do daily thingy :))
-            DailyReportViewer d = new DailyReportViewer();
+            DailyReportViewer d = new DailyReportViewer(null);
             d.ShowDialog();
         }
 

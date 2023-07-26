@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using WinFormsApp1.EnergyStorage;
 
 namespace WinFormsApp1.Reporting
 {
-    internal class DayReport
+    public class DayReport
     {
         List<Tuple<string, List<int>>> tupleList;
         public string Date { get; set; }
@@ -64,15 +65,16 @@ namespace WinFormsApp1.Reporting
         {
             return this.RetrieveItem("Overall Generation").Item2.Sum();
         }
+        //All positive values in grid needs
         public double getEmissionEnergy()
         {
             List<int> gridNeedsAll = this.RetrieveItem("Overall Grid Needs").Item2;
             double totalUsage = 0;
-            foreach (int i in gridNeedsAll)
+            foreach (int value in gridNeedsAll)
             {
-                if(i > 0)
+                if(value > 0)
                 {
-                    totalUsage += i;
+                    totalUsage += value;
                 }
             }
             return totalUsage;
@@ -85,13 +87,21 @@ namespace WinFormsApp1.Reporting
         {
             double cleanEnergyProportion = (double)getCleanEnergy() / (double)(getCleanEnergy() + getEmissionEnergy());
             double overallEmissionFactor = (cleanEnergyProportion * cleanEmissionFactor) + ((1 - cleanEnergyProportion) * emissionEmissonFactor);
-            return Math.Round(getConsumption() * overallEmissionFactor, 2);
+            return getConsumption() * overallEmissionFactor;
         }
+        /// <summary>
+        /// Gets net energy (Consumption - Generation)
+        /// </summary>
+        /// <returns></returns>
         public double getNet() {
             return getConsumption() - getCleanEnergy();
         }
+
+        int tempScape = 1000;
+
         public decimal getGridCost() {
-            return Math.Round((decimal)((getEmissionEnergy()/1000) * 0.212),2);
+            //PRICE PER WATT HERE
+            return Math.Round((decimal)((getEmissionEnergy()/tempScape) * 0.212),2);
         }
         public decimal getDaySavings() {
             return getNegatedGridCost() + getGridBuyBack();
@@ -108,16 +118,17 @@ namespace WinFormsApp1.Reporting
                     buyBack += Math.Abs(value);
                 }
             }
-            return Math.Round((buyBack/1000) * (decimal)0.212, 2);
+            //PRICE PER WATT HERE
+            return Math.Round((buyBack/ tempScape) * (decimal)0.212, 2);
         }
 
         internal decimal getEffectiveCost()
         {
-            return Math.Round((decimal)((getConsumption() / 1000) * 0.212), 2);
+            return Math.Round((decimal)((getConsumption() / tempScape) * 0.212), 2);
         }
 
         public decimal getNegatedGridCost() {
-            return getEffectiveCost() - getGridCost();
+            return Math.Max(getEffectiveCost() - getGridCost(), 0);
         }
     }
 }

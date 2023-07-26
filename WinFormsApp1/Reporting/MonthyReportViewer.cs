@@ -13,7 +13,6 @@ namespace WinFormsApp1.Reporting
     public partial class MonthyReportViewer : Form
     {
         List<DayReport> monthlyReport = new List<DayReport>();
-        DayRiseTimes startDay = Cache.currDay;
         //global pens and brushes
         Pen pen = new Pen(Color.Black, 1);
         Brush brush = new SolidBrush(Color.Black);
@@ -22,14 +21,18 @@ namespace WinFormsApp1.Reporting
         Font drawFont = new Font("Arial", 10);
         int maxVal = 2000;
         int PADDING = 5;
+        int days = 0;
+        string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
         public MonthyReportViewer()
         {
             InitializeComponent();
+            DayRiseTimes startDay = Cache.currDay;
             int month = 1;
-
-            int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-            for (int i = 0; i < daysInMonth[month - 1]; i++)
+            days = daysInMonth[month - 1];
+            labelMonth.Text = months[month - 1];
+            for (int i = 0; i < days; i++)
             {
                 DateTime newDate = new DateTime(2022, month, i + 1);
                 Cache.currDay = Cache.yearSunTimes.FirstOrDefault(d => d.Day == newDate.Day && d.Month == newDate.Month);
@@ -38,6 +41,7 @@ namespace WinFormsApp1.Reporting
 
             Cache.currDay = startDay;
             drawCheckBoxes();
+            updateAllTotals();
         }
 
         private void drawCheckBoxes()
@@ -50,11 +54,79 @@ namespace WinFormsApp1.Reporting
             }
         }
 
+        private void updateAllTotals()
+        {
+            DayReport currData = monthlyReport[0];
+            //Generation Percent - Can be based off day 1
+            labelWindPercent.Text = $"{currData.getWindPercent()}%";
+            labelSolarPercent.Text = $"{currData.getSolarPercent()}%";
+
+            //In kWh - Totaled for every single day in the month
+            int cleanEnergy = 0;
+            int emissionsEnergy = 0;
+            int consumption = 0;
+            double emissions = 0;
+            int net = 0;
+            decimal effCost = 0, gridCost = 0, negatedGridCost = 0, gridBuyBack = 0, monthSavings = 0;
+            decimal setup = Cache.getSetupCost();
+
+            foreach (DayReport day in monthlyReport)
+            {
+                cleanEnergy += (int)day.getCleanEnergy();
+                emissionsEnergy += (int)day.getEmissionEnergy();
+                consumption += (int)day.getConsumption();
+                emissions += day.getEmissions();
+                effCost += day.getEffectiveCost();
+                gridCost += day.getGridCost();
+                gridBuyBack += day.getGridBuyBack();
+                monthSavings += day.getDaySavings();
+            }
+            negatedGridCost = effCost - gridCost;
+            net = consumption - cleanEnergy;
+
+            int scaleValue = 1;
+            string unit = " W";
+            //Scaling
+            if (consumption > 1000000)
+            {
+                scaleValue = 1000000;
+                unit = " MWh";
+            }
+            else if (consumption > 1000)
+            {
+                scaleValue = 1000;
+                unit = " kWh";
+            }
+
+
+            //Labels!!!
+            labelCo2.Text = Math.Max(Math.Round(emissions / 1000, 2), 0) + " kgCO2/kWh";
+            labelDirty.Text = Math.Max(emissionsEnergy / scaleValue, 0) + unit;
+            labelRenew.Text = cleanEnergy / scaleValue + unit;
+            labelTotalConsumption.Text = consumption / scaleValue + unit;
+            labelTotalStorage.Text = currData.GridCapacity.Capacity < scaleValue ? currData.GridCapacity.Capacity / 1000 + " kW" : currData.GridCapacity.Capacity / scaleValue + " MW";
+            labelInternalNet.Text = net / scaleValue + unit;
+            labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
+            //Cost Analysis
+            // Hamilton	21.2c
+            labelEffCost.Text = "$" + $"{effCost:n}";
+            labelGridCost.Text = "$" + $"{gridCost:n}";
+            labelSaved.Text = "$" + $"{negatedGridCost:n}";
+            labelSetupCost.Text = "$" + $"{setup:n}";
+            labelBuyBack.Text = "$" + $"{gridBuyBack:n}";
+            double daysTillPayDone = (int)(setup / (monthSavings / days));
+
+            string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
+            daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;
+            labelPayback.Text = $"{Math.Round(daysTillPayDone, 2)} {time}";
+        }
+
+
         public void redrawMainGraph()
         {
             //isolated graphics object
             Graphics gCanvas = mainCanvas.CreateGraphics();
-      
+
             gCanvas.Clear(Color.LightGray);
             panelY.Invalidate();
             panelX.Invalidate();
@@ -66,7 +138,7 @@ namespace WinFormsApp1.Reporting
             {
                 gCanvas.DrawLine(pen, j, mainCanvas.Height, j, 0);
             }
-            
+
             //horiz lines
             double scale = Math.Floor(maxVal / 50.0) * 5;
             if (maxVal > 10000) scale = Math.Floor(maxVal / 100.0) * 10;
@@ -116,17 +188,23 @@ namespace WinFormsApp1.Reporting
         private void put_data(string key, Graphics gCanvas, int xinc, Color color, int width)
         {
             bool zipped = key == "Battery Usage" ? false : true;
+            int[] xArr = null;
             int x = 0;
+            int startVal = 0;
             foreach (DayReport dayReport in monthlyReport)
             {
                 List<int> currData = dayReport.RetrieveItem(key).Item2;
-                x = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, zipped);
+                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal, false);
+                //xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal,zipped);
+                x = xArr[0];
+                startVal = xArr[1];
             }
         }
 
 
-        private int partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, bool zipped)
+        private int[] partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, int startValue, bool zipped)
         {
+            heights[0] = startValue;
             int zip_amount = 3;
             if (zipped)
             {
@@ -171,7 +249,8 @@ namespace WinFormsApp1.Reporting
                 prevX = x;
                 prevY = y;
             }
-            return x;
+            int lastVal = heights[heights.Count - 1];
+            return new int[] { x, lastVal };
         }
 
         private void mainCanvas_Paint(object sender, PaintEventArgs e)
@@ -208,7 +287,7 @@ namespace WinFormsApp1.Reporting
 
             for (int i = 0; i < points; i++)
             {
-                if (i % increment == 0) gx.DrawString(currTime + "", drawFont, stringBrush, xTarre+20, y);
+                if (i % increment == 0) gx.DrawString(currTime + "", drawFont, stringBrush, xTarre + 20, y);
                 xTarre += xInc;
                 currTime += 1;
             }
@@ -251,6 +330,21 @@ namespace WinFormsApp1.Reporting
                         gy.DrawLine(pen, panelY.Width, yVal, panelY.Width - 10, yVal);
                     }
                 }
+            }
+        }
+
+        private void buttonOpen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int specificDay = int.Parse(textBoxDay.Text);
+                if (specificDay > days && specificDay < 1) { MessageBox.Show("Incorrect Day No."); return; }
+                DailyReportViewer dr = new DailyReportViewer(monthlyReport[specificDay - 1]);
+                dr.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Can't open due to: {ex}");
             }
         }
     }

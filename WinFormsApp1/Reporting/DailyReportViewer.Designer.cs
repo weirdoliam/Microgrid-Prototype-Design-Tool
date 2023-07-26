@@ -32,6 +32,7 @@
             mainCanvas = new System.Windows.Forms.Panel();
             checkedListBoxData = new System.Windows.Forms.CheckedListBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            labelDate = new System.Windows.Forms.Label();
             panelX = new System.Windows.Forms.Panel();
             panelY = new System.Windows.Forms.Panel();
             groupBox2 = new System.Windows.Forms.GroupBox();
@@ -84,23 +85,23 @@
             mainCanvas.BackColor = System.Drawing.SystemColors.Window;
             mainCanvas.Location = new System.Drawing.Point(168, 19);
             mainCanvas.Name = "mainCanvas";
-            mainCanvas.Size = new System.Drawing.Size(1093, 367);
+            mainCanvas.Size = new System.Drawing.Size(1107, 367);
             mainCanvas.TabIndex = 0;
             mainCanvas.Paint += mainCanvas_Paint;
             mainCanvas.Resize += mainCanvas_Resize;
             // 
             // checkedListBoxData
             // 
-            checkedListBoxData.Dock = System.Windows.Forms.DockStyle.Left;
             checkedListBoxData.FormattingEnabled = true;
-            checkedListBoxData.Location = new System.Drawing.Point(3, 19);
+            checkedListBoxData.Location = new System.Drawing.Point(3, 84);
             checkedListBoxData.Name = "checkedListBoxData";
-            checkedListBoxData.Size = new System.Drawing.Size(108, 390);
+            checkedListBoxData.Size = new System.Drawing.Size(108, 328);
             checkedListBoxData.TabIndex = 1;
             checkedListBoxData.Click += checkedListBoxData_Click;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(labelDate);
             groupBox1.Controls.Add(mainCanvas);
             groupBox1.Controls.Add(panelX);
             groupBox1.Controls.Add(panelY);
@@ -108,10 +109,20 @@
             groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             groupBox1.Location = new System.Drawing.Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(1264, 412);
+            groupBox1.Size = new System.Drawing.Size(1278, 412);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Graphing";
+            // 
+            // labelDate
+            // 
+            labelDate.AutoSize = true;
+            labelDate.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelDate.Location = new System.Drawing.Point(10, 19);
+            labelDate.Name = "labelDate";
+            labelDate.Size = new System.Drawing.Size(77, 51);
+            labelDate.TabIndex = 4;
+            labelDate.Text = "1/1";
             // 
             // panelX
             // 
@@ -119,7 +130,7 @@
             panelX.BackColor = System.Drawing.SystemColors.Control;
             panelX.Location = new System.Drawing.Point(111, 385);
             panelX.Name = "panelX";
-            panelX.Size = new System.Drawing.Size(1150, 27);
+            panelX.Size = new System.Drawing.Size(1164, 27);
             panelX.TabIndex = 3;
             panelX.Paint += panelX_Paint;
             // 
@@ -171,7 +182,7 @@
             groupBox2.Controls.Add(richTextBoxResponce);
             groupBox2.Location = new System.Drawing.Point(3, 418);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(1261, 349);
+            groupBox2.Size = new System.Drawing.Size(1275, 342);
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Results";
@@ -526,7 +537,7 @@
             richTextBoxResponce.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             richTextBoxResponce.Location = new System.Drawing.Point(6, 281);
             richTextBoxResponce.Name = "richTextBoxResponce";
-            richTextBoxResponce.Size = new System.Drawing.Size(1249, 57);
+            richTextBoxResponce.Size = new System.Drawing.Size(1263, 50);
             richTextBoxResponce.TabIndex = 0;
             richTextBoxResponce.Text = "";
             // 
@@ -539,12 +550,13 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1264, 768);
+            ClientSize = new System.Drawing.Size(1278, 761);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "DailyReportViewer";
             Text = "Single Day Report";
             groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
@@ -597,5 +609,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolTip toolTipCapacity;
+        private System.Windows.Forms.Label labelDate;
     }
 }

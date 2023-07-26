@@ -181,7 +181,7 @@ namespace WinFormsApp1
                     {
                         string datum = reader.ReadLine().Split(',')[3];
                         Console.WriteLine("Read Datum: " + datum);
-                        powerReadings[index] = double.Parse(datum);
+                        powerReadings[index] = Math.Max(double.Parse(datum), 0);
                     }
                     catch (Exception ex)
                     {
