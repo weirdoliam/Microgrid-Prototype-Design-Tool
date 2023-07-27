@@ -195,6 +195,11 @@ namespace WinFormsApp1
             {
                 houseModelToolStripMenuItem.DropDownItems.Add(h.shortDescription(), null, new EventHandler(HouseModelAdder));
             }
+            //Add Months to month thing
+            for (int i = 0; i < 12; i++)
+            {
+                monthToolStripMenuItem.DropDownItems.Add((i + 1) + "", null, new EventHandler(MonthOpener));
+            }
             //init stage ended
 
             //default additions
@@ -206,6 +211,14 @@ namespace WinFormsApp1
 
             // Work is completed or cancelled, so close the loading form
             LoadingScreenManager.HideLoadingScreen();
+        }
+
+        private void MonthOpener(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedMonth = (ToolStripMenuItem)sender;
+            int month = int.Parse(clickedMonth.Text);
+            MonthyReportViewer mForm = new MonthyReportViewer(month);
+            mForm.ShowDialog();
         }
 
         private void HouseModelAdder(object sender, EventArgs e)
@@ -450,8 +463,7 @@ namespace WinFormsApp1
 
         private void monthToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MonthyReportViewer month = new MonthyReportViewer();
-            month.ShowDialog();
+
         }
 
         private void customToolStripMenuItem_Click(object sender, EventArgs e)

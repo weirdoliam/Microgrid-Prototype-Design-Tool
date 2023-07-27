@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            textBoxSetWidth = new System.Windows.Forms.TextBox();
+            buttonWidth = new System.Windows.Forms.Button();
             labelMonth = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             textBoxMax = new System.Windows.Forms.TextBox();
@@ -82,6 +84,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(textBoxSetWidth);
+            groupBox1.Controls.Add(buttonWidth);
             groupBox1.Controls.Add(labelMonth);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(textBoxMax);
@@ -100,6 +104,26 @@
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Graphing";
+            // 
+            // textBoxSetWidth
+            // 
+            textBoxSetWidth.Location = new System.Drawing.Point(6, 441);
+            textBoxSetWidth.Name = "textBoxSetWidth";
+            textBoxSetWidth.Size = new System.Drawing.Size(72, 23);
+            textBoxSetWidth.TabIndex = 14;
+            textBoxSetWidth.Text = "1674";
+            textBoxSetWidth.Visible = false;
+            // 
+            // buttonWidth
+            // 
+            buttonWidth.Location = new System.Drawing.Point(6, 470);
+            buttonWidth.Name = "buttonWidth";
+            buttonWidth.Size = new System.Drawing.Size(72, 23);
+            buttonWidth.TabIndex = 13;
+            buttonWidth.Text = "set Width";
+            buttonWidth.UseVisualStyleBackColor = true;
+            buttonWidth.Visible = false;
+            buttonWidth.Click += buttonWidth_Click;
             // 
             // labelMonth
             // 
@@ -647,5 +671,7 @@
         private System.Windows.Forms.Label labelWindPercent;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox textBoxSetWidth;
+        private System.Windows.Forms.Button buttonWidth;
     }
 }

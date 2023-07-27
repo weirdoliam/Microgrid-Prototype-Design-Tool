@@ -117,10 +117,10 @@
             // labelDate
             // 
             labelDate.AutoSize = true;
-            labelDate.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelDate.Location = new System.Drawing.Point(10, 19);
+            labelDate.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelDate.Location = new System.Drawing.Point(0, 19);
             labelDate.Name = "labelDate";
-            labelDate.Size = new System.Drawing.Size(77, 51);
+            labelDate.Size = new System.Drawing.Size(62, 41);
             labelDate.TabIndex = 4;
             labelDate.Text = "1/1";
             // 

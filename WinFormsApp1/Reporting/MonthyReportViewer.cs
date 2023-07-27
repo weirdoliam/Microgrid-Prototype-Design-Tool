@@ -27,12 +27,15 @@ namespace WinFormsApp1.Reporting
         string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-        public MonthyReportViewer()
+        //Widhts lol 31 days = 1674
+        // 30 days = 1685
+        //28 = 1669
+
+        public MonthyReportViewer(int month)
         {
             LoadingScreenManager.ShowLoadingScreen();
             InitializeComponent();
             DayRiseTimes startDay = Cache.currDay;
-            int month = 1;
             days = daysInMonth[month - 1];
             labelMonth.Text = months[month - 1];
 
@@ -45,9 +48,11 @@ namespace WinFormsApp1.Reporting
 
             Cache.currDay = startDay;
             LoadingScreenManager.HideLoadingScreen();
+            //Update width appropriately
+            Width = days == 28 ? 1669 : days == 30 ? 1685 : 1674;
             drawCheckBoxes();
             updateAllTotals();
-            
+
         }
 
         private void drawCheckBoxes()
@@ -106,20 +111,20 @@ namespace WinFormsApp1.Reporting
 
 
             //Labels!!!
-            labelCo2.Text = Math.Max(Math.Round(emissions / 1000, 2), 0) + " kgCO2/kWh";
-            labelDirty.Text = Math.Max(emissionsEnergy / scaleValue, 0) + unit;
-            labelRenew.Text = cleanEnergy / scaleValue + unit;
-            labelTotalConsumption.Text = consumption / scaleValue + unit;
-            labelTotalStorage.Text = currData.GridCapacity.Capacity < scaleValue ? currData.GridCapacity.Capacity / 1000 + " kW" : currData.GridCapacity.Capacity / scaleValue + " MW";
-            labelInternalNet.Text = net / scaleValue + unit;
+            labelCo2.Text = $"{Math.Max(Math.Round(emissions / 1000, 2), 0):n} kgCO2/kWh";
+            labelDirty.Text = $"{Math.Max(emissionsEnergy / scaleValue, 0):n0} {unit}";
+            labelRenew.Text = $"{cleanEnergy / scaleValue:n} {unit}";
+            labelTotalConsumption.Text = $"{consumption / scaleValue:n} {unit}";
+            labelTotalStorage.Text = currData.GridCapacity.Capacity < 1000000 ? $"{currData.GridCapacity.Capacity / 1000:n} kW" : $"{currData.GridCapacity.Capacity / scaleValue:n} MW";
+            labelInternalNet.Text = $"{net / scaleValue:n} {unit}";
             labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
             //Cost Analysis
             // Hamilton	21.2c
-            labelEffCost.Text = "$" + $"{effCost:n}";
-            labelGridCost.Text = "$" + $"{gridCost:n}";
-            labelSaved.Text = "$" + $"{negatedGridCost:n}";
-            labelSetupCost.Text = "$" + $"{setup:n}";
-            labelBuyBack.Text = "$" + $"{gridBuyBack:n}";
+            labelEffCost.Text = $"${effCost:n}";
+            labelGridCost.Text = $"${gridCost:n}";
+            labelSaved.Text = $"${negatedGridCost:n}";
+            labelSetupCost.Text = $"${setup:n}";
+            labelBuyBack.Text = $"${gridBuyBack:n}";
             double daysTillPayDone = (int)(setup / (monthSavings / days));
 
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
@@ -170,8 +175,8 @@ namespace WinFormsApp1.Reporting
 
             //borders
             gCanvas.DrawLine(pen, 1, mainCanvas.Height, 1, 1);
-            gCanvas.DrawLine(pen, 1, mainCanvas.Height - 1, mainCanvas.Width, mainCanvas.Height - 1);
-            gCanvas.DrawLine(pen, 1, 1, mainCanvas.Width, 1);
+            gCanvas.DrawLine(pen, 1, mainCanvas.Height - 3, mainCanvas.Width, mainCanvas.Height - 3);
+            gCanvas.DrawLine(pen, 1, 3, mainCanvas.Width, 3);
             gCanvas.DrawLine(pen, mainCanvas.Width - 1, 0, mainCanvas.Width - 1, mainCanvas.Height);
             int i = 0;
             int y = 10;
@@ -352,6 +357,12 @@ namespace WinFormsApp1.Reporting
             {
                 MessageBox.Show($"Can't open due to: {ex}");
             }
+        }
+
+        private void buttonWidth_Click(object sender, EventArgs e)
+        {
+            this.Width = int.Parse(textBoxSetWidth.Text);
+            redrawMainGraph();
         }
     }
 }
