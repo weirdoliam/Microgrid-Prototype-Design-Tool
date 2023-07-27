@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.managers;
 using WinFormsApp1.utilForms;
 
 namespace WinFormsApp1.Reporting
@@ -28,7 +29,7 @@ namespace WinFormsApp1.Reporting
 
         public MonthyReportViewer()
         {
-
+            LoadingScreenManager.ShowLoadingScreen();
             InitializeComponent();
             DayRiseTimes startDay = Cache.currDay;
             int month = 1;
@@ -43,7 +44,7 @@ namespace WinFormsApp1.Reporting
             }
 
             Cache.currDay = startDay;
-
+            LoadingScreenManager.HideLoadingScreen();
             drawCheckBoxes();
             updateAllTotals();
             

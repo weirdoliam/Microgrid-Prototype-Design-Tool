@@ -35,11 +35,13 @@
             // pictureBox1
             // 
             pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            pictureBox1.Image = Properties.Resources.Eclipse_1s_200px;
-            pictureBox1.InitialImage = Properties.Resources.Eclipse_1s_200px;
+            pictureBox1.ErrorImage = null;
+            pictureBox1.Image = Properties.Resources.Loading;
+            pictureBox1.InitialImage = null;
             pictureBox1.Location = new System.Drawing.Point(0, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new System.Drawing.Size(200, 200);
+            pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.managers;
 using WinFormsApp1.Reporting;
 using WinFormsApp1.Solar;
 using WinFormsApp1.utilForms;
@@ -22,7 +23,7 @@ namespace WinFormsApp1
         public MainForm()
         {
             // Show the loading form on a separate thread
-            ShowLoadingForm();
+            LoadingScreenManager.ShowLoadingScreen();
 
 
             InitializeComponent();
@@ -204,31 +205,7 @@ namespace WinFormsApp1
             Cache.genListOut.Add(Cache.houseModels[0]);
 
             // Work is completed or cancelled, so close the loading form
-            CloseLoadingForm();
-        }
-
-        private async void ShowLoadingForm()
-        {
-            Loading loadingForm = new Loading();
-
-            // Show the form on a separate thread using Task.Run
-            await Task.Run(() =>
-            {
-                Application.Run(loadingForm);
-            });
-        }
-
-        private void CloseLoadingForm()
-        {
-            // Find the loading form and close it on the UI thread
-            var loadingForm = Application.OpenForms["Loading"] as Loading;
-            if (loadingForm != null)
-            {
-                loadingForm.Invoke(new Action(() =>
-                {
-                    loadingForm.Close();
-                }));
-            }
+            LoadingScreenManager.HideLoadingScreen();
         }
 
         private void HouseModelAdder(object sender, EventArgs e)
@@ -246,7 +223,6 @@ namespace WinFormsApp1
                 }
             }
         }
-
 
         private void MenuItemClickHandler(object sender, EventArgs e)
         {
