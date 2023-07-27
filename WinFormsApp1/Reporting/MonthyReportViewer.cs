@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.utilForms;
 
 namespace WinFormsApp1.Reporting
 {
@@ -27,11 +28,13 @@ namespace WinFormsApp1.Reporting
 
         public MonthyReportViewer()
         {
+
             InitializeComponent();
             DayRiseTimes startDay = Cache.currDay;
             int month = 1;
             days = daysInMonth[month - 1];
             labelMonth.Text = months[month - 1];
+
             for (int i = 0; i < days; i++)
             {
                 DateTime newDate = new DateTime(2022, month, i + 1);
@@ -40,8 +43,10 @@ namespace WinFormsApp1.Reporting
             }
 
             Cache.currDay = startDay;
+
             drawCheckBoxes();
             updateAllTotals();
+            
         }
 
         private void drawCheckBoxes()
@@ -58,8 +63,8 @@ namespace WinFormsApp1.Reporting
         {
             DayReport currData = monthlyReport[0];
             //Generation Percent - Can be based off day 1
-            labelWindPercent.Text = $"{currData.getWindPercent()}%";
-            labelSolarPercent.Text = $"{currData.getSolarPercent()}%";
+            labelWindPercent.Text = $"{currData.getWindPercent():n0}%";
+            labelSolarPercent.Text = $"{currData.getSolarPercent():n0}%";
 
             //In kWh - Totaled for every single day in the month
             int cleanEnergy = 0;

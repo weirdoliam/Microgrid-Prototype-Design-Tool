@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
 using WinFormsApp1.Reporting;
 using WinFormsApp1.Solar;
+using WinFormsApp1.utilForms;
 using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
@@ -17,6 +21,10 @@ namespace WinFormsApp1
 
         public MainForm()
         {
+            // Show the loading form on a separate thread
+            ShowLoadingForm();
+
+
             InitializeComponent();
 
             //read in sunlight hours
@@ -189,10 +197,38 @@ namespace WinFormsApp1
             //init stage ended
 
             //default additions
+
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 1, 100);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 1000, 72, "Polycrystalline", 1, 100);
             Cache.genListin.Add(s);
             Cache.genListOut.Add(Cache.houseModels[0]);
+
+            // Work is completed or cancelled, so close the loading form
+            CloseLoadingForm();
+        }
+
+        private async void ShowLoadingForm()
+        {
+            Loading loadingForm = new Loading();
+
+            // Show the form on a separate thread using Task.Run
+            await Task.Run(() =>
+            {
+                Application.Run(loadingForm);
+            });
+        }
+
+        private void CloseLoadingForm()
+        {
+            // Find the loading form and close it on the UI thread
+            var loadingForm = Application.OpenForms["Loading"] as Loading;
+            if (loadingForm != null)
+            {
+                loadingForm.Invoke(new Action(() =>
+                {
+                    loadingForm.Close();
+                }));
+            }
         }
 
         private void HouseModelAdder(object sender, EventArgs e)

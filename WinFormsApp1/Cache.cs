@@ -1,7 +1,9 @@
 ﻿using MathNet.Numerics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.utilForms;
 using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
