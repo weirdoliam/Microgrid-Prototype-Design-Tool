@@ -1,9 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.graphing;
+using WinFormsApp1.managers;
 using WinFormsApp1.Reporting;
 using WinFormsApp1.Solar;
+using WinFormsApp1.utilForms;
 using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
@@ -17,6 +23,10 @@ namespace WinFormsApp1
 
         public MainForm()
         {
+            // Show the loading form on a separate thread
+            LoadingScreenManager.ShowLoadingScreen();
+
+
             InitializeComponent();
 
             //read in sunlight hours
@@ -186,13 +196,30 @@ namespace WinFormsApp1
             {
                 houseModelToolStripMenuItem.DropDownItems.Add(h.shortDescription(), null, new EventHandler(HouseModelAdder));
             }
+            //Add Months to month thing
+            for (int i = 0; i < 12; i++)
+            {
+                monthToolStripMenuItem.DropDownItems.Add((i + 1) + "", null, new EventHandler(MonthOpener));
+            }
             //init stage ended
 
             //default additions
+
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 345, 72, "Polycrystalline", 1, 100);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 1000, 72, "Polycrystalline", 1, 100);
             Cache.genListin.Add(s);
             Cache.genListOut.Add(Cache.houseModels[0]);
+
+            // Work is completed or cancelled, so close the loading form
+            LoadingScreenManager.HideLoadingScreen();
+        }
+
+        private void MonthOpener(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedMonth = (ToolStripMenuItem)sender;
+            int month = int.Parse(clickedMonth.Text);
+            MonthyReportViewer mForm = new MonthyReportViewer(month);
+            mForm.ShowDialog();
         }
 
         private void HouseModelAdder(object sender, EventArgs e)
@@ -210,7 +237,6 @@ namespace WinFormsApp1
                 }
             }
         }
-
 
         private void MenuItemClickHandler(object sender, EventArgs e)
         {
@@ -438,8 +464,7 @@ namespace WinFormsApp1
 
         private void monthToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MonthyReportViewer month = new MonthyReportViewer();
-            month.ShowDialog();
+
         }
 
         private void customToolStripMenuItem_Click(object sender, EventArgs e)
@@ -463,6 +488,11 @@ namespace WinFormsApp1
             this.Close();
         }
 
+        private void fullYearForecastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            YearlyPerformance yp = new YearlyPerformance();
+            yp.ShowDialog();
+        }
     }
 }
 

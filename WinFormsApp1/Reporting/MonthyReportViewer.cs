@@ -7,6 +7,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.graphing;
+using WinFormsApp1.managers;
+using WinFormsApp1.utilForms;
 
 namespace WinFormsApp1.Reporting
 {
@@ -25,13 +28,18 @@ namespace WinFormsApp1.Reporting
         string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-        public MonthyReportViewer()
+        //Widhts lol 31 days = 1674
+        // 30 days = 1685
+        //28 = 1669
+
+        public MonthyReportViewer(int month)
         {
+            LoadingScreenManager.ShowLoadingScreen();
             InitializeComponent();
             DayRiseTimes startDay = Cache.currDay;
-            int month = 1;
             days = daysInMonth[month - 1];
             labelMonth.Text = months[month - 1];
+
             for (int i = 0; i < days; i++)
             {
                 DateTime newDate = new DateTime(2022, month, i + 1);
@@ -40,8 +48,12 @@ namespace WinFormsApp1.Reporting
             }
 
             Cache.currDay = startDay;
+            LoadingScreenManager.HideLoadingScreen();
+            //Update width appropriately
+            Width = days == 28 ? 1669 : days == 30 ? 1685 : 1674;
             drawCheckBoxes();
             updateAllTotals();
+
         }
 
         private void drawCheckBoxes()
@@ -58,8 +70,8 @@ namespace WinFormsApp1.Reporting
         {
             DayReport currData = monthlyReport[0];
             //Generation Percent - Can be based off day 1
-            labelWindPercent.Text = $"{currData.getWindPercent()}%";
-            labelSolarPercent.Text = $"{currData.getSolarPercent()}%";
+            labelWindPercent.Text = $"{currData.getWindPercent():n0}%";
+            labelSolarPercent.Text = $"{currData.getSolarPercent():n0}%";
 
             //In kWh - Totaled for every single day in the month
             int cleanEnergy = 0;
@@ -100,20 +112,20 @@ namespace WinFormsApp1.Reporting
 
 
             //Labels!!!
-            labelCo2.Text = Math.Max(Math.Round(emissions / 1000, 2), 0) + " kgCO2/kWh";
-            labelDirty.Text = Math.Max(emissionsEnergy / scaleValue, 0) + unit;
-            labelRenew.Text = cleanEnergy / scaleValue + unit;
-            labelTotalConsumption.Text = consumption / scaleValue + unit;
-            labelTotalStorage.Text = currData.GridCapacity.Capacity < scaleValue ? currData.GridCapacity.Capacity / 1000 + " kW" : currData.GridCapacity.Capacity / scaleValue + " MW";
-            labelInternalNet.Text = net / scaleValue + unit;
+            labelCo2.Text = $"{Math.Max(Math.Round(emissions / 1000, 2), 0):n} kgCO2/kWh";
+            labelDirty.Text = $"{Math.Max(emissionsEnergy / scaleValue, 0):n0} {unit}";
+            labelRenew.Text = $"{cleanEnergy / scaleValue:n} {unit}";
+            labelTotalConsumption.Text = $"{consumption / scaleValue:n} {unit}";
+            labelTotalStorage.Text = currData.GridCapacity.Capacity < 1000000 ? $"{currData.GridCapacity.Capacity / 1000:n} kW" : $"{currData.GridCapacity.Capacity / scaleValue:n} MW";
+            labelInternalNet.Text = $"{net / scaleValue:n} {unit}";
             labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
             //Cost Analysis
             // Hamilton	21.2c
-            labelEffCost.Text = "$" + $"{effCost:n}";
-            labelGridCost.Text = "$" + $"{gridCost:n}";
-            labelSaved.Text = "$" + $"{negatedGridCost:n}";
-            labelSetupCost.Text = "$" + $"{setup:n}";
-            labelBuyBack.Text = "$" + $"{gridBuyBack:n}";
+            labelEffCost.Text = $"${effCost:n}";
+            labelGridCost.Text = $"${gridCost:n}";
+            labelSaved.Text = $"${negatedGridCost:n}";
+            labelSetupCost.Text = $"${setup:n}";
+            labelBuyBack.Text = $"${gridBuyBack:n}";
             double daysTillPayDone = (int)(setup / (monthSavings / days));
 
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
@@ -164,13 +176,21 @@ namespace WinFormsApp1.Reporting
 
             //borders
             gCanvas.DrawLine(pen, 1, mainCanvas.Height, 1, 1);
-            gCanvas.DrawLine(pen, 1, mainCanvas.Height - 1, mainCanvas.Width, mainCanvas.Height - 1);
-            gCanvas.DrawLine(pen, 1, 1, mainCanvas.Width, 1);
+            gCanvas.DrawLine(pen, 1, mainCanvas.Height - 3, mainCanvas.Width, mainCanvas.Height - 3);
+            gCanvas.DrawLine(pen, 1, 3, mainCanvas.Width, 3);
             gCanvas.DrawLine(pen, mainCanvas.Width - 1, 0, mainCanvas.Width - 1, mainCanvas.Height);
             int i = 0;
             int y = 10;
             Color[] colors = new Color[] { Color.Green, Color.Red, Color.Blue, Color.Orange, Color.Olive, Color.Gray, Color.Gold };
-
+            int max = 0;
+            foreach (var checkedItem in checkedListBoxData.CheckedItems)
+            {
+                foreach (DayReport dayReport in monthlyReport)
+                {
+                    max = Math.Max(max, dayReport.RetrieveItem(checkedItem.ToString()).Item2.Max());
+                }
+            }
+            maxVal = max + (int)(max * 0.1);
             //Put all da data
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
@@ -190,21 +210,19 @@ namespace WinFormsApp1.Reporting
             bool zipped = key == "Battery Usage" ? false : true;
             int[] xArr = null;
             int x = 0;
-            int startVal = 0;
             foreach (DayReport dayReport in monthlyReport)
             {
                 List<int> currData = dayReport.RetrieveItem(key).Item2;
-                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal, false);
+
+                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, false);
                 //xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal,zipped);
                 x = xArr[0];
-                startVal = xArr[1];
             }
         }
 
 
-        private int[] partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, int startValue, bool zipped)
+        private int[] partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, bool zipped)
         {
-            heights[0] = startValue;
             int zip_amount = 3;
             if (zipped)
             {
@@ -238,7 +256,7 @@ namespace WinFormsApp1.Reporting
 
             //actual data
             int prevX = x;
-            int prevY = targetCanvas.Height - workingHeight * (int)(heights[0] / maxVal);
+            int prevY = targetCanvas.Height - (int)(workingHeight * heights[0] / maxVal);
 
             foreach (int height in heights)
             {
@@ -257,19 +275,7 @@ namespace WinFormsApp1.Reporting
         {
             redrawMainGraph();
         }
-
-        private void buttonSetMax_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                maxVal = int.Parse(textBoxMax.Text);
-                mainCanvas.Invalidate();
-            }
-            catch
-            {
-                MessageBox.Show("Oppzies");
-            }
-        }
+        
 
         private void panelX_Paint(object sender, PaintEventArgs e)
         {
@@ -346,6 +352,29 @@ namespace WinFormsApp1.Reporting
             {
                 MessageBox.Show($"Can't open due to: {ex}");
             }
+        }
+
+        private void buttonEnergyBalance_Click(object sender, EventArgs e)
+        {
+            List<int> initX = new List<int>() { 0 };
+            List<int> initY = new List<int>() { 0 };
+            EnergyBalanceGraph ebg = new EnergyBalanceGraph(initX, initY);
+            foreach (DayReport d in monthlyReport)
+            {
+                ebg.addPoints(d.RetrieveItem("Balanced Consumption").Item2, d.RetrieveItem("Balanced Generation").Item2);
+            }
+
+            ebg.Show();
+        }
+
+        private void checkedListBoxData_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBoxData_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            mainCanvas.Invalidate();
         }
     }
 }

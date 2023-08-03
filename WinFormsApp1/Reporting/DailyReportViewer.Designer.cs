@@ -71,6 +71,7 @@
             richTextBoxResponce = new System.Windows.Forms.RichTextBox();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolTipCapacity = new System.Windows.Forms.ToolTip(components);
+            button1 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -117,10 +118,10 @@
             // labelDate
             // 
             labelDate.AutoSize = true;
-            labelDate.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelDate.Location = new System.Drawing.Point(10, 19);
+            labelDate.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelDate.Location = new System.Drawing.Point(0, 19);
             labelDate.Name = "labelDate";
-            labelDate.Size = new System.Drawing.Size(77, 51);
+            labelDate.Size = new System.Drawing.Size(62, 41);
             labelDate.TabIndex = 4;
             labelDate.Text = "1/1";
             // 
@@ -147,6 +148,7 @@
             // groupBox2
             // 
             groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBox2.Controls.Add(button1);
             groupBox2.Controls.Add(label14);
             groupBox2.Controls.Add(labelEffCost);
             groupBox2.Controls.Add(label13);
@@ -546,6 +548,16 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(9, 228);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(96, 23);
+            button1.TabIndex = 36;
+            button1.Text = "Energy Balance";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // DailyReportViewer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -610,5 +622,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ToolTip toolTipCapacity;
         private System.Windows.Forms.Label labelDate;
+        private System.Windows.Forms.Button button1;
     }
 }

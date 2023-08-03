@@ -271,49 +271,50 @@ namespace WinFormsApp1
             // 
             generalCaseToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             generalCaseToolStripMenuItem.Name = "generalCaseToolStripMenuItem";
-            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             generalCaseToolStripMenuItem.Text = "Comparison";
             // 
             // dailyInsigtsToolStripMenuItem
             // 
             dailyInsigtsToolStripMenuItem.Name = "dailyInsigtsToolStripMenuItem";
-            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            dailyInsigtsToolStripMenuItem.Text = "Daily Analysis";
+            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            dailyInsigtsToolStripMenuItem.Text = "Load Comparison";
             dailyInsigtsToolStripMenuItem.Click += dailyInsigtsToolStripMenuItem_Click;
             // 
             // overallAnalysisToolStripMenuItem
             // 
             overallAnalysisToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             overallAnalysisToolStripMenuItem.Name = "overallAnalysisToolStripMenuItem";
-            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             overallAnalysisToolStripMenuItem.Text = "Overall Analysis";
             // 
             // dayToolStripMenuItem
             // 
             dayToolStripMenuItem.Name = "dayToolStripMenuItem";
-            dayToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            dayToolStripMenuItem.Text = "Day";
+            dayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            dayToolStripMenuItem.Text = "Current Day";
             dayToolStripMenuItem.Click += dayToolStripMenuItem_Click;
             // 
             // monthToolStripMenuItem
             // 
             monthToolStripMenuItem.Name = "monthToolStripMenuItem";
-            monthToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            monthToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             monthToolStripMenuItem.Text = "Month";
             monthToolStripMenuItem.Click += monthToolStripMenuItem_Click;
             // 
             // fullYearForecastToolStripMenuItem
             // 
             fullYearForecastToolStripMenuItem.Name = "fullYearForecastToolStripMenuItem";
-            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             fullYearForecastToolStripMenuItem.Text = "Full Year";
+            fullYearForecastToolStripMenuItem.Click += fullYearForecastToolStripMenuItem_Click;
             // 
             // labelGridAssets
             // 
             labelGridAssets.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom;
             labelGridAssets.AutoSize = true;
             labelGridAssets.Font = new System.Drawing.Font("Century Gothic", 45F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGridAssets.Location = new System.Drawing.Point(434, 8);
+            labelGridAssets.Location = new System.Drawing.Point(426, 8);
             labelGridAssets.Name = "labelGridAssets";
             labelGridAssets.Size = new System.Drawing.Size(397, 74);
             labelGridAssets.TabIndex = 13;
@@ -331,7 +332,7 @@ namespace WinFormsApp1
             groupBoxGeneration.Controls.Add(buttonRemoveGen);
             groupBoxGeneration.Controls.Add(label1);
             groupBoxGeneration.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            groupBoxGeneration.Location = new System.Drawing.Point(3, 6);
+            groupBoxGeneration.Location = new System.Drawing.Point(4, 6);
             groupBoxGeneration.Name = "groupBoxGeneration";
             groupBoxGeneration.Size = new System.Drawing.Size(352, 527);
             groupBoxGeneration.TabIndex = 15;
@@ -436,7 +437,7 @@ namespace WinFormsApp1
             groupBoxConsumption.Controls.Add(listBoxAddedHouses);
             groupBoxConsumption.Controls.Add(label2);
             groupBoxConsumption.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            groupBoxConsumption.Location = new System.Drawing.Point(361, 6);
+            groupBoxConsumption.Location = new System.Drawing.Point(457, 3);
             groupBoxConsumption.Name = "groupBoxConsumption";
             groupBoxConsumption.Size = new System.Drawing.Size(351, 527);
             groupBoxConsumption.TabIndex = 16;
@@ -520,7 +521,7 @@ namespace WinFormsApp1
             // 
             pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom;
             pictureBox1.Image = Properties.Resources.otherAssets;
-            pictureBox1.Location = new System.Drawing.Point(339, 0);
+            pictureBox1.Location = new System.Drawing.Point(331, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new System.Drawing.Size(89, 88);
             pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -543,7 +544,7 @@ namespace WinFormsApp1
             // 
             pictureBox5.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             pictureBox5.Image = Properties.Resources.X;
-            pictureBox5.Location = new System.Drawing.Point(1255, 5);
+            pictureBox5.Location = new System.Drawing.Point(1237, 5);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new System.Drawing.Size(20, 20);
             pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -555,14 +556,14 @@ namespace WinFormsApp1
             // 
             // panel2
             // 
-            panel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            panel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             panel2.Controls.Add(groupBox1);
             panel2.Controls.Add(groupBoxConsumption);
             panel2.Controls.Add(groupBoxGeneration);
             panel2.Location = new System.Drawing.Point(0, 115);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(1277, 608);
+            panel2.Size = new System.Drawing.Size(1280, 608);
             panel2.TabIndex = 20;
             // 
             // groupBox1
@@ -577,7 +578,7 @@ namespace WinFormsApp1
             groupBox1.Controls.Add(listBoxStorage);
             groupBox1.Controls.Add(label3);
             groupBox1.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            groupBox1.Location = new System.Drawing.Point(718, 6);
+            groupBox1.Location = new System.Drawing.Point(904, 6);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(351, 527);
             groupBox1.TabIndex = 17;
@@ -673,7 +674,7 @@ namespace WinFormsApp1
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            ClientSize = new System.Drawing.Size(1280, 720);
+            ClientSize = new System.Drawing.Size(1280, 728);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);

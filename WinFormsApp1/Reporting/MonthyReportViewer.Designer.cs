@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            buttonEnergyBalance = new System.Windows.Forms.Button();
             labelMonth = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            textBoxMax = new System.Windows.Forms.TextBox();
             buttonOpen = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
-            buttonSetMax = new System.Windows.Forms.Button();
             textBoxDay = new System.Windows.Forms.TextBox();
             panelX = new System.Windows.Forms.Panel();
             mainCanvas = new System.Windows.Forms.Panel();
@@ -82,12 +80,10 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(buttonEnergyBalance);
             groupBox1.Controls.Add(labelMonth);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(textBoxMax);
             groupBox1.Controls.Add(buttonOpen);
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(buttonSetMax);
             groupBox1.Controls.Add(textBoxDay);
             groupBox1.Controls.Add(panelX);
             groupBox1.Controls.Add(mainCanvas);
@@ -101,6 +97,16 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Graphing";
             // 
+            // buttonEnergyBalance
+            // 
+            buttonEnergyBalance.Location = new System.Drawing.Point(3, 245);
+            buttonEnergyBalance.Name = "buttonEnergyBalance";
+            buttonEnergyBalance.Size = new System.Drawing.Size(105, 23);
+            buttonEnergyBalance.TabIndex = 12;
+            buttonEnergyBalance.Text = "Energy Balance";
+            buttonEnergyBalance.UseVisualStyleBackColor = true;
+            buttonEnergyBalance.Click += buttonEnergyBalance_Click;
+            // 
             // labelMonth
             // 
             labelMonth.AutoSize = true;
@@ -110,23 +116,6 @@
             labelMonth.Size = new System.Drawing.Size(77, 51);
             labelMonth.TabIndex = 11;
             labelMonth.Text = "Jan";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(3, 246);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(99, 15);
-            label2.TabIndex = 10;
-            label2.Text = "Max Graph Value:";
-            // 
-            // textBoxMax
-            // 
-            textBoxMax.Location = new System.Drawing.Point(6, 264);
-            textBoxMax.Name = "textBoxMax";
-            textBoxMax.Size = new System.Drawing.Size(81, 23);
-            textBoxMax.TabIndex = 4;
-            textBoxMax.Text = "2000";
             // 
             // buttonOpen
             // 
@@ -146,16 +135,6 @@
             label1.Size = new System.Drawing.Size(61, 15);
             label1.TabIndex = 6;
             label1.Text = "Open day:";
-            // 
-            // buttonSetMax
-            // 
-            buttonSetMax.Location = new System.Drawing.Point(89, 264);
-            buttonSetMax.Name = "buttonSetMax";
-            buttonSetMax.Size = new System.Drawing.Size(22, 24);
-            buttonSetMax.TabIndex = 5;
-            buttonSetMax.Text = "✓";
-            buttonSetMax.UseVisualStyleBackColor = true;
-            buttonSetMax.Click += buttonSetMax_Click;
             // 
             // textBoxDay
             // 
@@ -201,6 +180,7 @@
             checkedListBoxData.Name = "checkedListBoxData";
             checkedListBoxData.Size = new System.Drawing.Size(108, 130);
             checkedListBoxData.TabIndex = 1;
+            checkedListBoxData.ItemCheck += checkedListBoxData_ItemCheck;
             // 
             // groupBox2
             // 
@@ -608,12 +588,9 @@
         private System.Windows.Forms.Panel mainCanvas;
         private System.Windows.Forms.Panel panelY;
         private System.Windows.Forms.CheckedListBox checkedListBoxData;
-        private System.Windows.Forms.TextBox textBoxMax;
-        private System.Windows.Forms.Button buttonSetMax;
         private System.Windows.Forms.Button buttonOpen;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxDay;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelMonth;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label14;
@@ -647,5 +624,6 @@
         private System.Windows.Forms.Label labelWindPercent;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button buttonEnergyBalance;
     }
 }

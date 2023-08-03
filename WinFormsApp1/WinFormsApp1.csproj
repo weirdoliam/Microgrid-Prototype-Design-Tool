@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
     <PackageReference Include="Nevron.Nov.Chart" Version="22.10.17.12" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OxyPlot.Core" Version="2.1.2" />
+    <PackageReference Include="OxyPlot.WindowsForms" Version="2.1.2" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ml\master_data.csv">

@@ -1,9 +1,11 @@
 ﻿using MathNet.Numerics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
 using WinFormsApp1.Solar;
 using WinFormsApp1.Wind;
@@ -28,6 +30,7 @@ namespace WinFormsApp1.Reporting
             List<int> overallGen = new List<int>();
 
             string parsedDate = date.Day + "/" + date.Month + "/" + date.Year;
+
             string currTime = "00:00";
             int hour = 0;
             int minute = 0;
@@ -73,8 +76,7 @@ namespace WinFormsApp1.Reporting
             dayReport.WindPercent = (double)windGeneration / (double)totalWatts;
             dayReport.SolarPercent = (double)solarGeneration / (double)totalWatts;
             dayReport.OtherPercent = (double)otherGeneration / (double)totalWatts;
-            //Overall Gen done. It wokrs. No complaints
-
+            //Overall Gen done.
 
             //from all consumers, calculate the consumption load
             List<int> overallConsumption = new List<int>();
@@ -100,7 +102,7 @@ namespace WinFormsApp1.Reporting
                 {
                     HouseModel house = (HouseModel)consumer;
                     List<int> dailyData = house.getDailyData(parsedDate);
-                    if (dailyData != null) lists.Add(dailyData);
+                    if (dailyData != null) { lists.Add(dailyData); }
                 }
             }
             List<int> resultList = lists.Aggregate((acc, curr) => acc.Zip(curr, (a, b) => a + b).ToList());
@@ -124,12 +126,16 @@ namespace WinFormsApp1.Reporting
                     totalCost += lib.Price;
                 }
             }
+            //Big ol battry :D
             LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery", totalCost);
 
             //Generate a list of state of charge throughout the day
             List<int> storageCharge = new List<int>();
             //Generate a list of times when the grid requires power from the grid, and when it gives to the grid
             List<int> gridNeeds = new List<int>();
+            //For energy balance plot
+            List<int> balanceCon = new List<int>();
+            List<int> balanceGen = new List<int>();
 
             //For times of demand when storage is empty, take power from grid instead (therefore adding more carbon emissions, or cost)
             int currDemand, currSupply, net = 0;
@@ -139,8 +145,14 @@ namespace WinFormsApp1.Reporting
 
             for (int i = 0; i < 48; i++)
             {
-                currDemand = overallConsumption[i];
-                currSupply = overallGen[i];
+                currDemand = i >= overallConsumption.Count ? 0 : overallConsumption[i];
+                currSupply = i >= overallGen.Count ? 0 : overallGen[i];
+                
+                //For energy balance plot
+                int gen_and_taken = currSupply;
+                int consume_and_given = currDemand;
+
+
                 net = currDemand - currSupply;
                 Console.WriteLine($"Net: {net}");
                 //if net is less than zero we have charge!
@@ -148,23 +160,29 @@ namespace WinFormsApp1.Reporting
                 {
                     Console.WriteLine($"Charging Battery: {-net}");
                     giveToGrid = reportBattry.Charge(-net);
+                    int chargedAmount = Math.Abs(-net - (int)giveToGrid);
                     Console.WriteLine($"Energy Unable to be charged in half-hour: {giveToGrid}");
                     needFromGrid = 0;
+                    consume_and_given += chargedAmount;
                 }
                 //if net is more than zero, we deduct charge
                 if (net > 0)
                 {
+                    
                     //Console.WriteLine($"Discharging:{net}");
                     recievedCharge = reportBattry.Discharge(net);
                     needFromGrid = net - recievedCharge;
                     //Console.WriteLine($"Energy Recieved:{recievedCharge}, need from grid to makeup: {needFromGrid}");
                     giveToGrid = 0;
+                    gen_and_taken += (int)recievedCharge;
                 }
                 if (net == 0)
                 {
                     needFromGrid = 0;
                     giveToGrid = 0;
                 }
+                balanceCon.Add(consume_and_given);
+                balanceGen.Add(gen_and_taken);
                 currCharge = reportBattry.ChargeLevel;
                 
                 //Console.WriteLine($"Current Charge after calculations: {currCharge}");
@@ -173,6 +191,10 @@ namespace WinFormsApp1.Reporting
             }
             dayReport.InsertItem("Battery Usage", storageCharge);
             dayReport.InsertItem("Overall Grid Needs", gridNeeds);
+
+            dayReport.InsertItem("Balanced Generation", balanceGen);
+            dayReport.InsertItem("Balanced Consumption", balanceCon);
+
             //battery alignment
             dayReport.GridCapacity = reportBattry;
                         
