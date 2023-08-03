@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp1.graphing;
 using WinFormsApp1.Reporting;
 
 namespace WinFormsApp1
@@ -23,6 +24,7 @@ namespace WinFormsApp1
         Graphics g;
         Graphics gy;
         Graphics gx;
+        DayReport previousDay = null;
         DayReport currData = null;
         SolidBrush stringBrush = new SolidBrush(Color.Black);
         StringFormat drawFormat = new StringFormat();
@@ -41,9 +43,17 @@ namespace WinFormsApp1
                 drawCheckBoxes();
                 day = int.Parse(currData.Date.Split(".")[0]);
                 month = int.Parse(currData.Date.Split(".")[1]);
-                Text = day + "-" + month;
-                labelDate.Text = day + "/" + month;
+
             }
+            else
+            {
+                day = Cache.currDay.Day;
+                month = Cache.currDay.Month;
+
+            }
+            //Update date display
+            Text = day + "-" + month;
+            labelDate.Text = day + "/" + month;
             // Enable owner-drawing for the CheckedListBox
             checkedListBoxData.DrawMode = DrawMode.OwnerDrawVariable;
             drawFormat.FormatFlags = StringFormatFlags.NoWrap;
@@ -61,14 +71,21 @@ namespace WinFormsApp1
         {
             if (currData == null)
             {
+
                 //retrieve data only if we do not have it.
                 currData = DailyReporter.GenerateReport(Cache.currDay.getSunrise());
                 //Setup CheckBoxes once
                 drawCheckBoxes();
-                Text = day + "-" + month;
-                labelDate.Text = day + "/" + month;
             }
-            // ------ The following calculations should be integrated into the dailyreport.
+            //Do the day before as well lmao
+            if (previousDay == null)
+            {
+                // Get the day before the input date
+                DateTime DTdayBefore = Cache.currDay.getSunrise().AddDays(-1);
+                // Format the result as "dd/mm/yyyy" and return it
+                previousDay = DailyReporter.GenerateReport(DTdayBefore);
+            }
+
             //BOXES
             //Generation Percent
             labelWindPercent.Text = $"{currData.getWindPercent()}%";
@@ -166,10 +183,18 @@ namespace WinFormsApp1
             //Put all da data
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
+
                 stringBrush.Color = colors[i % colors.Length];
                 //Draw the string at the top of the screen, 10 pixel offset both x and y to begin with
                 g.DrawString("---- " + checkedItem.ToString(), new Font("Arial", 10), stringBrush, 10, y);
-                put_data(currData.RetrieveItem(checkedItem.ToString()).Item2, mainCanvas, colors[i % colors.Length], 3);
+                //get yesterdays data
+                List<int> yesterdayData = previousDay.RetrieveItem(checkedItem.ToString()).Item2;
+                //isolate to start value
+                int startVal = yesterdayData[yesterdayData.Count - 1];
+                startVal = 150;
+                Console.WriteLine($"Yesterday started at: {startVal}");
+                //Plug in baby
+                put_data(currData.RetrieveItem(checkedItem.ToString()).Item2, mainCanvas, colors[i % colors.Length], 3, startVal);
                 //offset y by 15 px
                 y += 15;
                 i++;
@@ -186,9 +211,11 @@ namespace WinFormsApp1
             }
         }
 
-        public void put_data(List<int> heights, Panel targetCanvas, Color lineColor, int width)
+        public void put_data(List<int> heights, Panel targetCanvas, Color lineColor, int width, int startVal)
         {
+            Console.WriteLine($"StartVal is: {startVal}");
             if (maxVal == 0) maxVal = 1;
+            heights[0] = heights[0] < 0 ? startVal : heights[0];
             Pen pen = new Pen(lineColor);
             //ok now display!
             pen.Width = width;
@@ -200,13 +227,14 @@ namespace WinFormsApp1
 
             //actual data
             int prevX = x;
-            int prevY = targetCanvas.Height - workingHeight * (int)(heights[0] / maxVal);
+            int prevY = targetCanvas.Height - (int)(workingHeight * startVal / maxVal);
             int index = 1;
             foreach (int height in heights)
             {
                 int tayloredHeight = height < 0 ? 0 : height;
                 x += xInc;
                 y = targetCanvas.Height - (int)(workingHeight * tayloredHeight / maxVal);
+                Console.WriteLine($"Plotting: prevX: {prevX}  prevY: {prevY}   X: {x}   Y: {y}");
                 g.DrawLine(pen, prevX, prevY - PADDING, x, y - PADDING);
                 prevX = x;
                 prevY = y;
@@ -217,7 +245,7 @@ namespace WinFormsApp1
         private void mainCanvas_Paint(object sender, PaintEventArgs e)
         {
             g = mainCanvas.CreateGraphics();
-            g.Clear(Color.White);
+            g.Clear(Color.LightGray);
             process_report();
         }
 
@@ -350,5 +378,12 @@ namespace WinFormsApp1
             richTextBoxResponce.Text = response;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<int> consumption = currData.RetrieveItem("Balanced Consumption").Item2;
+            List<int> generation = currData.RetrieveItem("Balanced Generation").Item2;
+            EnergyBalanceGraph ebg_main = new EnergyBalanceGraph(consumption, generation);
+            ebg_main.Show();
+        }
     }
 }

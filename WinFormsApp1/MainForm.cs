@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.EnergyStorage;
+using WinFormsApp1.graphing;
 using WinFormsApp1.managers;
 using WinFormsApp1.Reporting;
 using WinFormsApp1.Solar;
@@ -487,6 +488,11 @@ namespace WinFormsApp1
             this.Close();
         }
 
+        private void fullYearForecastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            YearlyPerformance yp = new YearlyPerformance();
+            yp.ShowDialog();
+        }
     }
 }
 

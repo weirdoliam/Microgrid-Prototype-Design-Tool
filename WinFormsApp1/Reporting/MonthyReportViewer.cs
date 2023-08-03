@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.graphing;
 using WinFormsApp1.managers;
 using WinFormsApp1.utilForms;
 
@@ -181,7 +182,15 @@ namespace WinFormsApp1.Reporting
             int i = 0;
             int y = 10;
             Color[] colors = new Color[] { Color.Green, Color.Red, Color.Blue, Color.Orange, Color.Olive, Color.Gray, Color.Gold };
-
+            int max = 0;
+            foreach (var checkedItem in checkedListBoxData.CheckedItems)
+            {
+                foreach (DayReport dayReport in monthlyReport)
+                {
+                    max = Math.Max(max, dayReport.RetrieveItem(checkedItem.ToString()).Item2.Max());
+                }
+            }
+            maxVal = max + (int)(max * 0.1);
             //Put all da data
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
@@ -201,21 +210,19 @@ namespace WinFormsApp1.Reporting
             bool zipped = key == "Battery Usage" ? false : true;
             int[] xArr = null;
             int x = 0;
-            int startVal = 0;
             foreach (DayReport dayReport in monthlyReport)
             {
                 List<int> currData = dayReport.RetrieveItem(key).Item2;
-                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal, false);
+
+                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, false);
                 //xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal,zipped);
                 x = xArr[0];
-                startVal = xArr[1];
             }
         }
 
 
-        private int[] partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, int startValue, bool zipped)
+        private int[] partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, bool zipped)
         {
-            heights[0] = startValue;
             int zip_amount = 3;
             if (zipped)
             {
@@ -249,7 +256,7 @@ namespace WinFormsApp1.Reporting
 
             //actual data
             int prevX = x;
-            int prevY = targetCanvas.Height - workingHeight * (int)(heights[0] / maxVal);
+            int prevY = targetCanvas.Height - (int)(workingHeight * heights[0] / maxVal);
 
             foreach (int height in heights)
             {
@@ -268,19 +275,7 @@ namespace WinFormsApp1.Reporting
         {
             redrawMainGraph();
         }
-
-        private void buttonSetMax_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                maxVal = int.Parse(textBoxMax.Text);
-                mainCanvas.Invalidate();
-            }
-            catch
-            {
-                MessageBox.Show("Oppzies");
-            }
-        }
+        
 
         private void panelX_Paint(object sender, PaintEventArgs e)
         {
@@ -359,10 +354,27 @@ namespace WinFormsApp1.Reporting
             }
         }
 
-        private void buttonWidth_Click(object sender, EventArgs e)
+        private void buttonEnergyBalance_Click(object sender, EventArgs e)
         {
-            this.Width = int.Parse(textBoxSetWidth.Text);
-            redrawMainGraph();
+            List<int> initX = new List<int>() { 0 };
+            List<int> initY = new List<int>() { 0 };
+            EnergyBalanceGraph ebg = new EnergyBalanceGraph(initX, initY);
+            foreach (DayReport d in monthlyReport)
+            {
+                ebg.addPoints(d.RetrieveItem("Balanced Consumption").Item2, d.RetrieveItem("Balanced Generation").Item2);
+            }
+
+            ebg.Show();
+        }
+
+        private void checkedListBoxData_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBoxData_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            mainCanvas.Invalidate();
         }
     }
 }
