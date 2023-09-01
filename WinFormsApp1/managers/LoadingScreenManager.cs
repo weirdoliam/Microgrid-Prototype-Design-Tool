@@ -10,12 +10,12 @@ namespace WinFormsApp1.managers
     {
         private static Form loadingForm;
 
-        public static void ShowLoadingScreen()
+        public static void ShowLoadingScreen(Form f)
         {
             if (loadingForm != null && !loadingForm.IsDisposed)
                 return; // Loading form is already shown
 
-            loadingForm = new Loading();
+            loadingForm = f;
 
             // Show the form on a separate thread using Task.Run
             Task.Run(() =>

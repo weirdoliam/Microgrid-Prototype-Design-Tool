@@ -24,7 +24,7 @@ namespace WinFormsApp1
         public MainForm()
         {
             // Show the loading form on a separate thread
-            LoadingScreenManager.ShowLoadingScreen();
+            LoadingScreenManager.ShowLoadingScreen(new BatteryLoading());
 
 
             InitializeComponent();
@@ -275,7 +275,7 @@ namespace WinFormsApp1
                 tot += i.Watts;
             }
             labelGenTot.Text = Cache.genListin.Count.ToString();
-            labelGenCap.Text = tot + "";
+            labelGenCapStatic.Text = tot + "";
             //consumers
             int displayed = 0;
 

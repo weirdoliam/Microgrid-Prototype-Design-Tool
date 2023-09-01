@@ -53,10 +53,10 @@ namespace WinFormsApp1.graphing
             plotModel.Series.Add(scatterSeries);
 
             //Find max values
-            int max = Math.Max(_xValues.Max(), _yValues.Max());
+            //int max = Math.Max(_xValues.Max(), _yValues.Max());
             // Set the X-axis and Y-axis properties (optional)
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Consumpiton and Delivery to storage", Maximum = max});
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Generation and Retrieval from storage", Maximum = max});
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Consumpiton and Delivery to storage"});
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Generation and Retrieval from storage"});
 
             // Set the model to the existing plot view (plotView1)
             plotView1.Model = plotModel;

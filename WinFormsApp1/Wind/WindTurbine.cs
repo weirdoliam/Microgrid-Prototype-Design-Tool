@@ -79,7 +79,6 @@ namespace WinFormsApp1.Wind
                 double currPerformance = 0.5 * 1.225 * area * (speed * speed * speed);
                 //curr perf in kWh
                 currPerformance = currPerformance * 24 / 1000;
-                MessageBox.Show("Curr: " + currPerformance + " Peak: " + peakPerformance + " Speed (m/s): " + speed);
                 //return in kWh for the DAY
                 if (currPerformance > peakPerformance) return (int)peakPerformance;
                 return (int)currPerformance;

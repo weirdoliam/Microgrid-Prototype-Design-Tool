@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WinFormsApp1.Solar;
+using WinFormsApp1.Wind;
 
 namespace WinFormsApp1
 {
@@ -59,7 +60,7 @@ namespace WinFormsApp1
                     int cells = int.Parse(textBoxCells.Text);
                     SolarPanelArray s = new SolarPanelArray(material, width, length, watts, cells, material, amount, price);
                     Cache.genListin.Add(s);
-                    MessageBox.Show("Successfully Created Soloar Panel Array of " + amount + " panel(s).");
+                    MessageBox.Show("Successfully Created Solar Panel Array of " + amount + " panel(s).");
                     this.Close();
                 }
                 catch (Exception ex)
@@ -76,6 +77,35 @@ namespace WinFormsApp1
         private void comboBoxWindType_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int amount = int.Parse(quantity.Text.ToString());
+            int i = 0;
+            if (amount > 0)
+            {
+                try
+                {
+                    for (i = 0; i < amount; i++)
+                    {
+                        WindTurbineExisting w = new WindTurbineExisting(name.Text, manu.Text, int.Parse(power.Text), double.Parse(rotord.Text), double.Parse(sweptarea.Text), int.Parse(blades.Text), double.Parse(cutin.Text), double.Parse(ratedspeed.Text), double.Parse(cutoutspeed.Text));
+                        w.Price = decimal.Parse(price.Text);
+                        Cache.genListin.Add(w);
+                    }
+                    MessageBox.Show($"Successfully Created {amount} Windturbine(s)");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show($"Error Creating panels after creating: {i}. Message: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please install at least 1 unit.");
+            }
         }
     }
 }

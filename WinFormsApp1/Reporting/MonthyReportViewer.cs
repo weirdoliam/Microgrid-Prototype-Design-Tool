@@ -34,7 +34,7 @@ namespace WinFormsApp1.Reporting
 
         public MonthyReportViewer(int month)
         {
-            LoadingScreenManager.ShowLoadingScreen();
+            LoadingScreenManager.ShowLoadingScreen(new BatteryLoading());
             InitializeComponent();
             DayRiseTimes startDay = Cache.currDay;
             days = daysInMonth[month - 1];
@@ -50,7 +50,7 @@ namespace WinFormsApp1.Reporting
             Cache.currDay = startDay;
             LoadingScreenManager.HideLoadingScreen();
             //Update width appropriately
-            Width = days == 28 ? 1669 : days == 30 ? 1685 : 1674;
+            Width = days == 28 ? 1669 : days == 30 ? 1684 : 1674;
             drawCheckBoxes();
             updateAllTotals();
 

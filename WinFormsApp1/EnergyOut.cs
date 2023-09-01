@@ -14,11 +14,7 @@ namespace WinFormsApp1
         //watts capacity
         protected int watts;
 
-        protected int consumptionWatts;
-
         public int Watts { get => watts; }
-
-        public int Consuming { get => consumptionWatts; set => consumptionWatts = value; }
 
         public abstract int getDailyEmissions();
 

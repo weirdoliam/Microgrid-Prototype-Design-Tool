@@ -54,6 +54,8 @@
             groupBox1 = new System.Windows.Forms.GroupBox();
             checkBoxAssBat = new System.Windows.Forms.CheckBox();
             groupBox2 = new System.Windows.Forms.GroupBox();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
             canvas.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -75,7 +77,7 @@
             listBoxModelHouses.ForeColor = System.Drawing.Color.Red;
             listBoxModelHouses.FormattingEnabled = true;
             listBoxModelHouses.ItemHeight = 15;
-            listBoxModelHouses.Location = new System.Drawing.Point(666, 17);
+            listBoxModelHouses.Location = new System.Drawing.Point(676, 42);
             listBoxModelHouses.Name = "listBoxModelHouses";
             listBoxModelHouses.Size = new System.Drawing.Size(357, 64);
             listBoxModelHouses.TabIndex = 2;
@@ -158,7 +160,7 @@
             // 
             labelAverageDaily.AutoSize = true;
             labelAverageDaily.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelAverageDaily.Location = new System.Drawing.Point(579, 143);
+            labelAverageDaily.Location = new System.Drawing.Point(589, 168);
             labelAverageDaily.Name = "labelAverageDaily";
             labelAverageDaily.Size = new System.Drawing.Size(68, 28);
             labelAverageDaily.TabIndex = 20;
@@ -170,7 +172,7 @@
             listBoxGenerators.ForeColor = System.Drawing.Color.DarkOliveGreen;
             listBoxGenerators.FormattingEnabled = true;
             listBoxGenerators.ItemHeight = 15;
-            listBoxGenerators.Location = new System.Drawing.Point(307, 17);
+            listBoxGenerators.Location = new System.Drawing.Point(317, 42);
             listBoxGenerators.Name = "listBoxGenerators";
             listBoxGenerators.Size = new System.Drawing.Size(353, 64);
             listBoxGenerators.TabIndex = 23;
@@ -205,7 +207,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label1.Location = new System.Drawing.Point(307, 87);
+            label1.Location = new System.Drawing.Point(317, 112);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(243, 28);
             label1.TabIndex = 31;
@@ -215,7 +217,7 @@
             // 
             label13.AutoSize = true;
             label13.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label13.Location = new System.Drawing.Point(307, 115);
+            label13.Location = new System.Drawing.Point(317, 140);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(223, 28);
             label13.TabIndex = 32;
@@ -225,7 +227,7 @@
             // 
             labelConsume.AutoSize = true;
             labelConsume.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelConsume.Location = new System.Drawing.Point(579, 87);
+            labelConsume.Location = new System.Drawing.Point(589, 112);
             labelConsume.Name = "labelConsume";
             labelConsume.Size = new System.Drawing.Size(68, 28);
             labelConsume.TabIndex = 33;
@@ -235,7 +237,7 @@
             // 
             labelGenerate.AutoSize = true;
             labelGenerate.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGenerate.Location = new System.Drawing.Point(579, 115);
+            labelGenerate.Location = new System.Drawing.Point(589, 140);
             labelGenerate.Name = "labelGenerate";
             labelGenerate.Size = new System.Drawing.Size(68, 28);
             labelGenerate.TabIndex = 34;
@@ -245,7 +247,7 @@
             // 
             label14.AutoSize = true;
             label14.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label14.Location = new System.Drawing.Point(756, 143);
+            label14.Location = new System.Drawing.Point(766, 168);
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(127, 28);
             label14.TabIndex = 35;
@@ -256,7 +258,7 @@
             labelNet.AutoSize = true;
             labelNet.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             labelNet.ForeColor = System.Drawing.Color.Black;
-            labelNet.Location = new System.Drawing.Point(889, 143);
+            labelNet.Location = new System.Drawing.Point(899, 168);
             labelNet.Name = "labelNet";
             labelNet.Size = new System.Drawing.Size(68, 28);
             labelNet.TabIndex = 36;
@@ -266,7 +268,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label10.Location = new System.Drawing.Point(307, 143);
+            label10.Location = new System.Drawing.Point(317, 168);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(266, 28);
             label10.TabIndex = 19;
@@ -285,6 +287,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(checkBoxAssBat);
             groupBox1.Controls.Add(labelCurrDay);
             groupBox1.Controls.Add(labelNet);
@@ -330,7 +334,27 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Data";
             // 
-            // DailyForecast
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label2.Location = new System.Drawing.Point(317, 19);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(80, 21);
+            label2.TabIndex = 39;
+            label2.Text = "Generator";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label3.Location = new System.Drawing.Point(676, 19);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(82, 21);
+            label3.TabIndex = 40;
+            label3.Text = "Consumer";
+            // 
+            // LoadComparison
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -339,7 +363,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(labelMissingData);
-            Name = "DailyForecast";
+            Name = "LoadComparison";
             Text = " ";
             Resize += DailyForecast_Resize;
             canvas.ResumeLayout(false);
@@ -379,5 +403,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox checkBoxAssBat;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

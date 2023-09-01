@@ -40,7 +40,6 @@ namespace WinFormsApp1
             addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             generationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             solarPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            specificToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             consumptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             simpleHousesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             houseModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +48,7 @@ namespace WinFormsApp1
             lithiumIonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             largeScaleStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             resetStorageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            specificToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             factoryConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             weatherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,10 +62,10 @@ namespace WinFormsApp1
             fullYearForecastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             labelGridAssets = new System.Windows.Forms.Label();
             groupBoxGeneration = new System.Windows.Forms.GroupBox();
-            labelGenWatts = new System.Windows.Forms.Label();
+            labelGenCap = new System.Windows.Forms.Label();
             labelGenTot = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
-            labelGenCap = new System.Windows.Forms.Label();
+            labelGenCapStatic = new System.Windows.Forms.Label();
             pictureBox2 = new System.Windows.Forms.PictureBox();
             listBoxAddedGens = new System.Windows.Forms.ListBox();
             buttonRemoveGen = new System.Windows.Forms.Button();
@@ -152,7 +152,7 @@ namespace WinFormsApp1
             // 
             // addToolStripMenuItem
             // 
-            addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { generationToolStripMenuItem, specificToolStripMenuItem, consumptionToolStripMenuItem, batteryToolStripMenuItem });
+            addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { generationToolStripMenuItem, consumptionToolStripMenuItem, batteryToolStripMenuItem, specificToolStripMenuItem });
             addToolStripMenuItem.Name = "addToolStripMenuItem";
             addToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             addToolStripMenuItem.Text = "&Add";
@@ -161,27 +161,21 @@ namespace WinFormsApp1
             // 
             generationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { solarPanelToolStripMenuItem });
             generationToolStripMenuItem.Name = "generationToolStripMenuItem";
-            generationToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            generationToolStripMenuItem.Text = "&Solar";
+            generationToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            generationToolStripMenuItem.Text = "&Generation";
             // 
             // solarPanelToolStripMenuItem
             // 
             solarPanelToolStripMenuItem.Name = "solarPanelToolStripMenuItem";
-            solarPanelToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            solarPanelToolStripMenuItem.Text = "G&eneral";
+            solarPanelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            solarPanelToolStripMenuItem.Text = "Solar and Wind";
             solarPanelToolStripMenuItem.Click += solarPanelToolStripMenuItem_Click;
-            // 
-            // specificToolStripMenuItem
-            // 
-            specificToolStripMenuItem.Name = "specificToolStripMenuItem";
-            specificToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            specificToolStripMenuItem.Text = "&Wind";
             // 
             // consumptionToolStripMenuItem
             // 
             consumptionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { simpleHousesToolStripMenuItem, houseModelToolStripMenuItem });
             consumptionToolStripMenuItem.Name = "consumptionToolStripMenuItem";
-            consumptionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            consumptionToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             consumptionToolStripMenuItem.Text = "&Consumption";
             // 
             // simpleHousesToolStripMenuItem
@@ -201,7 +195,7 @@ namespace WinFormsApp1
             // 
             batteryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { customToolStripMenuItem, lithiumIonToolStripMenuItem, largeScaleStorageToolStripMenuItem, resetStorageToolStripMenuItem });
             batteryToolStripMenuItem.Name = "batteryToolStripMenuItem";
-            batteryToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            batteryToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             batteryToolStripMenuItem.Text = "Battery";
             // 
             // customToolStripMenuItem
@@ -231,6 +225,12 @@ namespace WinFormsApp1
             resetStorageToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             resetStorageToolStripMenuItem.Text = "Reset Storage";
             resetStorageToolStripMenuItem.Click += resetStorageToolStripMenuItem_Click;
+            // 
+            // specificToolStripMenuItem
+            // 
+            specificToolStripMenuItem.Name = "specificToolStripMenuItem";
+            specificToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            specificToolStripMenuItem.Text = "Preloaded &Wind";
             // 
             // toolsToolStripMenuItem
             // 
@@ -271,13 +271,13 @@ namespace WinFormsApp1
             // 
             generalCaseToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             generalCaseToolStripMenuItem.Name = "generalCaseToolStripMenuItem";
-            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             generalCaseToolStripMenuItem.Text = "Comparison";
             // 
             // dailyInsigtsToolStripMenuItem
             // 
             dailyInsigtsToolStripMenuItem.Name = "dailyInsigtsToolStripMenuItem";
-            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             dailyInsigtsToolStripMenuItem.Text = "Load Comparison";
             dailyInsigtsToolStripMenuItem.Click += dailyInsigtsToolStripMenuItem_Click;
             // 
@@ -285,27 +285,27 @@ namespace WinFormsApp1
             // 
             overallAnalysisToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             overallAnalysisToolStripMenuItem.Name = "overallAnalysisToolStripMenuItem";
-            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             overallAnalysisToolStripMenuItem.Text = "Overall Analysis";
             // 
             // dayToolStripMenuItem
             // 
             dayToolStripMenuItem.Name = "dayToolStripMenuItem";
-            dayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            dayToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             dayToolStripMenuItem.Text = "Current Day";
             dayToolStripMenuItem.Click += dayToolStripMenuItem_Click;
             // 
             // monthToolStripMenuItem
             // 
             monthToolStripMenuItem.Name = "monthToolStripMenuItem";
-            monthToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            monthToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             monthToolStripMenuItem.Text = "Month";
             monthToolStripMenuItem.Click += monthToolStripMenuItem_Click;
             // 
             // fullYearForecastToolStripMenuItem
             // 
             fullYearForecastToolStripMenuItem.Name = "fullYearForecastToolStripMenuItem";
-            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             fullYearForecastToolStripMenuItem.Text = "Full Year";
             fullYearForecastToolStripMenuItem.Click += fullYearForecastToolStripMenuItem_Click;
             // 
@@ -316,17 +316,17 @@ namespace WinFormsApp1
             labelGridAssets.Font = new System.Drawing.Font("Century Gothic", 45F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             labelGridAssets.Location = new System.Drawing.Point(426, 8);
             labelGridAssets.Name = "labelGridAssets";
-            labelGridAssets.Size = new System.Drawing.Size(397, 74);
+            labelGridAssets.Size = new System.Drawing.Size(431, 74);
             labelGridAssets.TabIndex = 13;
-            labelGridAssets.Text = "I.S.D.A Assets";
+            labelGridAssets.Text = "MicroSim Dev";
             // 
             // groupBoxGeneration
             // 
             groupBoxGeneration.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom;
-            groupBoxGeneration.Controls.Add(labelGenWatts);
+            groupBoxGeneration.Controls.Add(labelGenCap);
             groupBoxGeneration.Controls.Add(labelGenTot);
             groupBoxGeneration.Controls.Add(label5);
-            groupBoxGeneration.Controls.Add(labelGenCap);
+            groupBoxGeneration.Controls.Add(labelGenCapStatic);
             groupBoxGeneration.Controls.Add(pictureBox2);
             groupBoxGeneration.Controls.Add(listBoxAddedGens);
             groupBoxGeneration.Controls.Add(buttonRemoveGen);
@@ -339,15 +339,15 @@ namespace WinFormsApp1
             groupBoxGeneration.TabStop = false;
             groupBoxGeneration.Text = "Generation";
             // 
-            // labelGenWatts
+            // labelGenCap
             // 
-            labelGenWatts.AutoSize = true;
-            labelGenWatts.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGenWatts.Location = new System.Drawing.Point(291, 423);
-            labelGenWatts.Name = "labelGenWatts";
-            labelGenWatts.Size = new System.Drawing.Size(34, 21);
-            labelGenWatts.TabIndex = 12;
-            labelGenWatts.Text = "0W";
+            labelGenCap.AutoSize = true;
+            labelGenCap.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelGenCap.Location = new System.Drawing.Point(291, 423);
+            labelGenCap.Name = "labelGenCap";
+            labelGenCap.Size = new System.Drawing.Size(34, 21);
+            labelGenCap.TabIndex = 12;
+            labelGenCap.Text = "0W";
             // 
             // labelGenTot
             // 
@@ -369,15 +369,15 @@ namespace WinFormsApp1
             label5.TabIndex = 10;
             label5.Text = "Total: .......................................................";
             // 
-            // labelGenCap
+            // labelGenCapStatic
             // 
-            labelGenCap.AutoSize = true;
-            labelGenCap.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelGenCap.Location = new System.Drawing.Point(9, 423);
-            labelGenCap.Name = "labelGenCap";
-            labelGenCap.Size = new System.Drawing.Size(276, 21);
-            labelGenCap.TabIndex = 9;
-            labelGenCap.Text = "Estimated Total Wattage: ...............";
+            labelGenCapStatic.AutoSize = true;
+            labelGenCapStatic.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            labelGenCapStatic.Location = new System.Drawing.Point(9, 423);
+            labelGenCapStatic.Name = "labelGenCapStatic";
+            labelGenCapStatic.Size = new System.Drawing.Size(276, 21);
+            labelGenCapStatic.TabIndex = 9;
+            labelGenCapStatic.Text = "Estimated Total Wattage: ...............";
             // 
             // pictureBox2
             // 
@@ -760,10 +760,10 @@ namespace WinFormsApp1
         private System.Windows.Forms.ListBox listBoxStorage;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Label labelGenWatts;
+        private System.Windows.Forms.Label labelGenCap;
         private System.Windows.Forms.Label labelGenTot;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label labelGenCap;
+        private System.Windows.Forms.Label labelGenCapStatic;
         private System.Windows.Forms.Label labelHouseTot;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label labelCapacity;

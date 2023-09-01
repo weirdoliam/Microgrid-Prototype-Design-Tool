@@ -39,7 +39,7 @@ namespace WinFormsApp1
         private double averageOther;
 
         //Dictionary to store days, and watt consumption against time (in 48 half hours)
-        Dictionary<string, List<int>> consumptionData;
+        public Dictionary<string, List<int>> consumptionData;
         int[] dailyAverage;
         bool averaged;
 
@@ -88,30 +88,6 @@ namespace WinFormsApp1
             totalsHouse = false;
         }
 
-        public HouseModel(bool TotalsHouse)
-        {
-            totalsHouse = true;
-            this.heatpump = false;
-            this.ckElectric = false;
-            this.ckMains = false;
-            this.ckBottledGas = false;
-            this.whMains = false;
-            this.whElectric = false;
-            this.whWood = false;
-            this.shElectric = false;
-            this.shMains = false;
-            this.shWood = false;
-            this.shFossilFuels = false;
-            this.adults = 0;
-            this.children = 0;
-            this.income = "";
-            this.location = "";
-            consumptionData = new Dictionary<string, List<int>>();
-            dailyAverage = new int[96];
-            averaged = false;
-
-        }
-
         public bool Heatpump { get => heatpump; set => heatpump = value; }
         public bool CkElectric { get => ckElectric; set => ckElectric = value; }
         public bool CkMains { get => ckMains; set => ckMains = value; }
@@ -137,8 +113,10 @@ namespace WinFormsApp1
         {
             if (!consumptionData.ContainsKey(key))
             {
-                List<int> array = new List<int>();
-                array.Add(value);
+                List<int> array = new List<int>
+                {
+                    value
+                };
                 consumptionData.Add(key, array);
                 dailyAverage[array.Count-1] += value;
             }
@@ -149,6 +127,57 @@ namespace WinFormsApp1
                 consumptionData[key] =  array;
                 dailyAverage[array.Count-1] += value;
             }
+        }
+
+        public int CalculateSimilarityScore(HouseModel otherHouse)
+        {
+            if (otherHouse.Equals(this)) return 100;
+
+            int similarityScore = 100;
+
+            if (this.heatpump != otherHouse.heatpump)
+                similarityScore -= 5;
+
+            if (this.ckElectric != otherHouse.ckElectric)
+                similarityScore -= 5;
+
+            if (this.ckMains != otherHouse.ckMains)
+                similarityScore -= 5;
+
+            if (this.ckBottledGas != otherHouse.ckBottledGas)
+                similarityScore -= 5;
+
+            if (this.whMains != otherHouse.whMains)
+                similarityScore -= 5;
+
+            if (this.whElectric != otherHouse.whElectric)
+                similarityScore -= 5;
+
+            if (this.whWood != otherHouse.whWood)
+                similarityScore -= 5;
+
+            if (this.shElectric != otherHouse.shElectric)
+                similarityScore -= 5;
+
+            if (this.shMains != otherHouse.shMains)
+                similarityScore -= 5;
+
+            if (this.shWood != otherHouse.shWood)
+                similarityScore -= 5;
+
+            if (this.shFossilFuels != otherHouse.shFossilFuels)
+                similarityScore -= 5;
+
+            similarityScore -= Math.Abs(this.adults - otherHouse.adults);
+            similarityScore -= Math.Abs(this.children - otherHouse.children);
+
+            if (this.income != otherHouse.income)
+                similarityScore -= 5;
+
+            if (this.location != otherHouse.location)
+                similarityScore -= 5;
+
+            return similarityScore;
         }
 
         public override bool Equals(object obj)

@@ -57,15 +57,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>You can import house load data simply by selecting the load data you want to add to the application.
-
-It must be in CSV format: 
-datetime (yy/mm/dd hh:mm), consumption (w)
-
-It will be parsed against the definiton setup in the House Model section. Set up your house model, then select "Import Load" and the house model will be added to the grid.</value>
-  </data>
-  <metadata name="openFileDialogHouse.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
 </root>

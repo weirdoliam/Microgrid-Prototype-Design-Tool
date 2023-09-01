@@ -28,248 +28,209 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.labelK = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBoxIncome = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDownChildren = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownAdults = new System.Windows.Forms.NumericUpDown();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.checkedLBHM = new System.Windows.Forms.CheckedListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChildren)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdults)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(6, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(69, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Create";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 41);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            2000000,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(69, 23);
-            this.numericUpDown1.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 15);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Generate # random houses";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 100);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Simple House";
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEnergyOutForm));
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            textBoxLocation = new System.Windows.Forms.TextBox();
+            labelK = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            textBoxIncome = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            numericUpDownChildren = new System.Windows.Forms.NumericUpDown();
+            numericUpDownAdults = new System.Windows.Forms.NumericUpDown();
+            buttonAdd = new System.Windows.Forms.Button();
+            label2 = new System.Windows.Forms.Label();
+            checkedLBHM = new System.Windows.Forms.CheckedListBox();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
+            richTextBox1 = new System.Windows.Forms.RichTextBox();
+            openFileDialogHouse = new System.Windows.Forms.OpenFileDialog();
+            groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownChildren).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownAdults).BeginInit();
+            groupBox1.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.labelK);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.comboBox1);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.textBoxIncome);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.numericUpDownChildren);
-            this.groupBox2.Controls.Add(this.numericUpDownAdults);
-            this.groupBox2.Controls.Add(this.buttonAdd);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.checkedLBHM);
-            this.groupBox2.Location = new System.Drawing.Point(218, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 321);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "House Model";
+            groupBox2.Controls.Add(textBoxLocation);
+            groupBox2.Controls.Add(labelK);
+            groupBox2.Controls.Add(label6);
+            groupBox2.Controls.Add(label5);
+            groupBox2.Controls.Add(textBoxIncome);
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(label3);
+            groupBox2.Controls.Add(numericUpDownChildren);
+            groupBox2.Controls.Add(numericUpDownAdults);
+            groupBox2.Controls.Add(buttonAdd);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(checkedLBHM);
+            groupBox2.Location = new System.Drawing.Point(12, 12);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(200, 321);
+            groupBox2.TabIndex = 4;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "House Model";
+            // 
+            // textBoxLocation
+            // 
+            textBoxLocation.Location = new System.Drawing.Point(6, 260);
+            textBoxLocation.Name = "textBoxLocation";
+            textBoxLocation.Size = new System.Drawing.Size(100, 23);
+            textBoxLocation.TabIndex = 13;
             // 
             // labelK
             // 
-            this.labelK.AutoSize = true;
-            this.labelK.Location = new System.Drawing.Point(75, 220);
-            this.labelK.Name = "labelK";
-            this.labelK.Size = new System.Drawing.Size(13, 15);
-            this.labelK.TabIndex = 12;
-            this.labelK.Text = "k";
+            labelK.AutoSize = true;
+            labelK.Location = new System.Drawing.Point(62, 219);
+            labelK.Name = "labelK";
+            labelK.Size = new System.Drawing.Size(13, 15);
+            labelK.TabIndex = 12;
+            labelK.Text = "k";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 242);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 15);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Location: ";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Rural",
-            "City"});
-            this.comboBox1.Location = new System.Drawing.Point(6, 260);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(104, 23);
-            this.comboBox1.TabIndex = 10;
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(8, 242);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(143, 15);
+            label6.TabIndex = 11;
+            label6.Text = "Location (City, Rural etc): ";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 195);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(121, 15);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Income (Thousands): ";
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(8, 195);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(121, 15);
+            label5.TabIndex = 9;
+            label5.Text = "Income (Thousands): ";
             // 
             // textBoxIncome
             // 
-            this.textBoxIncome.Location = new System.Drawing.Point(6, 216);
-            this.textBoxIncome.Name = "textBoxIncome";
-            this.textBoxIncome.Size = new System.Drawing.Size(69, 23);
-            this.textBoxIncome.TabIndex = 8;
-            this.textBoxIncome.Text = "0";
+            textBoxIncome.Location = new System.Drawing.Point(8, 216);
+            textBoxIncome.Name = "textBoxIncome";
+            textBoxIncome.Size = new System.Drawing.Size(49, 23);
+            textBoxIncome.TabIndex = 8;
+            textBoxIncome.Text = "0";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(81, 147);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Children: ";
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(81, 147);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(58, 15);
+            label4.TabIndex = 7;
+            label4.Text = "Children: ";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 147);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 15);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Adults: ";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(8, 147);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(47, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Adults: ";
             // 
             // numericUpDownChildren
             // 
-            this.numericUpDownChildren.Location = new System.Drawing.Point(81, 169);
-            this.numericUpDownChildren.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDownChildren.Name = "numericUpDownChildren";
-            this.numericUpDownChildren.Size = new System.Drawing.Size(69, 23);
-            this.numericUpDownChildren.TabIndex = 5;
+            numericUpDownChildren.Location = new System.Drawing.Point(82, 169);
+            numericUpDownChildren.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
+            numericUpDownChildren.Name = "numericUpDownChildren";
+            numericUpDownChildren.Size = new System.Drawing.Size(69, 23);
+            numericUpDownChildren.TabIndex = 5;
             // 
             // numericUpDownAdults
             // 
-            this.numericUpDownAdults.Location = new System.Drawing.Point(6, 169);
-            this.numericUpDownAdults.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDownAdults.Name = "numericUpDownAdults";
-            this.numericUpDownAdults.Size = new System.Drawing.Size(69, 23);
-            this.numericUpDownAdults.TabIndex = 3;
+            numericUpDownAdults.Location = new System.Drawing.Point(6, 169);
+            numericUpDownAdults.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
+            numericUpDownAdults.Name = "numericUpDownAdults";
+            numericUpDownAdults.Size = new System.Drawing.Size(69, 23);
+            numericUpDownAdults.TabIndex = 3;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(5, 289);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(62, 23);
-            this.buttonAdd.TabIndex = 4;
-            this.buttonAdd.Text = "Create";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            buttonAdd.Location = new System.Drawing.Point(5, 289);
+            buttonAdd.Name = "buttonAdd";
+            buttonAdd.Size = new System.Drawing.Size(189, 23);
+            buttonAdd.TabIndex = 4;
+            buttonAdd.Text = "Use pre-generated load";
+            buttonAdd.UseVisualStyleBackColor = true;
+            buttonAdd.Click += buttonAdd_Click;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Electricity Details: ";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(6, 23);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(102, 15);
+            label2.TabIndex = 3;
+            label2.Text = "Electricity Details: ";
             // 
             // checkedLBHM
             // 
-            this.checkedLBHM.FormattingEnabled = true;
-            this.checkedLBHM.Items.AddRange(new object[] {
-            "Heatpump",
-            "Electric Cooking",
-            "Mains Cooking",
-            "Bottled Gas Cooking",
-            "Electric Water Heating",
-            "Mains Water Heating",
-            "Wood Water Heating",
-            "Electric Space Heating",
-            "Mains Space Heating",
-            "Wood Space Heating",
-            "Fossil Fuel Space Heating"});
-            this.checkedLBHM.Location = new System.Drawing.Point(6, 41);
-            this.checkedLBHM.Name = "checkedLBHM";
-            this.checkedLBHM.Size = new System.Drawing.Size(188, 94);
-            this.checkedLBHM.TabIndex = 0;
+            checkedLBHM.FormattingEnabled = true;
+            checkedLBHM.Items.AddRange(new object[] { "Heatpump", "Electric Cooking", "Mains Cooking", "Bottled Gas Cooking", "Electric Water Heating", "Mains Water Heating", "Wood Water Heating", "Electric Space Heating", "Mains Space Heating", "Wood Space Heating", "Fossil Fuel Space Heating" });
+            checkedLBHM.Location = new System.Drawing.Point(6, 41);
+            checkedLBHM.Name = "checkedLBHM";
+            checkedLBHM.Size = new System.Drawing.Size(188, 94);
+            checkedLBHM.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(richTextBox1);
+            groupBox1.Location = new System.Drawing.Point(218, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(201, 321);
+            groupBox1.TabIndex = 5;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Use Imported Load";
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(6, 289);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(189, 23);
+            button1.TabIndex = 1;
+            button1.Text = "Import Custom Load";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new System.Drawing.Point(0, 22);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new System.Drawing.Size(201, 235);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // openFileDialogHouse
+            // 
+            openFileDialogHouse.FileName = "openFileDialog1";
             // 
             // AddEnergyOutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(430, 340);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Name = "AddEnergyOutForm";
-            this.Text = "Add Houses";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownChildren)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAdults)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            ClientSize = new System.Drawing.Size(431, 340);
+            Controls.Add(groupBox1);
+            Controls.Add(groupBox2);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "AddEnergyOutForm";
+            Text = "Add Houses";
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownChildren).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownAdults).EndInit();
+            groupBox1.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckedListBox checkedLBHM;
         private System.Windows.Forms.Button buttonAdd;
@@ -279,9 +240,13 @@
         private System.Windows.Forms.NumericUpDown numericUpDownChildren;
         private System.Windows.Forms.NumericUpDown numericUpDownAdults;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxIncome;
         private System.Windows.Forms.Label labelK;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox textBoxLocation;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog openFileDialogHouse;
     }
 }

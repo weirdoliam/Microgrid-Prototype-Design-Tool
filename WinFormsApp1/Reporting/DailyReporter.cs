@@ -154,14 +154,14 @@ namespace WinFormsApp1.Reporting
 
 
                 net = currDemand - currSupply;
-                Console.WriteLine($"Net: {net}");
+                //Console.WriteLine($"Net: {net}");
                 //if net is less than zero we have charge!
                 if (net < 0)
                 {
-                    Console.WriteLine($"Charging Battery: {-net}");
+                    //Console.WriteLine($"Charging Battery: {-net}");
                     giveToGrid = reportBattry.Charge(-net);
                     int chargedAmount = Math.Abs(-net - (int)giveToGrid);
-                    Console.WriteLine($"Energy Unable to be charged in half-hour: {giveToGrid}");
+                    //Console.WriteLine($"Energy Unable to be charged in half-hour: {giveToGrid}");
                     needFromGrid = 0;
                     consume_and_given += chargedAmount;
                 }

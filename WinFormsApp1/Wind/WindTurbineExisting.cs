@@ -115,14 +115,14 @@ namespace WinFormsApp1.Wind
 
         public override string getArrayDescription()
         {
-            string returnString = "ExistingTurbine";
+            string returnString = "Wind Power";
             if (curve == null)
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower / 1000}kW";
+                returnString += $", {manufacturer},{name},{ratedPower / 1000}kW";
             }
             else
             {
-                returnString += $"{returnString}{manufacturer},{name},{ratedPower / 1000}kW,contains power curve data";
+                returnString += $", {manufacturer},{name},{ratedPower / 1000}kW,contains power curve data";
             }
             if (isArray)
             {

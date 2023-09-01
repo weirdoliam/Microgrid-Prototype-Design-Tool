@@ -15,13 +15,9 @@ namespace WinFormsApp1
         //watts capacity
         protected int watts;
 
-        protected int generationWatts;
-
-        public decimal Price { get; protected set; }
+        public decimal Price { get; set; }
 
         public int Watts { get => watts; }
-
-        public int Generating { get => generationWatts; set => generationWatts = value; }
 
         protected bool isArray;
 

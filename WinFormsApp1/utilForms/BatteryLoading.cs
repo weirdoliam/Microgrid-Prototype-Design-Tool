@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1.utilForms
 {
-    public partial class Loading : Form
+    public partial class BatteryLoading : Form
     {
-        public Loading()
+        public BatteryLoading()
         {
             InitializeComponent();
         }

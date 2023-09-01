@@ -18,84 +18,118 @@ namespace WinFormsApp1
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Cache.genListOut.Add(new HouseArray((int)numericUpDown1.Value));
-            this.Close();
-        }
-
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            bool heatpump = checkedLBHM.GetItemChecked(0);
-            bool ckElectric = checkedLBHM.GetItemChecked(1); 
-            bool ckMains = checkedLBHM.GetItemChecked(2);
-            bool ckBottle = checkedLBHM.GetItemChecked(3);
-            bool whElectric = checkedLBHM.GetItemChecked(4);
-            bool whMains = checkedLBHM.GetItemChecked(5);
-            bool whWood = checkedLBHM.GetItemChecked(6);
-            bool shElectric = checkedLBHM.GetItemChecked(7);
-            bool shMains = checkedLBHM.GetItemChecked(8);
-            bool shWood = checkedLBHM.GetItemChecked(9);
-            bool shFossil = checkedLBHM.GetItemChecked(10);
-
-            int adults = (int)numericUpDownAdults.Value;
-            int children = (int)numericUpDownChildren.Value;
-            string location = comboBox1.SelectedItem.ToString();
-            string income = textBoxIncome.Text + "k";
-
-            HouseModel h = new HouseModel(heatpump, 
-                ckElectric, ckMains, ckBottle, 
-                whElectric, whMains, whWood, 
-                shElectric, shMains, shWood, shFossil, 
-                adults, children, income, location);
+            HouseModel newHouse = getHouseModel();
+            if (newHouse == null) return;
             //now find some data that best fits this description
+            List<int> scores = new List<int>();
+            foreach (HouseModel h in Cache.houseModels)
+            {
+                scores.Add(newHouse.CalculateSimilarityScore(h));
+            }
+            //Figure out which house is closest
+            int maxIndex = 0;
+            int maxValue = scores[0];
 
+            for (int i = 1; i < scores.Count; i++)
+            {
+                if (scores[i] > maxValue)
+                {
+                    maxIndex = i;
+                    maxValue = scores[i];
+                }
+            }
+
+            newHouse.consumptionData = Cache.houseModels[maxIndex].consumptionData;
+            Cache.genListOut.Add(newHouse);
+            MessageBox.Show("House model setup with load auto-selected.");
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string path = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "house\\");
-            string[] paths = Directory.GetFiles(path);
+        private HouseModel getHouseModel() {
 
-            for (int i = 0; i < paths.Length; i++)
+            HouseModel newHouse;
+            try
             {
-                using (var reader = new StreamReader(paths[i]))
+                bool heatpump = checkedLBHM.GetItemChecked(0);
+                bool ckElectric = checkedLBHM.GetItemChecked(1);
+                bool ckMains = checkedLBHM.GetItemChecked(2);
+                bool ckBottle = checkedLBHM.GetItemChecked(3);
+                bool whElectric = checkedLBHM.GetItemChecked(4);
+                bool whMains = checkedLBHM.GetItemChecked(5);
+                bool whWood = checkedLBHM.GetItemChecked(6);
+                bool shElectric = checkedLBHM.GetItemChecked(7);
+                bool shMains = checkedLBHM.GetItemChecked(8);
+                bool shWood = checkedLBHM.GetItemChecked(9);
+                bool shFossil = checkedLBHM.GetItemChecked(10);
+
+                int adults = (int)numericUpDownAdults.Value;
+                int children = (int)numericUpDownChildren.Value;
+                string location = textBoxLocation.Text;
+                string income = textBoxIncome.Text + "k";
+
+                newHouse = new HouseModel(heatpump,
+                    ckElectric, ckMains, ckBottle,
+                    whElectric, whMains, whWood,
+                    shElectric, shMains, shWood, shFossil,
+                    adults, children, income, location);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"You've Entered some data incorrectly. Please check and try again.\n Digest:\n {ex.Message}");
+                return null;
+            }
+            return newHouse;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            HouseModel newHouse = getHouseModel();
+            if (newHouse == null) return;
+            if (openFileDialogHouse.ShowDialog() == DialogResult.OK)
+            {
+                string path = openFileDialogHouse.FileName;
+                MessageBox.Show(path);
+                int points = 0;
+                using (var reader = new StreamReader(path))
                 {
-                    //parse the initial description
-                    string[] d = reader.ReadLine().Split(',');
-                    HouseModel newHouse = new HouseModel(bool.Parse(d[0]), bool.Parse(d[1]), bool.Parse(d[2]),
-                        bool.Parse(d[3]), bool.Parse(d[4]), bool.Parse(d[5]), bool.Parse(d[6]), bool.Parse(d[7]), bool.Parse(d[8]),
-                        bool.Parse(d[9]), bool.Parse(d[10]), int.Parse(d[11]), int.Parse(d[12]), d[13], d[14]);
-                    //MessageBox.Show("Created House: " + newHouse.ToString());
                     while (!reader.EndOfStream)
                     {
-
-                        string[] values = reader.ReadLine().Split(',');
+                        string val = reader.ReadLine();
+                        string[] values = val.Split(',');
                         //MessageBox.Show(values[0] + ", " + values[1]);
-                        if (values.Length != 2)
+                        if (values.Length == 2 || values.Length == 3)
                         {
-                            string[] isolatedDate = values[0].Split(' ');
-                            //reformat to day month year
-                            string[] newDateFormat = isolatedDate[0].Split("/");
-                            //MessageBox.Show(newDateFormat[0]);
-                            int year = 2022;
-                            int month = int.Parse(newDateFormat[1]);
-                            int day = int.Parse(newDateFormat[2]);
-                            string date = day + "/" + month + "/" + year;
-                            //MessageBox.Show(date);
-                            newHouse.addTimeSample(date, (int)double.Parse(values[1]));
+                            try
+                            {
+                                string[] isolatedDate = values[0].Split(' ');
+                                //reformat to day month year
+                                string[] newDateFormat = isolatedDate[0].Split("/");
+                                //MessageBox.Show(newDateFormat[0]);
+                                int year = 2022;
+                                int month = int.Parse(newDateFormat[1]);
+                                int day = int.Parse(newDateFormat[2]);
+                                string date = day + "/" + month + "/" + year;
+                                //MessageBox.Show(date);
+                                newHouse.addTimeSample(date, (int)double.Parse(values[1]));
+                                points++;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"HouseModel: Datam skipped due to error: {val}");
+                            }
                         }
                         else
                         {
                             //skip
+                            Console.WriteLine($"HouseModel: Datam not readable: {val}");
                         }
-
                     }
-                    Cache.houseModels.Add(newHouse);
                 }
+                Cache.genListOut.Add(newHouse);
+                MessageBox.Show($"House model setup with {points} data points read into load.");
             }
-            this.Close();
         }
     }
 }
