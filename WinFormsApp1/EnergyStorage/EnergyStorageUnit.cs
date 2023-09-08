@@ -6,14 +6,17 @@ namespace WinFormsApp1.EnergyStorage
 {
     public abstract class EnergyStorageUnit
     {
-        // Properties
+        // Capacity of storage in W
         public double Capacity { get; protected set; }
+        //Current charge level (from 0W to capacity typically)
         public double ChargeLevel { get; protected set; }
+        //price of asset
         public decimal Price { get; protected set; }
-
-        // Charge returns
+        // Charge returns energy not charged
         public abstract double Charge(double amount);
+        //Discharge returns discharged energy
         public abstract double Discharge(double amount);
+        //get description of unit
         public abstract string getDescription();
     }
 }

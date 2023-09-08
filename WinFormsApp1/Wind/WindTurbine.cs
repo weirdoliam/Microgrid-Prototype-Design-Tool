@@ -1,6 +1,8 @@
 ﻿using MathNet.Numerics.Distributions;
+using Microsoft.ML.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,19 +13,19 @@ namespace WinFormsApp1.Wind
     {
         //m
         protected int rotorDiameter;
-        //degrees
+        //degrees from north (90 being east, 180 being south, etc)
         protected int rotation;
         //name
         protected string name;
         //kmh
-        protected const int CUTOFF = 100;
-        protected const int RATED = 55;
-        protected const int CUTIN = 13;
+        protected int cutoff;
+        protected int rated;
+        protected int cutin;
         //general effectiveness
         protected double effectiveness;
 
 
-        public WindTurbine(int watts, int rotorDiameter, int rotation, string name)
+        public WindTurbine(int watts, int rotorDiameter, int rotation, string name, int cutoff, int rated, int cutin)
         {
             this.watts = watts;
             this.rotorDiameter = rotorDiameter;
@@ -31,16 +33,9 @@ namespace WinFormsApp1.Wind
             this.rotation = rotation;
             this.name = name;
             effectiveness = 0.2;
-
-        }
-        public WindTurbine(int watts, int rotorDiameter, int rotation, string name, double effectiveness)
-        {
-            this.watts = watts;
-            this.rotorDiameter = rotorDiameter;
-            isArray = false;
-            this.rotation = rotation;
-            this.name = name;
-            this.effectiveness = effectiveness;
+            this.cutoff = cutoff;
+            this.rated = rated;
+            this.cutin = cutin;
         }
 
         public override string getArrayDescription()
@@ -69,11 +64,11 @@ namespace WinFormsApp1.Wind
             //best case cut in halfhourly, then the betz limit peak perf in kWh
             double peakPerformance = watts * 0.593 * 24 / 1000;
 
-            if (windSpeed < CUTIN)
+            if (windSpeed < cutin)
             {
                 return 0;
             }
-            else if (windSpeed >= CUTIN & windSpeed < RATED)
+            else if (windSpeed >= cutin & windSpeed < rated)
             {
                 //Power(W) = 1 / 2 x ρ x A x v3 
                 double currPerformance = 0.5 * 1.225 * area * (speed * speed * speed);
@@ -84,11 +79,11 @@ namespace WinFormsApp1.Wind
                 return (int)currPerformance;
 
             }
-            else if (windSpeed >= RATED & windSpeed < CUTOFF)
+            else if (windSpeed >= rated & windSpeed < cutoff)
             {
                 return (int)peakPerformance;
             }
-            else if (windSpeed >= CUTOFF)
+            else if (windSpeed >= cutoff)
             {
                 return 0;
             }
@@ -103,7 +98,8 @@ namespace WinFormsApp1.Wind
 
         public override int getHalfHourlyGeneration(string currTime, int iterationNo)
         {
-            //we need a list of windspeeds in m/s - WE HAVE KM/H SPEEDS IN HERE ALSO
+            //we need a list of windspeeds in m/s -
+            //We have KM/H SPEEDS in here also, labelled
             //We JUST want the date and NOT time
             string justDate = currTime.Split(' ')[0];
             List<double> windSpeeds = Cache.windModel.getDailySpeeds(justDate);
@@ -120,11 +116,11 @@ namespace WinFormsApp1.Wind
             //best case cut in halfhourly, then the betz limit
             double peakPerformance = watts * 0.5 * 0.593;
 
-            if (kmhWindSpeed < CUTIN)
+            if (kmhWindSpeed < cutin)
             {
                 return 0;
             }
-            else if (kmhWindSpeed >= CUTIN & kmhWindSpeed < RATED)
+            else if (kmhWindSpeed >= cutin & kmhWindSpeed < rated)
             {
                 //Power(W) = 1 / 2 x ρ x A x v (not cubed3)
                 //calculate available power estimate
@@ -135,11 +131,11 @@ namespace WinFormsApp1.Wind
                 if (currPerformance > peakPerformance) return (int)peakPerformance;
                 return (int)currPerformance;
             }
-            else if (kmhWindSpeed >= RATED & kmhWindSpeed < CUTOFF)
+            else if (kmhWindSpeed >= rated & kmhWindSpeed < cutoff)
             {
                 return (int)peakPerformance;
             }
-            else if (windspeed >= CUTOFF)
+            else if (windspeed >= cutoff)
             {
                 return 0;
             }

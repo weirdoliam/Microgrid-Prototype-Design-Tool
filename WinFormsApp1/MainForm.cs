@@ -30,6 +30,7 @@ namespace WinFormsApp1
             InitializeComponent();
 
             //read in sunlight hours
+            Console.WriteLine("Main Form Initialized OK");
             var path = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "sunrise_times2.csv");
             using (var reader = new StreamReader(path))
             {
@@ -206,7 +207,7 @@ namespace WinFormsApp1
             //default additions
 
             //continueing on, general admin setup
-            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 1000, 72, "Polycrystalline", 1, 100);
+            SolarPanelArray s = new SolarPanelArray("Commercial", 1.9812f, 0.9906f, 1000, 72, "Polycrystalline", 1, 100, 4);
             Cache.genListin.Add(s);
             Cache.genListOut.Add(Cache.houseModels[0]);
 

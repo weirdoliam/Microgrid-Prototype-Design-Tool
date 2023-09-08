@@ -6,12 +6,14 @@ namespace WinFormsApp1
 {
     internal class DayRiseTimes
     {
+        //Time of Year
         private int month;
         private int day;
+        //Sunrise and sunset specific times
         private DateTime sunrise;
         private DateTime sunset;
+        //Timespan defining how much daylight we typically have
         private TimeSpan daylight; 
-
         public DayRiseTimes(DateTime sunrise, DateTime sunset, TimeSpan daylight)
         {
             this.month = sunrise.Month;

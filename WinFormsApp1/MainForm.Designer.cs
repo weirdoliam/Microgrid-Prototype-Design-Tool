@@ -127,27 +127,27 @@ namespace WinFormsApp1
             // 
             saveScenarioToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             saveScenarioToolStripMenuItem.Name = "saveScenarioToolStripMenuItem";
-            saveScenarioToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            saveScenarioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             saveScenarioToolStripMenuItem.Text = "Scenario";
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            loadToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             saveAsToolStripMenuItem.Text = "Save as";
             // 
             // addToolStripMenuItem
@@ -161,7 +161,7 @@ namespace WinFormsApp1
             // 
             generationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { solarPanelToolStripMenuItem });
             generationToolStripMenuItem.Name = "generationToolStripMenuItem";
-            generationToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            generationToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             generationToolStripMenuItem.Text = "&Generation";
             // 
             // solarPanelToolStripMenuItem
@@ -175,27 +175,27 @@ namespace WinFormsApp1
             // 
             consumptionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { simpleHousesToolStripMenuItem, houseModelToolStripMenuItem });
             consumptionToolStripMenuItem.Name = "consumptionToolStripMenuItem";
-            consumptionToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            consumptionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             consumptionToolStripMenuItem.Text = "&Consumption";
             // 
             // simpleHousesToolStripMenuItem
             // 
             simpleHousesToolStripMenuItem.Name = "simpleHousesToolStripMenuItem";
-            simpleHousesToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            simpleHousesToolStripMenuItem.Text = "Simple House(s)";
+            simpleHousesToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            simpleHousesToolStripMenuItem.Text = "Custom House";
             simpleHousesToolStripMenuItem.Click += simpleHousesToolStripMenuItem_Click;
             // 
             // houseModelToolStripMenuItem
             // 
             houseModelToolStripMenuItem.Name = "houseModelToolStripMenuItem";
-            houseModelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            houseModelToolStripMenuItem.Text = "House Model";
+            houseModelToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            houseModelToolStripMenuItem.Text = "Preloaded House Models";
             // 
             // batteryToolStripMenuItem
             // 
             batteryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { customToolStripMenuItem, lithiumIonToolStripMenuItem, largeScaleStorageToolStripMenuItem, resetStorageToolStripMenuItem });
             batteryToolStripMenuItem.Name = "batteryToolStripMenuItem";
-            batteryToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            batteryToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             batteryToolStripMenuItem.Text = "Battery";
             // 
             // customToolStripMenuItem
@@ -229,8 +229,8 @@ namespace WinFormsApp1
             // specificToolStripMenuItem
             // 
             specificToolStripMenuItem.Name = "specificToolStripMenuItem";
-            specificToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            specificToolStripMenuItem.Text = "Preloaded &Wind";
+            specificToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            specificToolStripMenuItem.Text = "Preloaded &Wind Turbines";
             // 
             // toolsToolStripMenuItem
             // 
@@ -271,13 +271,13 @@ namespace WinFormsApp1
             // 
             generalCaseToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             generalCaseToolStripMenuItem.Name = "generalCaseToolStripMenuItem";
-            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            generalCaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             generalCaseToolStripMenuItem.Text = "Comparison";
             // 
             // dailyInsigtsToolStripMenuItem
             // 
             dailyInsigtsToolStripMenuItem.Name = "dailyInsigtsToolStripMenuItem";
-            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            dailyInsigtsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             dailyInsigtsToolStripMenuItem.Text = "Load Comparison";
             dailyInsigtsToolStripMenuItem.Click += dailyInsigtsToolStripMenuItem_Click;
             // 
@@ -285,27 +285,27 @@ namespace WinFormsApp1
             // 
             overallAnalysisToolStripMenuItem.BackColor = System.Drawing.SystemColors.ControlLight;
             overallAnalysisToolStripMenuItem.Name = "overallAnalysisToolStripMenuItem";
-            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            overallAnalysisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             overallAnalysisToolStripMenuItem.Text = "Overall Analysis";
             // 
             // dayToolStripMenuItem
             // 
             dayToolStripMenuItem.Name = "dayToolStripMenuItem";
-            dayToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            dayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             dayToolStripMenuItem.Text = "Current Day";
             dayToolStripMenuItem.Click += dayToolStripMenuItem_Click;
             // 
             // monthToolStripMenuItem
             // 
             monthToolStripMenuItem.Name = "monthToolStripMenuItem";
-            monthToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            monthToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             monthToolStripMenuItem.Text = "Month";
             monthToolStripMenuItem.Click += monthToolStripMenuItem_Click;
             // 
             // fullYearForecastToolStripMenuItem
             // 
             fullYearForecastToolStripMenuItem.Name = "fullYearForecastToolStripMenuItem";
-            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            fullYearForecastToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             fullYearForecastToolStripMenuItem.Text = "Full Year";
             fullYearForecastToolStripMenuItem.Click += fullYearForecastToolStripMenuItem_Click;
             // 

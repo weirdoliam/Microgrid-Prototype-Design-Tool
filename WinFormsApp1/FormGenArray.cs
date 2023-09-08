@@ -58,7 +58,8 @@ namespace WinFormsApp1
                     int watts = int.Parse(textBoxWatts.Text);
                     decimal price = decimal.Parse(textBoxPrice.Text);
                     int cells = int.Parse(textBoxCells.Text);
-                    SolarPanelArray s = new SolarPanelArray(material, width, length, watts, cells, material, amount, price);
+                    int hours = int.Parse(textBoxHours.Text);
+                    SolarPanelArray s = new SolarPanelArray(material, width, length, watts, cells, material, amount, price, hours);
                     Cache.genListin.Add(s);
                     MessageBox.Show("Successfully Created Solar Panel Array of " + amount + " panel(s).");
                     this.Close();

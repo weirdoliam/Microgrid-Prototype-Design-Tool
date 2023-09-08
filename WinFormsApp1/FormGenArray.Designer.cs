@@ -32,6 +32,8 @@
             labelAmount = new System.Windows.Forms.Label();
             textBoxQuantity = new System.Windows.Forms.TextBox();
             groupBoxSolar = new System.Windows.Forms.GroupBox();
+            label15 = new System.Windows.Forms.Label();
+            textBoxHours = new System.Windows.Forms.TextBox();
             textBoxCells = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
             button2 = new System.Windows.Forms.Button();
@@ -92,14 +94,16 @@
             // 
             // textBoxQuantity
             // 
-            textBoxQuantity.Location = new System.Drawing.Point(94, 207);
+            textBoxQuantity.Location = new System.Drawing.Point(168, 206);
             textBoxQuantity.Name = "textBoxQuantity";
-            textBoxQuantity.Size = new System.Drawing.Size(39, 23);
+            textBoxQuantity.Size = new System.Drawing.Size(72, 23);
             textBoxQuantity.TabIndex = 3;
-            textBoxQuantity.Text = "0";
+            textBoxQuantity.Text = "1";
             // 
             // groupBoxSolar
             // 
+            groupBoxSolar.Controls.Add(label15);
+            groupBoxSolar.Controls.Add(textBoxHours);
             groupBoxSolar.Controls.Add(textBoxCells);
             groupBoxSolar.Controls.Add(label3);
             groupBoxSolar.Controls.Add(button2);
@@ -124,6 +128,23 @@
             groupBoxSolar.TabIndex = 4;
             groupBoxSolar.TabStop = false;
             groupBoxSolar.Text = "Solar Panel Properties";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new System.Drawing.Point(6, 240);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(156, 15);
+            label15.TabIndex = 18;
+            label15.Text = "Hours before fully effective: ";
+            // 
+            // textBoxHours
+            // 
+            textBoxHours.Location = new System.Drawing.Point(168, 237);
+            textBoxHours.Name = "textBoxHours";
+            textBoxHours.Size = new System.Drawing.Size(72, 23);
+            textBoxHours.TabIndex = 17;
+            textBoxHours.Text = "4";
             // 
             // textBoxCells
             // 
@@ -334,6 +355,7 @@
             quantity.Name = "quantity";
             quantity.Size = new System.Drawing.Size(108, 23);
             quantity.TabIndex = 21;
+            quantity.Text = "1";
             // 
             // label14
             // 
@@ -350,6 +372,7 @@
             price.Name = "price";
             price.Size = new System.Drawing.Size(108, 23);
             price.TabIndex = 19;
+            price.Text = "250000";
             // 
             // label10
             // 
@@ -366,6 +389,7 @@
             cutoutspeed.Name = "cutoutspeed";
             cutoutspeed.Size = new System.Drawing.Size(108, 23);
             cutoutspeed.TabIndex = 17;
+            cutoutspeed.Text = "25";
             // 
             // label11
             // 
@@ -382,6 +406,7 @@
             ratedspeed.Name = "ratedspeed";
             ratedspeed.Size = new System.Drawing.Size(108, 23);
             ratedspeed.TabIndex = 15;
+            ratedspeed.Text = "13.5";
             // 
             // label12
             // 
@@ -398,6 +423,7 @@
             cutin.Name = "cutin";
             cutin.Size = new System.Drawing.Size(108, 23);
             cutin.TabIndex = 13;
+            cutin.Text = "3";
             // 
             // label8
             // 
@@ -414,6 +440,7 @@
             blades.Name = "blades";
             blades.Size = new System.Drawing.Size(108, 23);
             blades.TabIndex = 11;
+            blades.Text = "3";
             // 
             // label9
             // 
@@ -430,6 +457,7 @@
             sweptarea.Name = "sweptarea";
             sweptarea.Size = new System.Drawing.Size(108, 23);
             sweptarea.TabIndex = 9;
+            sweptarea.Text = "6361.7";
             // 
             // label6
             // 
@@ -446,6 +474,7 @@
             rotord.Name = "rotord";
             rotord.Size = new System.Drawing.Size(108, 23);
             rotord.TabIndex = 7;
+            rotord.Text = "90";
             // 
             // label7
             // 
@@ -462,6 +491,7 @@
             power.Name = "power";
             power.Size = new System.Drawing.Size(108, 23);
             power.TabIndex = 5;
+            power.Text = "2000";
             // 
             // label5
             // 
@@ -478,6 +508,7 @@
             manu.Name = "manu";
             manu.Size = new System.Drawing.Size(152, 23);
             manu.TabIndex = 3;
+            manu.Text = "Vestas";
             // 
             // label4
             // 
@@ -494,6 +525,7 @@
             name.Name = "name";
             name.Size = new System.Drawing.Size(152, 23);
             name.TabIndex = 1;
+            name.Text = "V90/2000";
             // 
             // button1
             // 
@@ -572,5 +604,7 @@
         private System.Windows.Forms.TextBox ratedspeed;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox cutin;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBoxHours;
     }
 }

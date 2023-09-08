@@ -10,8 +10,8 @@ namespace WinFormsApp1.Wind
         protected int amount;
         public int Amount { get => amount; }
 
-        public WindTurbineArray(int watts, int rotorDiameter, int amount, int rotation, string name) :
-            base(watts, rotorDiameter, rotation, name)
+        public WindTurbineArray(int watts, int rotorDiameter, int amount, int rotation, string name, int ci, int ra,int co ) :
+            base(watts, rotorDiameter, rotation, name,ci,ra,co)
         {
             this.amount = amount;
             isArray = true;
@@ -39,7 +39,7 @@ namespace WinFormsApp1.Wind
 
         public WindTurbine getWindTurbine()
         {
-            return new WindTurbine(watts, rotorDiameter, rotation, name);
+            return new WindTurbine(watts, rotorDiameter, rotation, name, cutoff, rated, cutin);
         }
     }
 }

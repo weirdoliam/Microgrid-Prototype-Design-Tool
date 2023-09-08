@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace WinFormsApp1
 {
     internal abstract class EnergyOut
@@ -14,14 +11,17 @@ namespace WinFormsApp1
         //watts capacity
         protected int watts;
 
-        public int Watts { get => watts; }
-
+        //Return the generic daily emissions
         public abstract int getDailyEmissions();
 
+        //Return the generic daily consumption
         public abstract int getDailyConsumption();
 
+        //Return the description of potential array
         public abstract string getArrayDescription();
 
+        //Return the desciption of the "product" 
         public abstract string getProductDecription();
     }
 }
+

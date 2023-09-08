@@ -10,12 +10,19 @@ namespace WinFormsApp1.Solar
 
         public int Amount { get => amount; }
 
-        public SolarPanelArray(string _type, float _width, float _length, int _watts, int _cells, string _material, int amount, decimal _price)
-            : base(_type, _width, _length, _watts, _cells, _material, _price)
+        public SolarPanelArray(string _type, float _width, float _length, int _watts, int _cells, string _material, int amount, decimal _price, int _hours)
+            : base(_type, _width, _length, _watts, _cells, _material, _price, _hours)
         {
             this.amount = amount;
             isArray = true;
             Price = amount * _price;
+        }
+
+        public override int getHalfHourlyGeneration(string currTime, int iterationNo)
+        {
+            int total = 0;
+            for (int i = 0; i < amount; i++) total += base.getHalfHourlyGeneration(currTime, iterationNo);
+            return total;
         }
 
         public override int getDailyEmissions()
@@ -33,10 +40,7 @@ namespace WinFormsApp1.Solar
             return type + " Solar Array, " + amount + " units";
         }
 
-        public override int getHalfHourlyGeneration(string currTime, int iterationNo)
-        {
-            return base.getHalfHourlyGeneration(currTime, iterationNo) * amount;
-        }
+        
 
         /// <summary>
         /// Overload for removing product of array
@@ -53,7 +57,7 @@ namespace WinFormsApp1.Solar
 
         public SolarPanel getPanelObject()
         {
-            return new SolarPanel(type, width, length, watts, cells, material, Price);
+            return new SolarPanel(type, width, length, watts, cells, material, Price, hours_till_efficient);
         }
     }
 }

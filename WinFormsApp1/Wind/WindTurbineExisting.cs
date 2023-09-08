@@ -158,7 +158,7 @@ namespace WinFormsApp1.Wind
             }
             else
             {
-                WindTurbine w = new WindTurbine(ratedPower, (int)rotorDiameter, 0, name);
+                WindTurbine w = new WindTurbine(ratedPower, (int)rotorDiameter, 0, name, (int)CutInSpeed, (int)ratedSpeed, (int)CutOutSpeed);
                 returnAmount = w.getHalfHourlyGeneration(currTime, iterationNo);
             }
 
@@ -173,34 +173,34 @@ namespace WinFormsApp1.Wind
         /// <returns></returns>
         public int getExistingPerformance(double windspeed)
         {
+            //only if we have a power curve do we return something
             if (windspeed > 35)
             {
                 return 0;
             }
-            //only if we have a power curve do we return something
-
 
             //get nearest .5 below and above
-
             double lower = rounder(windspeed);
             double upper = rounder(windspeed + 0.5);
-
+            //Ensure we are in the right .5 interval
             if (lower > windspeed)
             {
                 upper = lower;
                 lower = rounder(windspeed - 0.5);
             }
+            //We have no values above 35, so set it as the hard limit
             if (upper > 35)
             {
                 upper = 35;
             }
             int upperWattage = curve[upper];
             int lowerWattage = curve[lower];
-            int val = (upperWattage + lowerWattage) / 2;
+            //Simple maths. Rise/run
+            int rise = Math.Abs(upperWattage-lowerWattage);
+            double run = 0.5;
+            int val = (int)((rise / run) * windspeed);
             if (isArray) return val * amount;
             return val;
-            //*/
-            //return curve[rounder(windspeed)];
 
         }
 
