@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FactoryConfig));
             panelParticulars = new System.Windows.Forms.Panel();
+            button2 = new System.Windows.Forms.Button();
             buttonNewItem = new System.Windows.Forms.Button();
             label2 = new System.Windows.Forms.Label();
             listBoxMachines = new System.Windows.Forms.ListBox();
@@ -38,6 +39,7 @@
             buttonApply = new System.Windows.Forms.Button();
             buttonCancel = new System.Windows.Forms.Button();
             panel1 = new System.Windows.Forms.Panel();
+            button3 = new System.Windows.Forms.Button();
             button1 = new System.Windows.Forms.Button();
             label3 = new System.Windows.Forms.Label();
             listBoxMachineTimes = new System.Windows.Forms.ListBox();
@@ -58,6 +60,7 @@
             // panelParticulars
             // 
             panelParticulars.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelParticulars.Controls.Add(button2);
             panelParticulars.Controls.Add(buttonNewItem);
             panelParticulars.Controls.Add(label2);
             panelParticulars.Controls.Add(listBoxMachines);
@@ -65,6 +68,16 @@
             panelParticulars.Name = "panelParticulars";
             panelParticulars.Size = new System.Drawing.Size(265, 238);
             panelParticulars.TabIndex = 0;
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(205, 215);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(60, 23);
+            button2.TabIndex = 11;
+            button2.Text = "Remove";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // buttonNewItem
             // 
@@ -119,18 +132,18 @@
             // buttonApply
             // 
             buttonApply.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            buttonApply.Location = new System.Drawing.Point(7, 518);
+            buttonApply.Location = new System.Drawing.Point(7, 521);
             buttonApply.Name = "buttonApply";
             buttonApply.Size = new System.Drawing.Size(94, 23);
             buttonApply.TabIndex = 1;
-            buttonApply.Text = "Apply + Close";
+            buttonApply.Text = "Save + Close";
             buttonApply.UseVisualStyleBackColor = true;
             buttonApply.Click += buttonApply_Click;
             // 
             // buttonCancel
             // 
             buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            buttonCancel.Location = new System.Drawing.Point(445, 518);
+            buttonCancel.Location = new System.Drawing.Point(445, 520);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new System.Drawing.Size(100, 23);
             buttonCancel.TabIndex = 2;
@@ -141,6 +154,7 @@
             // panel1
             // 
             panel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panel1.Controls.Add(button3);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(listBoxMachineTimes);
@@ -148,6 +162,16 @@
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(265, 199);
             panel1.TabIndex = 3;
+            // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(205, 176);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(60, 23);
+            button3.TabIndex = 12;
+            button3.Text = "Remove";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button1
             // 
@@ -183,7 +207,7 @@
             // buttonClearImport
             // 
             buttonClearImport.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            buttonClearImport.Location = new System.Drawing.Point(445, 489);
+            buttonClearImport.Location = new System.Drawing.Point(445, 491);
             buttonClearImport.Name = "buttonClearImport";
             buttonClearImport.Size = new System.Drawing.Size(100, 23);
             buttonClearImport.TabIndex = 6;
@@ -194,11 +218,11 @@
             // buttonPreLoad
             // 
             buttonPreLoad.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            buttonPreLoad.Location = new System.Drawing.Point(159, 489);
+            buttonPreLoad.Location = new System.Drawing.Point(278, 520);
             buttonPreLoad.Name = "buttonPreLoad";
             buttonPreLoad.Size = new System.Drawing.Size(113, 23);
             buttonPreLoad.TabIndex = 5;
-            buttonPreLoad.Text = "Generic";
+            buttonPreLoad.Text = "Static";
             buttonPreLoad.UseVisualStyleBackColor = true;
             buttonPreLoad.Click += buttonPreLoad_Click;
             // 
@@ -209,7 +233,7 @@
             // buttonComp
             // 
             buttonComp.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            buttonComp.Location = new System.Drawing.Point(278, 489);
+            buttonComp.Location = new System.Drawing.Point(278, 491);
             buttonComp.Name = "buttonComp";
             buttonComp.Size = new System.Drawing.Size(113, 23);
             buttonComp.TabIndex = 7;
@@ -221,7 +245,7 @@
             // 
             label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(7, 489);
+            label4.Location = new System.Drawing.Point(167, 495);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(105, 15);
             label4.TabIndex = 4;
@@ -260,7 +284,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(550, 562);
+            ClientSize = new System.Drawing.Size(550, 556);
             Controls.Add(richTextBox1);
             Controls.Add(panel2);
             Controls.Add(label4);
@@ -308,5 +332,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

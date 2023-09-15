@@ -113,8 +113,8 @@ namespace WinFormsApp1.Wind
             double rotorRadius = rotorDiameter / 2;
             double area = Math.PI * (rotorRadius * rotorRadius);
 
-            //best case cut in halfhourly, then the betz limit
-            double peakPerformance = watts * 0.5 * 0.593;
+            //best case cut in halfhourly
+            double peakPerformance = watts * 0.5;
 
             if (kmhWindSpeed < cutin)
             {
@@ -122,14 +122,16 @@ namespace WinFormsApp1.Wind
             }
             else if (kmhWindSpeed >= cutin & kmhWindSpeed < rated)
             {
+                //Apply the betz limit to windspeed
+                windspeed = windspeed * 0.593;
+
                 //Power(W) = 1 / 2 x ρ x A x v (not cubed3)
                 //calculate available power estimate
                 //using constant for wind density so far
-                double currPerformance = 0.5 * 1.225 * area * windspeed;
+                double currPerformance = 0.5 * 1.225 * area * (windspeed*windspeed*windspeed);
                 //get the half-hourly value
                 currPerformance = currPerformance / 2;
-                if (currPerformance > peakPerformance) return (int)peakPerformance;
-                return (int)currPerformance;
+                return (int)Math.Min(peakPerformance,currPerformance);
             }
             else if (kmhWindSpeed >= rated & kmhWindSpeed < cutoff)
             {

@@ -35,6 +35,7 @@ namespace WinFormsApp1
         public void reloadMachines()
         {
             listBoxMachines.Items.Clear();
+            listBoxMachineTimes.Items.Clear();
             if (mainFactory.Machines.Count > 0)
             {
                 foreach (Tuple<string, double> item in mainFactory.Machines)
@@ -70,7 +71,7 @@ namespace WinFormsApp1
                 List<Tuple<TimeSpan, TimeSpan>> currTimes = mainFactory.MachineTimeRanges[machineName];
 
                 //DEBUG
-                Console.WriteLine(currTimes.Count.ToString());
+                // Console.WriteLine(currTimes.Count.ToString());
 
                 //display each tuple in the listbox
                 if (currTimes.Count > 0)
@@ -78,14 +79,14 @@ namespace WinFormsApp1
                     foreach (Tuple<TimeSpan, TimeSpan> currTime in currTimes)
                     {
                         //Add to list
-                        listBoxMachineTimes.Items.Add($"{currTime.Item1.ToString()} - {currTime.Item2.ToString()}");
+                        listBoxMachineTimes.Items.Add($"{currTime.Item1.ToString()} to {currTime.Item2.ToString()}");
                     }
                 }
                 else listBoxMachineTimes.Items.Add("There are no times for this machine yet.");
             }
             else
             {
-                listBoxMachineTimes.Items.Add("This machine somehow does not exist??!!");
+                listBoxMachineTimes.Items.Add("This machine somehow does not exist??!! Sync Error.");
             }
         }
 
@@ -220,6 +221,30 @@ namespace WinFormsApp1
                 buildingArray[m - 1] = (importCompleteness[m - 1] / daysInMonth[m - 1]) * 100;
             }
             return buildingArray.ToList<int>();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (listBoxMachines.SelectedIndex > -1)
+            {
+                mainFactory.Machines.RemoveAt(listBoxMachines.SelectedIndex);
+            }
+            reloadMachines();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listBoxMachineTimes.SelectedIndex > -1)
+            {
+                if (listBoxMachines.SelectedIndex == -1) return;
+                //get name
+                string machineName = (string)listBoxMachines.Items[listBoxMachines.SelectedIndex];
+                if (mainFactory.MachineTimeRanges.ContainsKey(machineName))
+                {
+                    mainFactory.MachineTimeRanges[machineName].RemoveAt(listBoxMachineTimes.SelectedIndex);
+                }
+                listBoxMachines_SelectedIndexChanged(null, null);
+            }
         }
     }
 }

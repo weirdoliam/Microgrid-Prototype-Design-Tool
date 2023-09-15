@@ -105,8 +105,14 @@ namespace WinFormsApp1.Reporting
                     if (dailyData != null) { lists.Add(dailyData); }
                 }
             }
-            List<int> resultList = lists.Aggregate((acc, curr) => acc.Zip(curr, (a, b) => a + b).ToList());
-            overallConsumption = resultList.Zip(factoryInts, (a, b) => a + b).ToList();
+
+            if (lists.Count > 0)
+            {
+                List<int> resultList = lists.Aggregate((acc, curr) => acc.Zip(curr, (a, b) => a + b).ToList());
+                overallConsumption = resultList.Zip(factoryInts, (a, b) => a + b).ToList();
+            }
+            else overallConsumption = factoryInts;
+
             dayReport.InsertItem("Overall Consumption", overallConsumption);
             //Daily Consumption done.
 

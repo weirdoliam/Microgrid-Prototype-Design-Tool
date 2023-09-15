@@ -155,7 +155,7 @@ namespace WinFormsApp1.Reporting
                     count++;
                 }
             }
-            LoadingScreenManager.HideLoadingScreen();
+            
             //*/
             // Add the line series to the plot model
             plotModel.Series.Add(fs);
@@ -166,6 +166,7 @@ namespace WinFormsApp1.Reporting
 
             // Set the model to the existing plot view (plotView1)
             mainPlot.Model = plotModel;
+            LoadingScreenManager.HideLoadingScreen();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

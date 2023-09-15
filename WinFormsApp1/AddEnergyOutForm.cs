@@ -40,7 +40,6 @@ namespace WinFormsApp1
                     maxValue = scores[i];
                 }
             }
-
             newHouse.consumptionData = Cache.houseModels[maxIndex].consumptionData;
             Cache.genListOut.Add(newHouse);
             MessageBox.Show("House model setup with load auto-selected.");
@@ -49,7 +48,7 @@ namespace WinFormsApp1
 
         private HouseModel getHouseModel() {
 
-            HouseModel newHouse;
+            HouseModel newHouse = null;
             try
             {
                 bool heatpump = checkedLBHM.GetItemChecked(0);
@@ -78,7 +77,6 @@ namespace WinFormsApp1
             catch (Exception ex)
             {
                 MessageBox.Show($"You've Entered some data incorrectly. Please check and try again.\n Digest:\n {ex.Message}");
-                return null;
             }
             return newHouse;
         }

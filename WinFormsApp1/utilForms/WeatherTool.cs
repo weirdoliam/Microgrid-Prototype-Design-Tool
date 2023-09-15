@@ -19,7 +19,7 @@ namespace WinFormsApp1
         StringFormat drawFormat = new StringFormat();
         List<double> displayedWindspeeds = null;
         List<double> newHeights = null;
-        int maxVal = 30;
+        int maxVal = 35;
         int POINTS = 47;
         int px = 0;
         int py = 0;
@@ -29,7 +29,8 @@ namespace WinFormsApp1
             InitializeComponent();
             this.DoubleBuffered = true;
             mainCanvas = panelMainCanvas.CreateGraphics();
-            
+            labelDate.Text = Cache.currDay.Day + "/" + Cache.currDay.Month;
+
             updateDraw();
         }
 
@@ -66,7 +67,7 @@ namespace WinFormsApp1
             double estimatedSector = e.X / interval;
             Console.WriteLine(estimatedSector);
             Console.WriteLine((int)(estimatedSector));
-            int sector = (int)(Math.Round((decimal)(estimatedSector)))-1;
+            int sector = (int)(Math.Round((decimal)(estimatedSector))) - 1;
             //if (estimatedSector - (int)estimatedSector <= 0.5) sector = (int)estimatedSector -1;
 
             labelWidth.Text = panelMainCanvas.Width + "";
@@ -79,7 +80,7 @@ namespace WinFormsApp1
             if (displayedWindspeeds != null && sector < POINTS && sector >= 0)
             {
                 labelCurrYVal.Text = height - (height * (displayedWindspeeds[sector] / maxVal)) + "";
-                labelCurrSpeed.Text = displayedWindspeeds[sector] + "";
+                labelCurrSpeed.Text = (int)displayedWindspeeds[sector] + "";
             }
             //*/
             double newSpeed = -(maxVal * (e.Y - height)) / height;
@@ -173,12 +174,12 @@ namespace WinFormsApp1
         private void checkDev_CheckedChanged(object sender, EventArgs e)
         {
             label1.Visible = checkDev.Checked;
-            labelCurrSpeed.Visible = checkDev.Checked;
+            //labelCurrSpeed.Visible = checkDev.Checked;
             labelCurrYVal.Visible = checkDev.Checked;
             labelX.Visible = checkDev.Checked;
             labelY.Visible = checkDev.Checked;
             labelSector.Visible = checkDev.Checked;
-            labelNewSpeed.Visible = checkDev.Checked;
+            //labelNewSpeed.Visible = checkDev.Checked;
             labelDist.Visible = checkDev.Checked;
             labelWidth.Visible = checkDev.Checked;
             labelHeight.Visible = checkDev.Checked;

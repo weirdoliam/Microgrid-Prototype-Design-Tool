@@ -7,23 +7,14 @@ namespace WinFormsApp1
 {
     class FactoryModel : EnergyOut
     {
-
-        // Properties
-        public string Name { get; set; }
-        public List<Tuple<string, double>> Machines { get => machines; }
-        public Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> MachineTimeRanges { get => machineTimeRanges; }
-        public bool UsesCompLoad { get => usesCompLoad; }
-        public string CompLoadPath { get => compLoadPath; }
-
-
         //variable loads per item. 
         //Flexibility in how a load is defined
 
-        // Item Lists. These need to be in sync.
+        // Machine item Lists. These are kept in sync through methods.
         private List<Tuple<string, double>> machines;
         private Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> machineTimeRanges = new Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>>();
 
-        //Variable load, and associated bool
+        //generic (or static) load, and associated bool
         private List<double> genericLoad = new List<double>();
         private bool usesPreLoad = false;
 
@@ -34,6 +25,15 @@ namespace WinFormsApp1
         private Dictionary<string, double[]> comprehensiveLoad = new Dictionary<string,double[]>();
         private bool usesCompLoad = false;
 
+        // Properties
+        public string Name { get; set; }
+        public List<Tuple<string, double>> Machines { get => machines; }
+        public Dictionary<string, List<Tuple<TimeSpan, TimeSpan>>> MachineTimeRanges { get => machineTimeRanges; }
+        public bool UsesCompLoad { get => usesCompLoad; }
+        public string CompLoadPath { get => compLoadPath; }
+
+
+        Random r = new Random();
         // Constructor
         public FactoryModel(string name)
         {
@@ -51,9 +51,9 @@ namespace WinFormsApp1
         }
 
         public FactoryModel Clone() {
-            return new FactoryModel(Name, machines, MachineTimeRanges, genericLoad, usesPreLoad);
+            //These referenecs need to be cloned for this to work. 
+            return new FactoryModel(Name.ToString(), machines, MachineTimeRanges, genericLoad, usesPreLoad);
         }
-
 
         public double CalculateDailyPowerConsumption()
         {
@@ -70,6 +70,10 @@ namespace WinFormsApp1
             return dailyPowerConsumption;
         }
 
+        /// <summary>
+        /// Get the hourly power consumption, if all the items are turned on
+        /// </summary>
+        /// <returns>Power consumption in W</returns>
         public double CalculateHourlyPowerConsumption()
         {
             double totalWattage = 0;
@@ -80,18 +84,20 @@ namespace WinFormsApp1
                 totalWattage += item.Item2;
             }
 
-            // Convert total wattage to kWh
-            double hourlyPowerConsumption = totalWattage / 1000;
+            // Convert total wattage to kW
+            double hourlyPowerConsumption = totalWattage;
             return hourlyPowerConsumption;
         }
 
         public List<double> GetHourlyConsumptionList(DateTime date)
         {
-            List<double> data = new List<double>();
             if (!usesCompLoad) return null;
+            List<double> data = new List<double>();
+
             //we ignore year in date
             string d = date.Day + "";
             string m = date.Month + "";
+
             //Format appropriately
             if (date.Day < 10)
             {
@@ -217,10 +223,7 @@ namespace WinFormsApp1
             try
             {
                 const int halfHourCount = 48; // 24 hours * 2 half-hours per hour
-
-                // Calculate the average hourly power consumption based on the items in the factory
-                double avgHourlyConsumption = CalculateHourlyPowerConsumption();
-
+                
                 // Create a list to hold the half-hourly consumption values
                 List<double> consumptionList = new List<double>(halfHourCount);
 
@@ -237,12 +240,13 @@ namespace WinFormsApp1
                     {
                         if (IsMachineryBeingUsed(hour, minute, item.Item1))
                         {
-                            machineryConsumption += item.Item2;
+                            int next = r.Next(98, 104);
+                            double coeff = ((double)next / 100);
+                            machineryConsumption += item.Item2 * coeff;
                         }
                     }
-
-                    // Calculate the total consumption for this half-hour period
-                    double totalConsumption = avgHourlyConsumption / 2 + machineryConsumption;
+                    // Calculate the total consumption for this half-hour period (no other params so far)
+                    double totalConsumption = machineryConsumption;
 
                     // Add the value to the consumption list
                     consumptionList.Add(totalConsumption);
@@ -287,7 +291,6 @@ namespace WinFormsApp1
                     }
                 }
             }
-
             // The machinery is not being used during the specified time
             return false;
         }
