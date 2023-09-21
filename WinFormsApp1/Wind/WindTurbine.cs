@@ -25,7 +25,7 @@ namespace WinFormsApp1.Wind
         protected double effectiveness;
 
 
-        public WindTurbine(int watts, int rotorDiameter, int rotation, string name, int cutoff, int rated, int cutin)
+        public WindTurbine(int watts, int rotorDiameter, int rotation, string name, int cutin, int rated, int cutoff)
         {
             this.watts = watts;
             this.rotorDiameter = rotorDiameter;

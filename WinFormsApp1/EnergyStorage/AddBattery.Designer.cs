@@ -218,7 +218,7 @@
             textBoxQuantity.Name = "textBoxQuantity";
             textBoxQuantity.Size = new System.Drawing.Size(89, 23);
             textBoxQuantity.TabIndex = 3;
-            textBoxQuantity.Text = "0";
+            textBoxQuantity.Text = "1";
             // 
             // label2
             // 

@@ -330,7 +330,7 @@ namespace WinFormsApp1
             mainCanvas.Invalidate();
         }
 
-        //GPT Ai Stuff
+        //GPT Ai Stuff. Markers - this was experimental code that I did not want to remove, but it is unused in the final implementation
 
         public async Task sendRequest(string request)
         {
@@ -349,17 +349,11 @@ namespace WinFormsApp1
             };
 
             string jsonString = JsonConvert.SerializeObject(data);
-
             var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
             HttpClient client = new HttpClient();
-
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {sk}");
-
             var initResponce = await client.PostAsync(endpoint, content);
-
             string responseContent = await initResponce.Content.ReadAsStringAsync();
-
             var jsonResponce = JObject.Parse(responseContent);
             try
             {

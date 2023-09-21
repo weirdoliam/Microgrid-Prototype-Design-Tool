@@ -36,6 +36,7 @@
             panelX = new System.Windows.Forms.Panel();
             panelY = new System.Windows.Forms.Panel();
             groupBox2 = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
             label14 = new System.Windows.Forms.Label();
             labelEffCost = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
@@ -71,7 +72,6 @@
             richTextBoxResponce = new System.Windows.Forms.RichTextBox();
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             toolTipCapacity = new System.Windows.Forms.ToolTip(components);
-            button1 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -188,6 +188,16 @@
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Results";
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(9, 228);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(96, 23);
+            button1.TabIndex = 36;
+            button1.Text = "Energy Balance";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // label14
             // 
@@ -532,6 +542,7 @@
             label1.Size = new System.Drawing.Size(125, 15);
             label1.TabIndex = 1;
             label1.Text = "GPT-Turbo-3.5 Report:";
+            label1.Visible = false;
             // 
             // richTextBoxResponce
             // 
@@ -542,21 +553,12 @@
             richTextBoxResponce.Size = new System.Drawing.Size(1263, 50);
             richTextBoxResponce.TabIndex = 0;
             richTextBoxResponce.Text = "";
+            richTextBoxResponce.Visible = false;
             // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // button1
-            // 
-            button1.Location = new System.Drawing.Point(9, 228);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(96, 23);
-            button1.TabIndex = 36;
-            button1.Text = "Energy Balance";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // DailyReportViewer
             // 

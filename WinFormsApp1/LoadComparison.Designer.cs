@@ -52,10 +52,10 @@
             label10 = new System.Windows.Forms.Label();
             checkBoxDaylight = new System.Windows.Forms.CheckBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
-            checkBoxAssBat = new System.Windows.Forms.CheckBox();
-            groupBox2 = new System.Windows.Forms.GroupBox();
-            label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            checkBoxWindspeeds = new System.Windows.Forms.CheckBox();
+            groupBox2 = new System.Windows.Forms.GroupBox();
             canvas.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -65,7 +65,7 @@
             // 
             labelCurrDay.AutoSize = true;
             labelCurrDay.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            labelCurrDay.Location = new System.Drawing.Point(6, 19);
+            labelCurrDay.Location = new System.Drawing.Point(11, 19);
             labelCurrDay.Name = "labelCurrDay";
             labelCurrDay.Size = new System.Drawing.Size(70, 37);
             labelCurrDay.TabIndex = 1;
@@ -148,7 +148,7 @@
             // checkBoxSmooth
             // 
             checkBoxSmooth.AutoSize = true;
-            checkBoxSmooth.Location = new System.Drawing.Point(11, 87);
+            checkBoxSmooth.Location = new System.Drawing.Point(11, 204);
             checkBoxSmooth.Name = "checkBoxSmooth";
             checkBoxSmooth.Size = new System.Drawing.Size(102, 19);
             checkBoxSmooth.TabIndex = 12;
@@ -277,7 +277,7 @@
             // checkBoxDaylight
             // 
             checkBoxDaylight.AutoSize = true;
-            checkBoxDaylight.Location = new System.Drawing.Point(11, 112);
+            checkBoxDaylight.Location = new System.Drawing.Point(11, 87);
             checkBoxDaylight.Name = "checkBoxDaylight";
             checkBoxDaylight.Size = new System.Drawing.Size(104, 19);
             checkBoxDaylight.TabIndex = 37;
@@ -289,7 +289,7 @@
             // 
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(checkBoxAssBat);
+            groupBox1.Controls.Add(checkBoxWindspeeds);
             groupBox1.Controls.Add(labelCurrDay);
             groupBox1.Controls.Add(labelNet);
             groupBox1.Controls.Add(checkBoxDaylight);
@@ -312,15 +312,36 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Graph conrol and information";
             // 
-            // checkBoxAssBat
+            // label3
             // 
-            checkBoxAssBat.AutoSize = true;
-            checkBoxAssBat.Location = new System.Drawing.Point(11, 137);
-            checkBoxAssBat.Name = "checkBoxAssBat";
-            checkBoxAssBat.Size = new System.Drawing.Size(203, 19);
-            checkBoxAssBat.TabIndex = 38;
-            checkBoxAssBat.Text = "Overlay Associated Storage (Blue)";
-            checkBoxAssBat.UseVisualStyleBackColor = true;
+            label3.AutoSize = true;
+            label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label3.Location = new System.Drawing.Point(676, 19);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(82, 21);
+            label3.TabIndex = 40;
+            label3.Text = "Consumer";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label2.Location = new System.Drawing.Point(317, 19);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(80, 21);
+            label2.TabIndex = 39;
+            label2.Text = "Generator";
+            // 
+            // checkBoxWindspeeds
+            // 
+            checkBoxWindspeeds.AutoSize = true;
+            checkBoxWindspeeds.Location = new System.Drawing.Point(11, 112);
+            checkBoxWindspeeds.Name = "checkBoxWindspeeds";
+            checkBoxWindspeeds.Size = new System.Drawing.Size(128, 19);
+            checkBoxWindspeeds.TabIndex = 38;
+            checkBoxWindspeeds.Text = "Visual Wind Speeds";
+            checkBoxWindspeeds.UseVisualStyleBackColor = true;
+            checkBoxWindspeeds.CheckedChanged += checkBoxWindspeeds_CheckedChanged;
             // 
             // groupBox2
             // 
@@ -333,26 +354,6 @@
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             groupBox2.Text = "Data";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label2.Location = new System.Drawing.Point(317, 19);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(80, 21);
-            label2.TabIndex = 39;
-            label2.Text = "Generator";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label3.Location = new System.Drawing.Point(676, 19);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(82, 21);
-            label3.TabIndex = 40;
-            label3.Text = "Consumer";
             // 
             // LoadComparison
             // 
@@ -402,7 +403,7 @@
         private System.Windows.Forms.CheckBox checkBoxDaylight;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox checkBoxAssBat;
+        private System.Windows.Forms.CheckBox checkBoxWindspeeds;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
     }

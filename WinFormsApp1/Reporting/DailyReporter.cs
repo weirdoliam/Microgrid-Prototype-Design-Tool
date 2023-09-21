@@ -22,13 +22,11 @@ namespace WinFormsApp1.Reporting
             int solarGeneration = 0;
             int otherGeneration = 0;
             int windGeneration = 0;
-          
 
             //Deliverable
             DayReport dayReport = new DayReport($"{date.Day}.{date.Month}.{date.Year}");
             //From all generators, calculate the generation load
             List<int> overallGen = new List<int>();
-
             string parsedDate = date.Day + "/" + date.Month + "/" + date.Year;
 
             string currTime = "00:00";
@@ -72,6 +70,7 @@ namespace WinFormsApp1.Reporting
                 if (hour < 10) currTime = "0" + currTime;
             }
             dayReport.InsertItem("Overall Generation", overallGen);
+
             //do generator totals
             dayReport.WindPercent = (double)windGeneration / (double)totalWatts;
             dayReport.SolarPercent = (double)solarGeneration / (double)totalWatts;
@@ -81,19 +80,16 @@ namespace WinFormsApp1.Reporting
             //from all consumers, calculate the consumption load
             List<int> overallConsumption = new List<int>();
 
-            List<double> factoryLoad = new List<double>();
+            List<double> factoryLoad = null;
             //factory load added separately.
             if (Cache.mainFactory.UsesCompLoad)
             {
                 factoryLoad = Cache.mainFactory.GetHourlyConsumptionList(date);
-                if (factoryLoad == null) factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
-            }
-            else {
-                factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
-            }
 
-            List<int> factoryInts = new List<int>();
-            foreach (double d in factoryLoad) factoryInts.Add((int)d);
+            }
+            if (factoryLoad == null) factoryLoad = Cache.mainFactory.GetHourlyConsumptionList();
+
+            List<int> factoryInts = factoryLoad.ConvertAll(d => (int)d);
 
             List<List<int>> lists = new List<List<int>>();
             foreach (EnergyOut consumer in Cache.genListOut)
@@ -143,12 +139,12 @@ namespace WinFormsApp1.Reporting
             List<int> balanceCon = new List<int>();
             List<int> balanceGen = new List<int>();
 
-            //For times of demand when storage is empty, take power from grid instead (therefore adding more carbon emissions, or cost)
             int currDemand, currSupply, net = 0;
             double giveToGrid = 0;
             double needFromGrid = 0;
             double recievedCharge, currCharge = 0;
 
+            //For times of demand when storage is empty, take power from grid instead (therefore adding more carbon emissions, or cost)
             for (int i = 0; i < 48; i++)
             {
                 currDemand = i >= overallConsumption.Count ? 0 : overallConsumption[i];
@@ -157,7 +153,6 @@ namespace WinFormsApp1.Reporting
                 //For energy balance plot
                 int gen_and_taken = currSupply;
                 int consume_and_given = currDemand;
-
 
                 net = currDemand - currSupply;
                 //Console.WriteLine($"Net: {net}");

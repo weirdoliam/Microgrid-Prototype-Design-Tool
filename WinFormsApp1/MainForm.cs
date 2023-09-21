@@ -138,7 +138,7 @@ namespace WinFormsApp1
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e.Message);
+                        Console.WriteLine("LOAD: Can't read in Turbine: " + e.Message);
                     }
                 }
             }
@@ -465,7 +465,7 @@ namespace WinFormsApp1
 
         private void monthToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Please select a month: 1 = Jan, 12 = Dec");
         }
 
         private void customToolStripMenuItem_Click(object sender, EventArgs e)

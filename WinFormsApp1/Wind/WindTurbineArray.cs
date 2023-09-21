@@ -39,7 +39,7 @@ namespace WinFormsApp1.Wind
 
         public WindTurbine getWindTurbine()
         {
-            return new WindTurbine(watts, rotorDiameter, rotation, name, cutoff, rated, cutin);
+            return new WindTurbine(watts, rotorDiameter, rotation, name, cutin, rated, cutoff);
         }
     }
 }

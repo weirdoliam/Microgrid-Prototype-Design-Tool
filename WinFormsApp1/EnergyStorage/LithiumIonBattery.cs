@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace WinFormsApp1.EnergyStorage
 {
     public class LithiumIonBattery : EnergyStorageUnit
     {
-        // In watts/half hour
-        private double _maxChargeRate;
-        // give it a proper name
-        private string _name;
+        // Rated Efficiency
         public double Efficiency { get; set; }
+        // Store the rated Amps 
         public int Currnt { get; set; }
+        // Store the rated Voltage
         public int Voltage { get; set; }
-
-        public string Name { get => _name; set => _name = value; }
-        public double MaxChargeRate { get => _maxChargeRate; set => _maxChargeRate = value; }
+        // String description (typically model number)
+        public string Name { get; set; }
+        // The max charge rate (for per half-hour), which is calculated ouside the class def, to make internal calculations simpler. 
+        public double MaxChargeRate { get; set; }
 
         // Constructor
         public LithiumIonBattery(double capacity, double maxChargeRate, string name, decimal price)
         {
             Capacity = capacity;
             ChargeLevel = capacity;
-            _maxChargeRate = maxChargeRate;
-            _name = name;
+            MaxChargeRate = maxChargeRate;
+            Name = name;
             Price = price;
             Efficiency = 0.95;
         }
@@ -38,13 +39,20 @@ namespace WinFormsApp1.EnergyStorage
         {
             double not_charged = 0;
             double old_charge = ChargeLevel;
+
+            if(amount > MaxChargeRate)
+            {
+                not_charged += amount - MaxChargeRate;
+                amount = MaxChargeRate;
+            }
+
             ChargeLevel = Math.Min(ChargeLevel + amount, Capacity);
             double difference = ChargeLevel - old_charge;
             if (difference != amount)
             {
                 not_charged = Math.Abs(difference-amount);
             }
-            //return wasted energy
+            //return not charged energy
             return not_charged;
         }
 
@@ -54,10 +62,11 @@ namespace WinFormsApp1.EnergyStorage
         /// <param name="amount">Returns energy that was discharged</param>
         public override double Discharge(double amount)
         {
+            if(amount > MaxChargeRate) amount = MaxChargeRate;
             double effectiveReturn = amount * Efficiency;
             double old_charge = ChargeLevel;
             ChargeLevel = Math.Max(ChargeLevel - effectiveReturn, 0);
-            return old_charge- ChargeLevel;
+            return old_charge - ChargeLevel;
         }
 
         public override string getDescription()

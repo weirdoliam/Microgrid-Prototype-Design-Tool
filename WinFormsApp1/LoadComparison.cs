@@ -274,6 +274,14 @@ namespace WinFormsApp1
             g.DrawLine(pen, canvas.Width - 1, 0, canvas.Width - 1, canvas.Height);
 
 
+            //Do the windspeeds
+            if (checkBoxWindspeeds.Checked)
+            {
+                string date = Cache.currDay.Day + "/" + Cache.currDay.Month + "/" + Cache.currDay.Year;
+                List<double> currWindspeeds = Cache.windModel.getDailySpeeds(date);
+                List<int> intList = currWindspeeds.ConvertAll(d => (int)(d*10));
+                put_data(intList, canvas, Color.DeepSkyBlue, 2);
+            }
 
             //round up to the nearest 500
             int localmaxVal = 500 * (int)Math.Round((decimal)(maxVal / 500));
@@ -344,10 +352,10 @@ namespace WinFormsApp1
                 }
 
             }
-            labelGenerate.Text = gen + " W";
-            labelConsume.Text = consume + " W";
+            labelGenerate.Text = gen + " Wh";
+            labelConsume.Text = consume + " Wh";
             int net = gen - consume;
-            labelNet.Text = net + " W";
+            labelNet.Text = net + " Wh";
             if (net < 0) { labelNet.ForeColor = Color.Red; }
             else { labelNet.ForeColor = Color.Green; }
         }
@@ -555,6 +563,12 @@ namespace WinFormsApp1
         }
 
         private void DailyForecast_Resize(object sender, EventArgs e)
+        {
+            canvas.Refresh();
+            labelPanel.Refresh();
+        }
+
+        private void checkBoxWindspeeds_CheckedChanged(object sender, EventArgs e)
         {
             canvas.Refresh();
             labelPanel.Refresh();
