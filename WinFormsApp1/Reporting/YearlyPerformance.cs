@@ -34,7 +34,9 @@ namespace WinFormsApp1.Reporting
                 {
                     DateTime newDate = new DateTime(2022, i, j);
                     Cache.currDay = Cache.yearSunTimes.FirstOrDefault(d => d.Day == newDate.Day && d.Month == newDate.Month);
-                    yearlyReport.Add(DailyReporter.GenerateReport(newDate));
+                    int startCap = yearlyReport.Count == 0 ? -1 : (int)yearlyReport[yearlyReport.Count].GridCapacity.ChargeLevel;
+                    DayReport r = DailyReporter.GenerateReport(newDate, startCap);
+                    yearlyReport.Add(r);
                 }
             }
             doResultsBox();

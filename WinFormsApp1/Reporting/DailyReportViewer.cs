@@ -69,22 +69,22 @@ namespace WinFormsApp1
 
         private async void process_report()
         {
-            if (currData == null)
-            {
-
-                //retrieve data only if we do not have it.
-                currData = DailyReporter.GenerateReport(Cache.currDay.getSunrise());
-                //Setup CheckBoxes once
-                drawCheckBoxes();
-            }
             //Do the day before as well lmao
             if (previousDay == null)
             {
                 // Get the day before the input date
                 DateTime DTdayBefore = Cache.currDay.getSunrise().AddDays(-1);
                 // Format the result as "dd/mm/yyyy" and return it
-                previousDay = DailyReporter.GenerateReport(DTdayBefore);
+                previousDay = DailyReporter.GenerateReport(DTdayBefore, -1);
             }
+            if (currData == null)
+            {
+                //retrieve data only if we do not have it.
+                currData = DailyReporter.GenerateReport(Cache.currDay.getSunrise(), (int)previousDay.GridCapacity.ChargeLevel);
+                //Setup CheckBoxes once
+                drawCheckBoxes();
+            }
+            
 
             //BOXES
             //Generation Percent

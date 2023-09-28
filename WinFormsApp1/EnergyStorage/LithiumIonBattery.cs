@@ -73,5 +73,10 @@ namespace WinFormsApp1.EnergyStorage
         {
             return $"{Name}, {Capacity} W";
         }
+
+        public void overrideCharge(int cap)
+        {
+            this.ChargeLevel = cap;
+        }
     }
 }

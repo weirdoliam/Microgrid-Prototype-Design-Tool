@@ -16,7 +16,7 @@ namespace WinFormsApp1.Reporting
     {
 
         // Calculates entire content, from scratch, will break it down once it's created
-        public static DayReport GenerateReport(DateTime date)
+        public static DayReport GenerateReport(DateTime date, int start_capacity)
         {
             int totalWatts = 0;
             int solarGeneration = 0;
@@ -130,7 +130,7 @@ namespace WinFormsApp1.Reporting
             }
             //Big ol battry :D
             LithiumIonBattery reportBattry = new LithiumIonBattery(totalCapacity, totalChargeRate, "Report Battery", totalCost);
-
+            if (start_capacity >= 0) reportBattry.overrideCharge(start_capacity);
             //Generate a list of state of charge throughout the day
             List<int> storageCharge = new List<int>();
             //Generate a list of times when the grid requires power from the grid, and when it gives to the grid

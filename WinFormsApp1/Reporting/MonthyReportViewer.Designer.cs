@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
+            label2 = new System.Windows.Forms.Label();
+            comboBoxZip = new System.Windows.Forms.ComboBox();
             buttonEnergyBalance = new System.Windows.Forms.Button();
             labelMonth = new System.Windows.Forms.Label();
             buttonOpen = new System.Windows.Forms.Button();
@@ -80,6 +83,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(comboBoxZip);
             groupBox1.Controls.Add(buttonEnergyBalance);
             groupBox1.Controls.Add(labelMonth);
             groupBox1.Controls.Add(buttonOpen);
@@ -96,6 +102,35 @@
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Graphing";
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(89, 301);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(22, 24);
+            button1.TabIndex = 15;
+            button1.Text = "✓";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(6, 283);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(66, 15);
+            label2.TabIndex = 14;
+            label2.Text = "Zip values: ";
+            // 
+            // comboBoxZip
+            // 
+            comboBoxZip.FormattingEnabled = true;
+            comboBoxZip.Items.AddRange(new object[] { "1", "2", "3", "4", "6", "8", "12", "16", "24", "48" });
+            comboBoxZip.Location = new System.Drawing.Point(3, 301);
+            comboBoxZip.Name = "comboBoxZip";
+            comboBoxZip.Size = new System.Drawing.Size(84, 23);
+            comboBoxZip.TabIndex = 13;
+            comboBoxZip.Text = "2";
             // 
             // buttonEnergyBalance
             // 
@@ -625,5 +660,8 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonEnergyBalance;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxZip;
+        private System.Windows.Forms.Button button1;
     }
 }

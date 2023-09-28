@@ -31,6 +31,7 @@ namespace WinFormsApp1.Reporting
         //Widhts lol 31 days = 1674
         // 30 days = 1685
         //28 = 1669
+        bool usezipped = false;
 
         public MonthyReportViewer(int month)
         {
@@ -44,7 +45,9 @@ namespace WinFormsApp1.Reporting
             {
                 DateTime newDate = new DateTime(2022, month, i + 1);
                 Cache.currDay = Cache.yearSunTimes.FirstOrDefault(d => d.Day == newDate.Day && d.Month == newDate.Month);
-                monthlyReport.Add(DailyReporter.GenerateReport(newDate));
+                int startCap = i == 0 ? -1 : (int)monthlyReport[monthlyReport.Count-1].GridCapacity.ChargeLevel;
+                DayReport currReport = DailyReporter.GenerateReport(newDate, startCap);
+                monthlyReport.Add(currReport);
             }
 
             Cache.currDay = startDay;
@@ -96,7 +99,7 @@ namespace WinFormsApp1.Reporting
             negatedGridCost = effCost - gridCost;
             net = consumption - cleanEnergy;
 
-            int scaleValue = 1;
+            double scaleValue = 1;
             string unit = " W";
             //Scaling
             if (consumption > 1000000)
@@ -110,17 +113,17 @@ namespace WinFormsApp1.Reporting
                 unit = " kWh";
             }
 
-
-            //Labels!!!
+            //Labels
             labelCo2.Text = $"{Math.Max(Math.Round(emissions / 1000, 2), 0):n} kgCO2/kWh";
-            labelDirty.Text = $"{Math.Max(emissionsEnergy / scaleValue, 0):n0} {unit}";
-            labelRenew.Text = $"{cleanEnergy / scaleValue:n} {unit}";
+            labelDirty.Text = $"{Math.Max((double)emissionsEnergy / scaleValue, 0):n0} {unit}";
+            labelRenew.Text = $"{(double)(cleanEnergy) / (double)scaleValue:n} {unit}";
             labelTotalConsumption.Text = $"{consumption / scaleValue:n} {unit}";
-            labelTotalStorage.Text = currData.GridCapacity.Capacity < 1000000 ? $"{currData.GridCapacity.Capacity / 1000:n} kW" : $"{currData.GridCapacity.Capacity / scaleValue:n} MW";
+            labelTotalStorage.Text = currData.GridCapacity.Capacity < 1000000 ?
+                $"{currData.GridCapacity.Capacity / 1000:n} kW" :
+                $"{currData.GridCapacity.Capacity / scaleValue:n} MW";
             labelInternalNet.Text = $"{net / scaleValue:n} {unit}";
             labelInternalNet.ForeColor = net > 0 ? Color.Red : net == 0 ? Color.Gold : Color.Green;
             //Cost Analysis
-            // Hamilton	21.2c
             labelEffCost.Text = $"${effCost:n}";
             labelGridCost.Text = $"${gridCost:n}";
             labelSaved.Text = $"${negatedGridCost:n}";
@@ -191,6 +194,7 @@ namespace WinFormsApp1.Reporting
                 }
             }
             maxVal = max + (int)(max * 0.1);
+            if (usezipped) maxVal  = maxVal * int.Parse(comboBoxZip.Text);
             //Put all da data
             foreach (var checkedItem in checkedListBoxData.CheckedItems)
             {
@@ -214,7 +218,7 @@ namespace WinFormsApp1.Reporting
             {
                 List<int> currData = dayReport.RetrieveItem(key).Item2;
 
-                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, false);
+                xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, zipped);
                 //xArr = partial_write(currData, mainCanvas, gCanvas, color, xinc, x, width, startVal,zipped);
                 x = xArr[0];
             }
@@ -223,7 +227,9 @@ namespace WinFormsApp1.Reporting
 
         private int[] partial_write(List<int> heights, Panel targetCanvas, Graphics g, Color lineColor, int xInc, int startX, int width, bool zipped)
         {
-            int zip_amount = 3;
+            int zip_amount = 2;
+            try { zip_amount = int.Parse(comboBoxZip.Text); }
+            catch { zipped = false; }
             if (zipped)
             {
                 List<int> zippedHeights = new List<int>();
@@ -238,6 +244,7 @@ namespace WinFormsApp1.Reporting
                         }
                         catch (Exception e)
                         {
+                            Console.WriteLine("Liam is so good at coding you will never see this message: " + e);
                             //Do nothing!
                         }
                     }
@@ -275,7 +282,7 @@ namespace WinFormsApp1.Reporting
         {
             redrawMainGraph();
         }
-        
+
 
         private void panelX_Paint(object sender, PaintEventArgs e)
         {
@@ -374,6 +381,12 @@ namespace WinFormsApp1.Reporting
 
         private void checkedListBoxData_ItemCheck(object sender, ItemCheckEventArgs e)
         {
+            mainCanvas.Invalidate();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            usezipped = true;
             mainCanvas.Invalidate();
         }
     }

@@ -14,7 +14,10 @@ namespace WinFormsApp1.Reporting
         //Emissions Factor
         private double emissionEmissonFactor = 0.025;
         private double cleanEmissionFactor = 0;
+
+        //To ensure price is sclaed back to watts insted of Kilowatts
         private int scale = 1000;
+
         public double SolarPercent { get; set; }
         public double WindPercent { get; set; }
         public double OtherPercent { get; set; }
@@ -111,7 +114,7 @@ namespace WinFormsApp1.Reporting
 
         public decimal getGridCost() {
             //PRICE PER WATT HERE
-            return Math.Round((decimal)((getEmissionEnergy()/scale) * 0.212),2);
+            return Math.Round((decimal)((getEmissionEnergy()/scale) * Cache.powerCost),2);
         }
 
         public decimal getDaySavings() {
@@ -131,12 +134,12 @@ namespace WinFormsApp1.Reporting
                 }
             }
             //PRICE PER WATT HERE
-            return Math.Round((buyBack/ scale) * (decimal)0.212, 2);
+            return Math.Round((buyBack/ scale) * (decimal)Cache.powerCost, 2);
         }
 
         internal decimal getEffectiveCost()
         {
-            return Math.Round((decimal)((getConsumption() / scale) * 0.212), 2);
+            return Math.Round((decimal)((getConsumption() / scale) * Cache.powerCost), 2);
         }
 
         public decimal getNegatedGridCost() {

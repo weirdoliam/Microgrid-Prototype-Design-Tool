@@ -42,6 +42,8 @@ namespace WinFormsApp1
         //list of power curves... Just incase
         public static List<WindTurbinePowerCurve> curves = new List<WindTurbinePowerCurve>();
 
+        public static double powerCost = 0.212;
+
         //Calculates the cost of each battery and generator
         public static decimal getSetupCost() {
             decimal sum = 0;

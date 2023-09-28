@@ -92,6 +92,7 @@ namespace WinFormsApp1
             buttonRemoveBattery = new System.Windows.Forms.Button();
             listBoxStorage = new System.Windows.Forms.ListBox();
             label3 = new System.Windows.Forms.Label();
+            setCostOfPowerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             groupBoxGeneration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -234,7 +235,7 @@ namespace WinFormsApp1
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { factoryConfigurationToolStripMenuItem, weatherToolStripMenuItem, dateToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { factoryConfigurationToolStripMenuItem, weatherToolStripMenuItem, dateToolStripMenuItem, setCostOfPowerToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             toolsToolStripMenuItem.Text = "&Tools";
@@ -668,6 +669,13 @@ namespace WinFormsApp1
             label3.TabIndex = 4;
             label3.Text = "Energy Storage";
             // 
+            // setCostOfPowerToolStripMenuItem
+            // 
+            setCostOfPowerToolStripMenuItem.Name = "setCostOfPowerToolStripMenuItem";
+            setCostOfPowerToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            setCostOfPowerToolStripMenuItem.Text = "Set cost of power";
+            setCostOfPowerToolStripMenuItem.Click += setCostOfPowerToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -770,6 +778,7 @@ namespace WinFormsApp1
         private System.Windows.Forms.Label labelStorageTot;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ToolStripMenuItem setCostOfPowerToolStripMenuItem;
     }
 }
 

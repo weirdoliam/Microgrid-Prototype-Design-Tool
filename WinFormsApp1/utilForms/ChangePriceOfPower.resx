@@ -117,7 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>Kerikeri		24.6c
+Greymouth	24.3c
+Tauranga	24.2c
+Westport	24c
+Nelson		23.2c
+Balclutha	23.1c
+Taupo		23.1c
+Blenheim	22.8c
+Gisborne	22.8c
+Rotorua	22.8c
+Thames	22.3c
+Hawera	22.1c
+Richmond	22.1c
+Whangarei	22c
+Ashburton	21.8c
+Whanganui	21.8c
+Masterton	21.6c
+Cambridge	21.5c
+Hamilton	21.2c
+Napier		21.1c
+Palmerston N	21c
+NZ Average	20.9c
+New Plymouth	20.8c
+Whakatane	20.8c
+Oamaru	20.6c
+Timaru		20.6c
+Waipukurau	20.5c
+Wellington City	20.5c
+North Shore	20.4c
+Christchurch	20.3c
+Cromwell	20.2c
+Winton		20.2c
+Auckland Ctrl	20.1c
+Invercargill	20.1c
+Otorohanga	20.1c
+Taumaranui	20.1c
+Dannevirke	19.9c
+Rangiora	19.9c
+Pukekohe	19.8c
+Queenstown	19.5c
+Kaiapoi		19.5c
+Paraparaumu	19.1c
+Dunedin	19c</value>
+  </data>
 </root>

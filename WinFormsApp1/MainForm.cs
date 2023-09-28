@@ -494,6 +494,12 @@ namespace WinFormsApp1
             YearlyPerformance yp = new YearlyPerformance();
             yp.ShowDialog();
         }
+
+        private void setCostOfPowerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangePriceOfPower p = new ChangePriceOfPower();
+            p.ShowDialog();
+        }
     }
 }
 
