@@ -14,11 +14,6 @@ namespace WinFormsApp1.graphing
         List<int> _xValues;
         List<int> _yValues;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="xValues">Total local consumption (Including delivery to storage)</param>
-        /// <param name="yValues">Total Local Generation (including storage delivery)</param>
         public EnergyBalanceGraph(List<int> xValues, List<int> yValues)
         {
             _xValues = xValues;
@@ -35,7 +30,7 @@ namespace WinFormsApp1.graphing
             {
                 dataPoints.Add(new ScatterPoint(_xValues[i], _yValues[i]));
             }
-
+            int max = Math.Max(_xValues.Max(), _yValues.Max());
             // Create the plot model
             var plotModel = new PlotModel { Title = "Energy Balance Graph" };
 
@@ -55,8 +50,8 @@ namespace WinFormsApp1.graphing
             //Find max values
             //int max = Math.Max(_xValues.Max(), _yValues.Max());
             // Set the X-axis and Y-axis properties (optional)
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Consumpiton and Delivery to storage"});
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Generation and Retrieval from storage"});
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Consumpiton and Delivery to storage", AbsoluteMaximum = max });
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Generation and Retrieval from storage", AbsoluteMaximum = max });
 
             // Set the model to the existing plot view (plotView1)
             plotView1.Model = plotModel;

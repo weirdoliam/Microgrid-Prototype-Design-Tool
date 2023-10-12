@@ -24,6 +24,8 @@ namespace WinFormsApp1.Wind
         //general effectiveness
         protected double effectiveness;
 
+        Random r = new Random();
+
 
         public WindTurbine(int watts, int rotorDiameter, int rotation, string name, int cutin, int rated, int cutoff)
         {
@@ -124,18 +126,22 @@ namespace WinFormsApp1.Wind
             {
                 //Apply the betz limit to windspeed
                 windspeed = windspeed * 0.593;
-
-                //Power(W) = 1 / 2 x ρ x A x v (not cubed3)
+                double initialOffset = r.Next(850, 1000);
+                double randomOffset = initialOffset / 1000;
+                
                 //calculate available power estimate
                 //using constant for wind density so far
                 double currPerformance = 0.5 * 1.225 * area * (windspeed*windspeed*windspeed);
                 //get the half-hourly value
-                currPerformance = currPerformance / 2;
-                return (int)Math.Min(peakPerformance,currPerformance);
+                currPerformance = (currPerformance / 2);
+                int returnVal = (int)(Math.Min(peakPerformance, currPerformance) * randomOffset);
+                return returnVal;
             }
             else if (kmhWindSpeed >= rated & kmhWindSpeed < cutoff)
             {
-                return (int)peakPerformance;
+                double initialOffset = r.Next(800, 1000);
+                double randomOffset = initialOffset / 1000;
+                return (int)(peakPerformance*randomOffset);
             }
             else if (windspeed >= cutoff)
             {

@@ -144,7 +144,7 @@ namespace WinFormsApp1.Reporting
             double needFromGrid = 0;
             double recievedCharge, currCharge = 0;
 
-            //For times of demand when storage is empty, take power from grid instead (therefore adding more carbon emissions, or cost)
+            //For times of demand when storage is empty, take power from grid instead (therefore adding more carbon emissions and cost)
             for (int i = 0; i < 48; i++)
             {
                 currDemand = i >= overallConsumption.Count ? 0 : overallConsumption[i];

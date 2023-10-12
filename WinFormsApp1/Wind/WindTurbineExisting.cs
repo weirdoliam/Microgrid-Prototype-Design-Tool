@@ -199,6 +199,7 @@ namespace WinFormsApp1.Wind
             int rise = Math.Abs(upperWattage-lowerWattage);
             double run = 0.5;
             int val = (int)((rise / run) * windspeed);
+            val = val > curve[upper] ? curve[upper] : val;
             if (isArray) return val * amount;
             return val;
 

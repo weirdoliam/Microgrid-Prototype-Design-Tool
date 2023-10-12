@@ -26,14 +26,21 @@ namespace WinFormsApp1.managers
 
         public static void HideLoadingScreen()
         {
-            if (loadingForm != null && !loadingForm.IsDisposed)
+            try
             {
-                loadingForm.Invoke(new Action(() =>
+                if (loadingForm != null && !loadingForm.IsDisposed)
                 {
-                    loadingForm.Close();
-                    loadingForm.Dispose();
-                    loadingForm = null;
-                }));
+                    loadingForm.Invoke(new Action(() =>
+                    {
+                        loadingForm.Close();
+                        loadingForm.Dispose();
+                        loadingForm = null;
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " +  ex.Message);
             }
         }
     }

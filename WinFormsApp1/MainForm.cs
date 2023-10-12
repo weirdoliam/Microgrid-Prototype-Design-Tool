@@ -273,10 +273,16 @@ namespace WinFormsApp1
             foreach (EnergyIn i in Cache.genListin)
             {
                 listBoxAddedGens.Items.Add(i.getArrayDescription());
-                tot += i.Watts;
+                int amount = 1;
+                if (i is SolarPanelArray)
+                {
+                    SolarPanelArray s = (SolarPanelArray)i;
+                    amount = s.Amount;
+                }
+                tot += i.Watts * amount;
             }
             labelGenTot.Text = Cache.genListin.Count.ToString();
-            labelGenCapStatic.Text = tot + "";
+            labelGenCap.Text = tot + "";
             //consumers
             int displayed = 0;
 
@@ -434,7 +440,7 @@ namespace WinFormsApp1
         {
             //Open form and stuff to do daily thingy :))
             DailyReportViewer d = new DailyReportViewer(null);
-            d.ShowDialog();
+            d.Show();
         }
 
         private void lithiumIonToolStripMenuItem_Click(object sender, EventArgs e)

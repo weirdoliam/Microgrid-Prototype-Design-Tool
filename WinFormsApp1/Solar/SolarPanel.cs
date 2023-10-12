@@ -111,7 +111,7 @@ namespace WinFormsApp1.Solar
             }
             //Random performance drop of 0-15% 
             float drop = r.Next(0, 15) * hundredthOfBase;
-            return (int)baseGen - (int)drop;
+            return Math.Max((int)baseGen - (int)drop, 0);
         }
     }
 }

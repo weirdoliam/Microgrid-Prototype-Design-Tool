@@ -34,7 +34,7 @@ namespace WinFormsApp1.Reporting
                 {
                     DateTime newDate = new DateTime(2022, i, j);
                     Cache.currDay = Cache.yearSunTimes.FirstOrDefault(d => d.Day == newDate.Day && d.Month == newDate.Month);
-                    int startCap = yearlyReport.Count == 0 ? -1 : (int)yearlyReport[yearlyReport.Count].GridCapacity.ChargeLevel;
+                    int startCap = yearlyReport.Count == 0 ? 0 : (int)yearlyReport[yearlyReport.Count-1].GridCapacity.ChargeLevel;
                     DayReport r = DailyReporter.GenerateReport(newDate, startCap);
                     yearlyReport.Add(r);
                 }
@@ -72,6 +72,7 @@ namespace WinFormsApp1.Reporting
                 gridBuyBack += day.getGridBuyBack();
                 yearSavings += day.getDaySavings();
             }
+            gridCost = Math.Min(effCost, gridCost);
             negatedGridCost = effCost - gridCost;
             net = consumption - cleanEnergy;
 
@@ -104,7 +105,7 @@ namespace WinFormsApp1.Reporting
             labelSaved.Text = $"${negatedGridCost:n}";
             labelSetupCost.Text = $"${setup:n}";
             labelBuyBack.Text = $"${gridBuyBack:n}";
-            double daysTillPayDone = (int)(setup / (yearSavings / 365));
+            double daysTillPayDone = yearSavings <= 0 ? 0 : (int)(setup / (yearSavings / 365));
 
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
             daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;
@@ -163,8 +164,8 @@ namespace WinFormsApp1.Reporting
             plotModel.Series.Add(fs);
 
             // Set the X-axis and Y-axis properties (optional)
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Consumption" });
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Time" });
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Time" });
+            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "Consumption" });
 
             // Set the model to the existing plot view (plotView1)
             mainPlot.Model = plotModel;

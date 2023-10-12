@@ -90,7 +90,7 @@ namespace WinFormsApp1
                 {
                     for (i = 0; i < amount; i++)
                     {
-                        WindTurbineExisting w = new WindTurbineExisting(name.Text, manu.Text, int.Parse(power.Text) * 1000, double.Parse(rotord.Text), double.Parse(sweptarea.Text), int.Parse(blades.Text), double.Parse(cutoutspeed.Text), double.Parse(ratedspeed.Text), double.Parse(cutin.Text));
+                        WindTurbineExisting w = new WindTurbineExisting(name.Text, manu.Text, int.Parse(power.Text) * 1000, double.Parse(rotord.Text), double.Parse(sweptarea.Text), int.Parse(blades.Text), double.Parse(cutin.Text), double.Parse(ratedspeed.Text), double.Parse(cutoutspeed.Text));
                         w.Price = decimal.Parse(price.Text);
                         Cache.genListin.Add(w);
                     }

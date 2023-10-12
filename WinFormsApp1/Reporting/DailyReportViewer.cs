@@ -113,7 +113,8 @@ namespace WinFormsApp1
             labelSaved.Text = "$" + currData.getNegatedGridCost();
             labelSetupCost.Text = "$" + setup;
             labelBuyBack.Text = "$" + currData.getGridBuyBack();
-            double daysTillPayDone = (int)(setup / (currData.getDaySavings()));
+            decimal savings = currData.getDaySavings();
+            double daysTillPayDone = savings <= 0 ? 0 : (int)(setup / (savings));
             //double daysTillPayDone = (int)(setup / (currData.getGenSavings() + currData.getGridBuyBack()));
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
             daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;

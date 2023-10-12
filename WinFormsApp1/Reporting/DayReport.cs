@@ -118,7 +118,7 @@ namespace WinFormsApp1.Reporting
         }
 
         public decimal getDaySavings() {
-            return getNegatedGridCost() + getGridBuyBack();
+            return Math.Max(getNegatedGridCost() + getGridBuyBack(), 0);
         }
 
         public decimal getGridBuyBack()

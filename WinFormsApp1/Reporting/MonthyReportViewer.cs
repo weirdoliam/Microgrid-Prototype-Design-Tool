@@ -82,7 +82,11 @@ namespace WinFormsApp1.Reporting
             int consumption = 0;
             double emissions = 0;
             int net = 0;
-            decimal effCost = 0, gridCost = 0, negatedGridCost = 0, gridBuyBack = 0, monthSavings = 0;
+            decimal effCost = 0;
+            decimal gridCost = 0;
+            decimal negatedGridCost = 0;
+            decimal gridBuyBack = 0;
+            decimal monthSavings = 0;
             decimal setup = Cache.getSetupCost();
 
             foreach (DayReport day in monthlyReport)
@@ -96,6 +100,7 @@ namespace WinFormsApp1.Reporting
                 gridBuyBack += day.getGridBuyBack();
                 monthSavings += day.getDaySavings();
             }
+            gridCost = Math.Min(effCost, gridCost);
             negatedGridCost = effCost - gridCost;
             net = consumption - cleanEnergy;
 
@@ -129,7 +134,7 @@ namespace WinFormsApp1.Reporting
             labelSaved.Text = $"${negatedGridCost:n}";
             labelSetupCost.Text = $"${setup:n}";
             labelBuyBack.Text = $"${gridBuyBack:n}";
-            double daysTillPayDone = (int)(setup / (monthSavings / days));
+            double daysTillPayDone = monthSavings <= 0 ? 0 : (int)(setup / (monthSavings / 365));
 
             string time = daysTillPayDone > 183 ? "Years" : daysTillPayDone > 365 ? "Months" : "Days";
             daysTillPayDone = daysTillPayDone > 365 ? daysTillPayDone / 365 : daysTillPayDone > 183 ? daysTillPayDone / 30 : daysTillPayDone;
